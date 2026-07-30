@@ -8,6 +8,8 @@ description: >
   Use when the brief leaves nothing to decide. If any judgment call remains, use
   sidekick instead.
 model: haiku
+skills:
+  - coding-standards
 tools: Read, Write, Edit, Bash, Grep, Glob
 maxTurns: 25
 color: green

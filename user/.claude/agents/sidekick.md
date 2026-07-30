@@ -10,6 +10,9 @@ description: >
   itself, and should delegate EARLY rather than after solo implementation.
 model: sonnet
 effort: high
+skills:
+  - coding-standards
+  - solution-architecture
 tools: Read, Write, Edit, Bash, Grep, Glob, TodoWrite
 memory: project
 maxTurns: 60

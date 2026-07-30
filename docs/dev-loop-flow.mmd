@@ -1,0 +1,100 @@
+flowchart TD
+
+  ENTRY(["/dev-loop"])
+  ENTRY --> P0
+
+  P0["Phase 0 — Frame the slice<br/>requirement, non-goals, hard constraints,<br/>files, definition of done, SOURCE BRANCH<br/>create run dir + brief.md"]
+  P0 --> P1["Phase 1 — Implement<br/>delegate to a sidekick tier<br/>coding-standards + solution-architecture"]
+  P1 --> P2["Phase 2 — Tests<br/>a separate handoff<br/>unit / integration / UI<br/>each must fail if the behaviour regresses"]
+  P2 --> P3
+
+  P3["Phase 3 — Plan the round<br/>ROUND = N, create round-N/<br/>classify every lane applicable or skipped,<br/>with a diff-based reason, into plan.md"]
+  P3 --> P4["Phase 4 — Delegate<br/>spawn the applicable reviewers in parallel,<br/>MAX 4 AT A TIME, drain each wave<br/>each reviewer reads only its own lane card"]
+
+  P4 --> AL
+  P4 --> GL
+
+  subgraph AL["Lanes — always applicable"]
+    direction LR
+    L1["Requirements"]
+    L2["Technical"]
+    L3["Tests"]
+  end
+
+  subgraph GL["Lanes — gated on what the diff touches"]
+    direction LR
+    L4["Architecture<br/>types or responsibilities moved"]
+    L5["Standards<br/>any source file changed"]
+    L6["Security<br/>input, authn/authz, secrets, I/O, deps"]
+    L7["Dead code<br/>paths removed or narrowed"]
+    L8["Minimalism<br/>guards, wrappers, config added"]
+    L9["Artifacts<br/>migration, schema, lockfile, CI"]
+  end
+
+  AL --> OUT
+  GL --> OUT
+
+  OUT["each lane is read-only and writes<br/>round-N/lane.json and round-N/lane.log.md,<br/>returning ONE LINE: path + counts by severity"]
+  OUT --> P5
+
+  P5["Phase 5 — Triage — the lead is the arbiter"]
+  P5 --> T1["1. cluster by locator and cause<br/>one owning lane per concern"]
+  T1 --> T2["2. gate on evidence<br/>inferred alone is never a blocker"]
+  T2 --> T3["3. gate on cause<br/>only introduced and worsened"]
+  T3 --> T4["4. separate defect from remedy<br/>smallest fix preserving intent"]
+  T4 --> T5["5. check wontfix.json<br/>never re-litigate a rejection"]
+  T5 --> T6["6. durable decisions go to<br/>.claude/review/conventions.md"]
+  T6 --> TW["write round-N/triage.md<br/>rejections split: stale, evidence, remedy, wrong"]
+
+  TW --> D1{"any accepted<br/>findings?"}
+
+  D1 -- yes --> P6
+  P6["Phase 6 — Fix<br/>one brief to a sidekick<br/>reviewers never edit"]
+  P6 --> BUG{"would_have_been_bug?"}
+  BUG -- yes --> RT["write a failing test, confirm it fails,<br/>apply the fix, confirm it passes"]
+  BUG -- no --> FX["apply the smallest fix"]
+  RT --> VAL
+  FX --> VAL
+  VAL["run the smallest relevant validation:<br/>affected tests, types, lint, build"]
+
+  VAL --> P7{"Phase 7 — loop or exit"}
+  D1 -- no --> P7
+
+  P7 -- "ROUND + 1 — recompute applicability<br/>from the fix delta" --> P3
+
+  P7 -- "PASS: no Critical or Major survived and<br/>validation is green, or 2 Minor-only rounds" --> P8
+  P7 -- "BLOCKED: round 4 reached, same concern fixed twice,<br/>no material progress, or needs redesign" --> STOP
+
+  STOP(["stop and report — no PR"])
+
+  P8{"validation uncertain, risky slice,<br/>artifacts changed, or a Critical fixed?"}
+  P8 -- yes --> V["Phase 8 — reviewer-verify<br/>intent preserved? validation matches?<br/>checks ran? deferrals justified?<br/>NOT a re-review of the diff"]
+  P8 -- no --> P9
+  V --> P9
+
+  P9["Phase 9 — Commit, push, pull request"]
+  P9 --> S1["1. full build and test suite green"]
+  S1 --> S2["2. stage everything — read git status --porcelain<br/>untracked files are missed by a path-pattern add<br/>exclude runs/, but commit conventions.md"]
+  S2 --> S3["3. commit, referencing the work item"]
+  S3 --> S4{"4. does git diff base...HEAD --stat<br/>match round-1/plan.md?"}
+  S4 -- no --> HALT(["STOP — staging went wrong;<br/>the review no longer describes this diff"])
+  S4 -- yes --> S5["5. push, and confirm the remote has it"]
+  S5 --> S6["6. PR targets the Phase 0 source branch,<br/>never the repository default"]
+  S6 --> S7["7. confirm the PR file list matches step 4"]
+  S7 --> S8["8. description: what, why, lanes run and skipped,<br/>rounds taken, every deferred finding stated"]
+  S8 --> S9["9. write run.md<br/>10. append one line to runs/index.jsonl"]
+  S9 --> DONE(["done"])
+
+  classDef entry fill:#0f3355,stroke:#0f3355,color:#ffffff
+  classDef phase fill:#1f4e79,stroke:#0f3355,color:#ffffff
+  classDef lane fill:#e7eef5,stroke:#4a7095,color:#12263f
+  classDef gate fill:#fbf0d5,stroke:#b07a00,color:#4a3600
+  classDef bad fill:#f7dadd,stroke:#9e2b34,color:#5a1a1f
+  classDef good fill:#dcefe3,stroke:#2e6f4e,color:#123328
+
+  class ENTRY entry
+  class P0,P1,P2,P3,P4,P5,P6,P9 phase
+  class L1,L2,L3,L4,L5,L6,L7,L8,L9 lane
+  class D1,BUG,P7,P8,S4 gate
+  class STOP,HALT bad
+  class DONE,V good

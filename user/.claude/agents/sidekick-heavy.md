@@ -9,6 +9,9 @@ description: >
   on evidence, not on anticipated difficulty.
 model: opus
 effort: xhigh
+skills:
+  - coding-standards
+  - solution-architecture
 tools: Read, Write, Edit, Bash, Grep, Glob, TodoWrite
 memory: project
 maxTurns: 80
