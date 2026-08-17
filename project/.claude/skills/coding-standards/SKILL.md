@@ -73,6 +73,13 @@ SHOULD. Do not invent rules that are not written here.
 - **SHOULD** explain why, not what. Delete commented-out code rather than
   shipping it.
 - **MUST** put XML doc comments on public API surface.
+- **MUST** be concise. State the reason and stop. A comment that restates what
+  the code already says, narrates steps the reader can follow unaided, or
+  carries change history belonging in git is not concise — and unlike code,
+  nothing compiles it, so it goes stale silently and misleads the next reader.
+- **SHOULD** fit in one or two lines. A comment substantially longer than the
+  code it explains usually means the code needs changing, not that it needs
+  more explanation.
 
 ## Explicitly not standards
 
@@ -81,6 +88,11 @@ The following are **not** rules here, and a reviewer must not raise them:
 - Preference between `var` and explicit types.
 - Brace style, line length, or anything the formatter already fixes.
 - File-scoped versus block namespaces.
+- Comment **length on its own**, where the comment carries a genuinely
+  non-obvious why — an invariant, a workaround and its ticket, an ordering
+  guarantee, a field number a device expects. Raise the redundancy, never the
+  line count. The conciseness rule above exists to kill comments that say
+  nothing, not to ration the ones that earn their space.
 
 If the formatter or analyser can catch it, it is not a review finding. Fix the
 analyser configuration instead.
