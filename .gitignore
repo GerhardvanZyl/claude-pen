@@ -2,3 +2,4 @@
 .claude/sprint/*/manifest.json
 .claude/sprint/*/summary.md
 .claude/settings.local.json
+.claude/agent-memory/
