@@ -287,7 +287,10 @@ The change has been reviewed, but the reasoning behind it still exists only in
    context to judge it.
 
 3. **Retake the working-tree snapshot and record it as the new baseline** for
-   Phase 9, per `references/tree-snapshot.md`. **This is not bookkeeping.** The
+   Phase 9, per `references/tree-snapshot.md`. **Do this whether or not you wrote
+   a walkthrough** — on a skip the digest simply matches the one Phase 7
+   recorded, and Phase 9 compares against this step unconditionally, so it must
+   always have a value to compare against. **This is not bookkeeping.** The
    walkthrough is a new file under `docs/`, which is not `.gitignore`d, so it
    changes the digest — and Phase 9 step 4 stops the run when the digest differs
    from the recorded baseline. Without this step, every run halts there. The only
