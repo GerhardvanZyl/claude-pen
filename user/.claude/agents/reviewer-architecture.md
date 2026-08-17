@@ -7,7 +7,7 @@ model: opus
 effort: xhigh
 skills:
   - solution-architecture
-tools: Read, Grep, Glob, Bash, Write
+tools: Read, Grep, Glob, Bash, PowerShell, Write
 disallowedTools:
   - Edit
   - NotebookEdit

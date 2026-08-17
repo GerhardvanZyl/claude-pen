@@ -75,7 +75,8 @@ Never fix and carry on — the concerns the lighter loop compressed have not had
 
 Rules common to every loop:
 
-- The loop is: frame → implement → tests → plan → parallel review lanes → triage → fix → loop → verify → PR. The skill owns the detail; do not improvise a different shape.
+- The loop is: frame → implement → tests → plan → parallel review lanes → triage → fix → loop → verify → walkthrough → PR. The skill owns the detail; do not improvise a different shape.
+- **Every loop keeps notes and ships a walkthrough.** `implementation-notes` records the decisions, the alternatives rejected and why, and the requirements findings — accepted *and* rejected — into `notes.md` in the run directory as the run proceeds. Before the PR, `pr-walkthrough` turns that into `docs/walkthroughs/<slug>.md`, and `pr-walkthrough-review` checks it (every loop but `dev-loop-ultralight`, where the lead checks inline). Implement, test, and fix briefs must ask the sidekick for its rejected alternatives back — reasoning nobody wrote down cannot be explained to a reviewer later. Skipping the walkthrough is allowed only for a purely mechanical change, and the skip is reported, never silent.
 - **Classify every lane applicable or skipped with a diff-based reason before spawning anything.** "The code looks fine" is never a skip reason.
 - **One owner per concern.** Each lane reads only its own card. A lane that notices something owned by another lane stays silent.
 - Findings carry `evidence` and `cause`. Inferred evidence alone is never a blocker. `introduced`, `worsened`, and `missing-required` are fixed; `stale` is recorded, not fixed. **`missing-required` is in scope even though what it names is absent from the diff** — a missing migration or an unregenerated client is never visible in a diff, and a gate that admitted only `introduced` and `worsened` would silently drop every one of them.

@@ -15,7 +15,8 @@ description: >
 rule is the same. This file changes two things and nothing else.
 
 Read `dev-loop-ultra/SKILL.md` now and work from it. Do not reimplement its
-phases from this file.
+phases from this file. That includes Phase 0's `implementation-notes` and Phase
+8b's walkthrough — both are inherited unchanged.
 
 ## Change 1 — Every subagent runs on Opus
 
@@ -83,6 +84,6 @@ spending, not diligence.
 ## Index line
 
 `"loop":"ultra-opus"`. Keep the same per-lane `raised_p` / `raised_d` / `kept`
-counts — comparing those against `ultra` runs is how you find out whether the
-Opus lanes actually change the findings or only the bill. That is worth knowing,
-and nobody can tell you without the data.
+counts and the same `"walkthrough"` field — comparing those against `ultra` runs
+is how you find out whether the Opus lanes actually change the findings or only
+the bill. That is worth knowing, and nobody can tell you without the data.

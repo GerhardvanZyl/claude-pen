@@ -7,7 +7,7 @@ model: sonnet
 effort: high
 skills:
   - coding-standards
-tools: Read, Grep, Glob, Bash, Write
+tools: Read, Grep, Glob, Bash, PowerShell, Write
 disallowedTools:
   - Edit
   - NotebookEdit

@@ -54,6 +54,12 @@ Report format:
 4. Tradeoffs you made and what you rejected.
 5. Anything the lead should double-check.
 
+**Report your reasoning, not only your result.** Alongside the summary of what
+you changed, return the decisions you took, the alternatives you considered and
+why you rejected them, and any constraint that forced a shape. The lead records
+these; they become the walkthrough that ships with the PR, and a decision whose
+alternatives were never written down cannot be explained to a reviewer later.
+
 Memory: check your agent memory for repo conventions before starting. Afterwards
 record what would make a future run on this codebase cheaper — invariants you
 had to discover, why an obvious approach fails here, where the sharp edges are.

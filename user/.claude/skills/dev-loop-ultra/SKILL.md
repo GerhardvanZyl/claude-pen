@@ -54,6 +54,11 @@ Identical to `dev-loop`. Frame the slice, record the source branch, write
 `brief.md`, then implement and test in two handoffs at the normal sidekick tiers.
 **Implementation is not changed by this loop** — ultra buys scrutiny, not code.
 
+Phase 0 also invokes the `implementation-notes` skill and creates `notes.md`, as
+`dev-loop` specifies. The implement and test briefs in Phases 1 and 2 ask for the
+decisions taken and the alternatives rejected back, and the lead appends what
+comes back to `notes.md` — same requirement, same file, same two handoffs.
+
 ## Phase 3 — Plan the round
 
 Set `ROUND`, starting at 1. Create `round-N/`. Classify each lane applicable or
@@ -138,6 +143,11 @@ One addition: read each lane's adjudication log for its **coverage** line. A lan
 reported as "both thin" was not really reviewed, whatever its findings file says.
 Rerun that lane before trusting the round.
 
+The Interesting finds appended to `notes.md` are also as `dev-loop` specifies.
+Ultra has a source the single-pass loops do not: **the adjudication logs**. A
+finding prosecution raised and the adjudicator dropped, with its reason, is
+exactly the kind of near-miss worth telling a reviewer about — append it.
+
 ## Phase 6 — Fix
 
 Identical to `dev-loop`. Accepted findings to a sidekick, regression test written
@@ -165,6 +175,14 @@ Spawn `reviewer-verify` as `dev-loop` specifies. Adversarial review does not
 replace it: the pair checks the code, verification checks that the accumulated
 fixes still do what was asked.
 
+## Phase 8b — Walkthrough
+
+As `dev-loop` Phase 8b in full: invoke `pr-walkthrough` off `notes.md`, invoke
+`pr-walkthrough-review`, then retake the snapshot and record it as the new
+baseline whether or not a walkthrough was written. One addition: the per-lane
+prosecution/defence/kept counts go into the notes' Reviewers section, alongside
+the lanes run, lanes skipped, and model tiers `dev-loop` already puts there.
+
 ## Phase 9 — Commit, push, pull request
 
 As `dev-loop` Phase 9 in full — **including the staging and commit-verification
@@ -172,7 +190,8 @@ steps.** Stage untracked files explicitly, confirm the committed diff matches th
 reviewed file list, push, and confirm the PR's file list matches. Three agents per
 lane approved a working tree; none of them approved a commit.
 
-Use `"loop":"ultra"` in the index line, and state in the PR description that this
+Use `"loop":"ultra"` and `"walkthrough"` — the committed path, or
+`skipped:<reason>` — in the index line, and state in the PR description that this
 was an adversarial run.
 
 The work-tracker rule in `dev-loop` applies unchanged: no item creation, state

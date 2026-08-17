@@ -11,7 +11,7 @@ effort: high
 skills:
   - coding-standards
   - solution-architecture
-tools: Read, Grep, Glob, Bash, Write
+tools: Read, Grep, Glob, Bash, PowerShell, Write
 disallowedTools:
   - Edit
   - NotebookEdit

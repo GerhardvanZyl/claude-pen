@@ -6,7 +6,7 @@ description: >
   the full loop uses the unconsolidated lanes instead.
 model: haiku
 effort: high
-tools: Read, Grep, Glob, Bash, Write
+tools: Read, Grep, Glob, Bash, PowerShell, Write
 disallowedTools:
   - Edit
   - NotebookEdit

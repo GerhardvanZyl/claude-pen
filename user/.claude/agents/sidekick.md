@@ -51,6 +51,12 @@ Report format — keep it tight:
 3. Test / lint / build results.
 4. Anything the lead should double-check.
 
+**Report your reasoning, not only your result.** Alongside the summary of what
+you changed, return the decisions you took, the alternatives you considered and
+why you rejected them, and any constraint that forced a shape. The lead records
+these; they become the walkthrough that ships with the PR, and a decision whose
+alternatives were never written down cannot be explained to a reviewer later.
+
 Memory: before starting, check your agent memory for conventions already
 established in this repo. After finishing, record anything durable you learned —
 project structure, naming and style conventions, test layout, build quirks,

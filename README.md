@@ -201,6 +201,17 @@ change, the regenerated client for an altered contract. None of those are ever
 visible in a diff, so a gate admitting only `introduced` and `worsened` would
 drop every one of them while looking perfectly principled.
 
+### The walkthrough
+
+`implementation-notes` accumulates decisions, rejected alternatives, and
+rejected requirements findings into `notes.md` throughout the run, inside the
+gitignored run directory. At Phase 8b, or 5b in ultralight, `pr-walkthrough` turns that record into
+`docs/walkthroughs/<slug>.md`. The diff already shows *what* changed, so the
+walkthrough's only job is *why* — the alternatives considered, the constraint
+that forced the shape, the thing a reviewer would otherwise flag as a bug.
+It is committed alongside the change and linked from the PR description, so a
+reviewer opens it before they open the diff.
+
 ---
 
 ## The adversarial loops
@@ -361,7 +372,10 @@ user/.claude/
     ├── dev-loop-ultralight/         SKILL.md
     ├── dev-loop-ultra/              SKILL.md
     ├── dev-loop-ultra-opus/         SKILL.md
-    └── solution-architecture/       SKILL.md   (repo-agnostic)
+    ├── solution-architecture/       SKILL.md   (repo-agnostic)
+    ├── implementation-notes/        SKILL.md
+    ├── pr-walkthrough/              SKILL.md + references/example-walkthrough.md
+    └── pr-walkthrough-review/       SKILL.md
 
 project/.claude/
 ├── agents/sprint-item-runner.md
@@ -460,17 +474,23 @@ skill is provider-specific.
 │       │   ├── <lane>.json            findings
 │       │   ├── <lane>.log.md          considered-and-dropped, uncertain
 │       │   └── triage.md              every accept/reject with reason
+│       ├── notes.md                   decisions, rejected alternatives — feeds pr-walkthrough
 │       ├── verification.md
 │       └── run.md
 ├── wontfix.json                       per-run rejections
 └── conventions.md                     durable accepted deviations — commit this
+
+docs/walkthroughs/
+└── <slug>.md                          why this change is shaped the way it is — committed, linked from the PR
 ```
 
 The installer appends `.claude/review/runs/` to the repo's `.gitignore` for you —
 lane logs quote the code they examined, so this is not a tidiness rule. Keep
 `conventions.md`; it is the only part of `.claude/review/` that is committed.
 Scratch worktrees live under `runs/` too, which is why they never appear in
-`git status`.
+`git status`. `notes.md` lives inside that gitignored run directory and never
+ships; `docs/walkthroughs/` sits outside it, on the repo proper, because that
+one is the shipped artifact.
 
 ---
 

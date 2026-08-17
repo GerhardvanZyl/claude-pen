@@ -7,7 +7,7 @@ description: >
   re-review of the whole diff.
 model: opus
 effort: high
-tools: Read, Grep, Glob, Bash, Write
+tools: Read, Grep, Glob, Bash, PowerShell, Write
 disallowedTools:
   - Edit
   - NotebookEdit
