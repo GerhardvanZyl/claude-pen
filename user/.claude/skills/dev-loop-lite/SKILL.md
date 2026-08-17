@@ -179,6 +179,9 @@ passes. That order, stated explicitly in the brief.
 
 Then run the smallest relevant validation, not the whole suite.
 
+The brief also asks for the decisions taken and the alternatives rejected, and
+the lead appends what comes back to `notes.md`.
+
 ## Phase 7 — Loop or exit
 
 **Remove the round's scratch worktree first** — `git worktree remove --force
