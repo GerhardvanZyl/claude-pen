@@ -38,11 +38,23 @@ paths below are relative to the run directory.
 Reviewers read `brief.md`. If it is not written down, the requirements lane
 cannot run.
 
+Then invoke the `implementation-notes` skill and create `notes.md` in the same
+directory. Record the requirement, the non-goals, the constraints, and **which
+loop you chose and the specific eligibility criterion that chose it**. You are
+appending to this file for the rest of the run; Phase 8b turns it into the
+walkthrough that ships with the PR.
+
 ## Phase 1 — Implement
 
 Delegate to the appropriate sidekick tier. The brief must require conformance to
 the `coding-standards` skill and the `solution-architecture` skill, both
 preloaded into the sidekick agents.
+
+**The brief must ask for the reasoning back.** Require the sidekick to return,
+alongside its summary, the decisions it took, the alternatives it rejected and
+why, and any constraint that forced a shape. Append what comes back to
+`notes.md`. Without this the reasoning dies when the agent returns, and the
+walkthrough in Phase 8b has nothing to work from but the diff.
 
 ## Phase 2 — Tests
 
@@ -50,6 +62,9 @@ A second handoff, not part of Phase 1. Require unit tests for logic and
 boundaries, integration tests for anything crossing a process, database, queue,
 or service edge, and UI tests for user-visible behaviour changes. Each test must
 fail if the behaviour it covers regresses — state this in the brief.
+
+The brief also asks for the decisions taken and the alternatives rejected, and
+the lead appends what comes back to `notes.md`.
 
 ## Phase 3 — Plan the review round
 
@@ -187,6 +202,17 @@ is producing untrue findings. Only the last kind counts against a lane.
 
 This file is the main thing you will want when a run goes wrong.
 
+Then append the **Interesting finds** to `notes.md`: any finding worth explaining
+to a reviewer, every accepted-defect-but-rejected-remedy pair, and every
+`conventions.md` entry created this run.
+
+**Requirements-lane findings go in whether you accepted them or rejected them.**
+Every other lane's rejected findings are correctly dropped here. A rejected
+requirements finding is not noise — it is a statement that the brief was
+ambiguous, or that the reviewer read it differently from the implementer, and
+that is exactly what a reviewer of the change needs to be told. Record the
+finding, the decision, and the reason.
+
 You are the arbiter. A reviewer's output is advice.
 
 ## Phase 6 — Fix
@@ -206,6 +232,9 @@ nothing about whether it would have caught the bug.
 
 Then run the smallest relevant validation — the affected tests, type check,
 linter, build, and any generated-artifact check — not the whole suite.
+
+The brief also asks for the decisions taken and the alternatives rejected, and
+the lead appends what comes back to `notes.md`.
 
 ## Phase 7 — Loop or exit
 
@@ -239,6 +268,36 @@ whether the final diff preserves intent, validation matches the touched
 behaviour, required checks ran or have stated blockers, and deferrals have
 concrete reasons. Do not ask it to re-review the whole diff.
 
+## Phase 8b — Walkthrough
+
+The change has been reviewed, but the reasoning behind it still exists only in
+`notes.md`. This phase turns it into the document that ships with the PR.
+
+1. **Author it.** Invoke the `pr-walkthrough` skill. Delegate the draft to
+   `sidekick`, passing the `notes.md` path, the diff base, and the changed-file
+   list. **The notes are the brief, not the diff** — a draft briefed on the diff
+   comes back as a narrated changelog, which is the one failure this phase
+   exists to prevent. If `notes.md` is missing or thin, write the walkthrough
+   yourself and record in `run.md` that the notes were inadequate; that is a
+   defect in the run worth seeing.
+
+2. **Review it.** Invoke the `pr-walkthrough-review` skill. It is write-capable
+   on the walkthrough file only and returns one line — path, whether it edited,
+   and issues corrected by category. Do not read the document into your own
+   context to judge it.
+
+3. **Retake the working-tree snapshot and record it as the new baseline** for
+   Phase 9, per `references/tree-snapshot.md`. **This is not bookkeeping.** The
+   walkthrough is a new file under `docs/`, which is not `.gitignore`d, so it
+   changes the digest — and Phase 9 step 4 stops the run when the digest differs
+   from the recorded baseline. Without this step, every run halts there. The only
+   legitimate delta is the walkthrough file itself; anything else is the failure
+   that check has always been for, and is handled the same way.
+
+Skipping the walkthrough is permitted only for a purely mechanical change — a
+rename, a dependency bump, a formatting sweep. A skip is stated in the PR
+description and in `run.md`. It is never silent.
+
 ## Phase 9 — Commit, push, pull request
 
 Everything reviewed so far lives in the working tree. **Nothing is on the branch
@@ -261,7 +320,8 @@ approved. Work through this in order and verify each step rather than assuming i
 
    Exclude the run directory: `.claude/review/runs/` is working output, not part
    of the change. `.claude/review/conventions.md` **is** committed — it is shared
-   repository knowledge.
+   repository knowledge. The walkthrough at docs/walkthroughs/ **is** committed —
+   it is part of the change and the PR description links it.
 
 3. **Commit**, referencing the work item where there is one.
 
@@ -273,8 +333,8 @@ approved. Work through this in order and verify each step rather than assuming i
      touched. **If a file the lanes reviewed is missing from the commit, stop**
      — staging went wrong, and the review no longer describes what you are about
      to push.
-   - `git rev-parse HEAD^{tree}` against the digest recorded after the final
-     round's fixes (Phase 7). **If they differ, something changed the tree
+   - `git rev-parse HEAD^{tree}` against the digest recorded at the end of
+     Phase 8b. **If they differ, something changed the tree
      between the last review and the commit** — an editor, a formatter on save,
      a stray command — and a matching file list will not reveal it, because the
      same files with different contents produce the same `--stat`. Stop and find
@@ -294,7 +354,8 @@ approved. Work through this in order and verify each step rather than assuming i
    reviewed. Check it rather than trusting that the previous steps worked.
 
 8. Description: what changed, why, constraints verified, lanes run and skipped,
-   rounds taken, and every deferred or unresolved finding stated honestly.
+   rounds taken, every deferred or unresolved finding stated honestly, and a
+   link to the walkthrough, per the hosting table in the pr-walkthrough skill.
 
 9. Write `run.md` at the run root: outcome, rounds, validation results,
    verification result, residual concerns.
@@ -376,11 +437,14 @@ The lead writes `plan.md` and `triage.md` per round, `run.md` at the end, and
 appends to `.claude/review/runs/index.jsonl`:
 
 ```json
-{"run_id":"20260728-1430-feat-movement-batching","loop":"full","branch":"feature/movement-batching","base":"develop","rounds":2,"outcome":"pass","lanes":{"security":{"raised":3,"accepted":1,"rejected_stale":1,"rejected_evidence":0,"rejected_remedy":1,"rejected_wrong":0},"technical":{"raised":2,"accepted":2,"rejected_stale":0,"rejected_evidence":0,"rejected_remedy":0,"rejected_wrong":0}},"regression_tests_added":1,"pr":"<url>"}
+{"run_id":"20260728-1430-feat-movement-batching","loop":"full","branch":"feature/movement-batching","base":"develop","rounds":2,"outcome":"pass","lanes":{"security":{"raised":3,"accepted":1,"rejected_stale":1,"rejected_evidence":0,"rejected_remedy":1,"rejected_wrong":0},"technical":{"raised":2,"accepted":2,"rejected_stale":0,"rejected_evidence":0,"rejected_remedy":0,"rejected_wrong":0}},"regression_tests_added":1,"walkthrough":"docs/walkthroughs/movement-batching.md","pr":"<url>"}
 ```
 
 The `loop` field is `full` here, `lite`, `ultralight`, `ultra`, or `ultra-opus`
 elsewhere. All loops write this format identically so runs are comparable.
+
+`walkthrough` is the committed path, or `skipped:<reason>`. All five loops write
+it identically.
 
 **Rejections are split by reason, and the split is the point.** A bare
 accepted-versus-rejected ratio cannot tell a noisy lane from a well-functioning
