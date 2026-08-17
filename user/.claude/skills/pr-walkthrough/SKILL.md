@@ -35,6 +35,19 @@ they do not know this codebase's particular shape. That calibrates everything:
 
 ## Why beats what
 
+This is the whole point of the document. For every meaningful change, the diff
+already shows *what*. Your job is the part the diff cannot carry:
+
+- **What else you considered and rejected**, and what made you reject it. A
+  decision with no discarded alternative usually means you did not make one.
+- **What constraint forced the shape** — an existing caller you could not
+  break, an external system that rejects a mismatched payload, a requirement
+  that named a specific field or value.
+- **What the reader would otherwise flag as wrong.** If a choice looks odd,
+  say why before they spend twenty minutes deciding it is a bug.
+- **What you are unsure about.** Close with the genuine open questions. A
+  reviewer who knows where you were torn reviews the right lines.
+
 A walkthrough that restates the diff in prose is a changelog with extra steps,
 and the reviewer already has the diff. Every section earns its place by
 answering *why*, not *what*.
@@ -74,6 +87,11 @@ wraps or a name gets one character longer, and it cannot be checked
 mechanically. Mermaid renders in the PR and `pr-walkthrough-review` can
 verify it parses; ASCII art can do neither.
 
+Beyond the two mandatory opening diagrams, pick the type that fits what you
+are showing: a sequence diagram suits a request flow, a flowchart suits
+branching logic, an ER diagram suits a schema change. Only add one if it
+earns its place — it is not mandatory to add more than the opening two.
+
 ## Anchors
 
 Every claim about "this file, this line" must cite a real anchor —
@@ -82,12 +100,24 @@ Every claim about "this file, this line" must cite a real anchor —
 than no citation, because it sends the reviewer to the wrong place with false
 confidence.
 
+**Start each section with the name of the method and class it lives in**, so
+the reviewer can open the right file and scroll to the right place without
+hunting for it.
+
+**If a section has a relevant method call that the next section is about to
+follow, call that out** — say plainly that the walkthrough is now going to
+follow that call. The reviewer should never have to notice the handoff
+themselves.
+
 ## What this is not
 
 Not a changelog — that lists what changed; this explains why. Not a PR
 description — that is a short summary for the PR list view; this is the
 document a reviewer reads before they start reviewing. If a section could be
 copy-pasted into either of those without editing, it belongs there instead.
+
+Not a defence. Where you are unsure, say so — that is the most useful
+paragraph in the document.
 
 ## Exemplar resolution
 

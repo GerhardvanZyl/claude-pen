@@ -83,7 +83,7 @@ sequenceDiagram
 
 ## Decisions
 
-### Store idempotency keys in a table, not the existing Redis cache
+### `IdempotencyKeyStore` — a table, not the existing Redis cache
 
 - **Decided:** a new relational table (`idempotency_keys`) with a unique
   index on the key, rather than the Redis cache the rest of the service uses
@@ -99,7 +99,7 @@ sequenceDiagram
 - **Forced by:** the correctness requirement, not performance — capture is
   not a hot path.
 
-### Insert-or-fetch as one atomic statement, not check-then-insert
+### `IdempotencyKeyStore.TryInsert` — one atomic statement, not check-then-insert
 
 - **Decided:** `IdempotencyKeyStore.TryInsert` uses a single
   `INSERT ... ON CONFLICT DO NOTHING RETURNING` statement instead of a
@@ -126,7 +126,7 @@ reopen the bug this PR fixes — do not copy this pattern into other repositorie
 as a general style preference, and do not "simplify" it back to
 check-then-insert in a later cleanup pass without re-reading this section.
 
-### Missing idempotency key falls back to old (non-idempotent) behaviour
+### `OrderCaptureController.Capture` — a missing key falls back to old (non-idempotent) behaviour
 
 - **Decided:** requests with no `Idempotency-Key` header skip the new check
   entirely and behave exactly as they did before this change.
