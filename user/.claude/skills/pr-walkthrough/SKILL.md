@@ -15,10 +15,15 @@ only job is to make the diff make sense.
 
 ## When this runs
 
-At the end of every dev loop, after the final review round has passed and
-before Phase 9 (commit, push, PR). This is also the point where
-`pr-walkthrough-review` gets invoked next, so treat what you write here as a
-draft that will be checked, not a finished artifact.
+- **At the end of every dev loop**, after the final review round has passed
+  and before the PR is raised — Phase 8b in `dev-loop` and `dev-loop-lite`,
+  Phase 5b in `dev-loop-ultralight`. Every loop then checks what you write here
+  against `pr-walkthrough-review`'s criteria: delegated to `sidekick` in
+  `dev-loop` and `dev-loop-lite`, done inline by the lead in
+  `dev-loop-ultralight`. Treat this as a draft that will be checked, not a
+  finished artifact.
+- **On `/pr-walkthrough`**, standalone, for a branch or story that already has
+  a diff.
 
 ## Who you are writing for
 
@@ -65,6 +70,14 @@ who starts at the entrypoint can hold the flow in their head; a reviewer handed
 files in diff order has to reconstruct that flow themselves before they can
 judge anything.
 
+**Move fast over what did not change.** A passthrough layer gets a sentence —
+enough for the reviewer to know it exists and does nothing interesting — then
+slow down and spend the document where the change actually lives.
+
+Where the flow crosses into another system or repository, draw the far side in
+and label it as belonging there — the reviewer needs to know whether a file is
+in this PR or merely called by it.
+
 State the entrypoint explicitly, early, in a small table:
 
 | Entrypoint | Trigger | First changed file it reaches |
@@ -73,12 +86,19 @@ State the entrypoint explicitly, early, in a small table:
 
 ## Highlight rarely used patterns
 
-If the flow uses something the rest of the codebase does not lean on often —
-a double-dispatch, a compensating transaction, a non-obvious caching layer —
-call it out explicitly, with why it was necessary here rather than the more
-common approach. A reviewer who has not seen the pattern before in this repo
-will otherwise assume it is a mistake and spend their review time relitigating
-a decision that was already made.
+Call out explicitly, with why it was necessary here:
+
+- Something the rest of the codebase does not lean on often — a
+  double-dispatch, a compensating transaction, a non-obvious caching layer.
+- **A deliberate deviation from what the repo consistently does.** The
+  convention is not the finding; the deviation is, so it needs its reason in
+  writing.
+- Anything load-bearing but non-obvious: an ordering guarantee, a tie-breaker
+  column, a lock, a disposal.
+
+A reviewer who has not seen the pattern before in this repo will otherwise
+assume it is a mistake and spend their review time relitigating a decision
+that was already made.
 
 ## Diagrams
 
@@ -116,6 +136,9 @@ description — that is a short summary for the PR list view; this is the
 document a reviewer reads before they start reviewing. If a section could be
 copy-pasted into either of those without editing, it belongs there instead.
 
+Not documentation of the feature. It documents **this change**, and it is
+read once, at review time. Do not maintain it afterwards.
+
 Not a defence. Where you are unsure, say so — that is the most useful
 paragraph in the document.
 
@@ -136,7 +159,11 @@ domain.
 ## Authoring is delegated
 
 **Delegate the draft to `sidekick`**, passing it the run's `notes.md`, the
-diff base, and the changed-file list. Do not brief it on the diff alone.
+diff base, the changed-file list, the path to this skill
+(`pr-walkthrough/SKILL.md`), and the resolved exemplar path (see Exemplar
+resolution above). `sidekick` has no Skill tool and cannot fetch either
+itself — without both in the brief it has the reasons but not the format, and
+the draft will not reliably come back with the structure this skill defines.
 
 Why this is safe here when it would not be elsewhere: a draft briefed only on
 the diff comes back as a narrated diff, because the diff is all the brief
@@ -174,11 +201,14 @@ In order:
 5. **The decisions**, file by file, ordered by the flow, not by filename.
 6. **Where to look to review this** — priority order, with line ranges,
    anchored to the commit.
-7. **Tests** — what is covered and, if relevant, what deliberately is not.
+7. **Tests** — what is covered, what deliberately is not, and the suite counts.
 8. **Open questions** — carried verbatim from `notes.md`'s `## Open
    questions` section.
 
 ## Where it goes, per hosting
+
+Name `<slug>` for the feature and the affected project, not for the story
+number alone — `order-capture-idempotency.md`, not `us-4821.md`.
 
 | Host | Path | Link |
 | --- | --- | --- |

@@ -68,6 +68,10 @@ sequenceDiagram
 
 ## The flow
 
+| Entrypoint | Trigger | First changed file it reaches |
+| --- | --- | --- |
+| `POST /orders/:id/capture` | HTTP request | `OrderCaptureController.cs` |
+
 1. `OrderCaptureController.Capture` (entrypoint) reads the `Idempotency-Key`
    header. If it is absent, the request is treated as non-idempotent and
    behaves exactly as before — this is a deliberate compatibility choice, see
@@ -139,6 +143,20 @@ check-then-insert in a later cleanup pass without re-reading this section.
   warning (deferred — see Open questions).
 - **Forced by:** the client rollout not being complete at merge time.
 
+### `PaymentProcessorClient` — timeout reclassified as retryable-safe
+
+- **Decided:** a request that times out talking to the external processor is
+  now treated as retryable-safe rather than unknown.
+- **Why:** the idempotency key is inserted before the charge call, so a timed
+  out attempt is safe to retry — the retry hits the same key and returns the
+  stored result once the first attempt lands, instead of charging twice.
+- **Alternatives considered:** keeping a timeout classified as unknown and
+  failing closed (reject the retry, force manual reconciliation) was the
+  existing behaviour and was rejected — it turns a network blip into a support
+  ticket now that the idempotency check already makes the retry safe.
+- **Forced by:** the ordering change above; reclassifying the timeout only
+  became safe once insert-before-charge existed to catch the retry.
+
 ## Where to look to review this
 
 In priority order:
@@ -166,6 +184,8 @@ unique-index violation can); a request with no key behaves as before.
 Not covered: load-level concurrency (hundreds of simultaneous retries against
 the same key). The concurrent test above proves correctness for two
 concurrent callers, not throughput under contention.
+
+The suite stands at 61 tests after this change, 4 of them new, all passing.
 
 ## Open questions
 

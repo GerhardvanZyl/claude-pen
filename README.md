@@ -205,7 +205,7 @@ drop every one of them while looking perfectly principled.
 
 `implementation-notes` accumulates decisions, rejected alternatives, and
 rejected requirements findings into `notes.md` throughout the run, inside the
-gitignored run directory. At Phase 8b, `pr-walkthrough` turns that record into
+gitignored run directory. At Phase 8b, or 5b in ultralight, `pr-walkthrough` turns that record into
 `docs/walkthroughs/<slug>.md`. The diff already shows *what* changed, so the
 walkthrough's only job is *why* — the alternatives considered, the constraint
 that forced the shape, the thing a reviewer would otherwise flag as a bug.

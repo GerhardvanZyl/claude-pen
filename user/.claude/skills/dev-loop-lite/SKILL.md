@@ -213,20 +213,26 @@ The change has been reviewed, but the reasoning behind it still exists only in
 `notes.md`. This phase turns it into the document that ships with the PR.
 
 1. **Author it.** Invoke the `pr-walkthrough` skill. Delegate the draft to
-   `sidekick`, passing the `notes.md` path, the diff base, and the changed-file
-   list. **The notes are the brief, not the diff** — a draft briefed on the diff
+   `sidekick`, passing the `notes.md` path, the diff base, the changed-file
+   list, the path to `pr-walkthrough/SKILL.md`, and the resolved exemplar path
+   (newest file in `docs/walkthroughs/`, else the bundled
+   `references/example-walkthrough.md`). `sidekick` cannot fetch either
+   itself, so the format has to travel in the brief alongside the reasons.
+   **The notes are the brief, not the diff** — a draft briefed on the diff
    comes back as a narrated changelog, which is the one failure this phase
    exists to prevent. If `notes.md` is missing or thin, write the walkthrough
    yourself and record in `run.md` that the notes were inadequate; that is a
    defect in the run worth seeing.
 
-2. **Review it.** Invoke the `pr-walkthrough-review` skill. It is write-capable
-   on the walkthrough file only and returns one line — path, whether it edited,
-   and issues corrected by category. Do not read the document into your own
-   context to judge it.
+2. **Review it.** Delegate to `sidekick`, passing the `pr-walkthrough-review`
+   skill path and the walkthrough path. It is write-capable on the walkthrough
+   file only and returns one line — path, whether it edited, and issues
+   corrected by category. Do not read the document into your own context to
+   judge it — that is why this is a delegation, not an invocation in the
+   lead's own context.
 
 3. **Retake the working-tree snapshot and record it as the new baseline** for
-   Phase 9, per `references/tree-snapshot.md`. **Do this whether or not you wrote
+   Phase 9, per `dev-loop/references/tree-snapshot.md`. **Do this whether or not you wrote
    a walkthrough** — on a skip the digest simply matches the one Phase 7
    recorded, and Phase 9 compares against this step unconditionally, so it must
    always have a value to compare against. **This is not bookkeeping.** The

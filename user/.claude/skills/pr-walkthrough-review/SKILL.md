@@ -21,10 +21,12 @@ not part of the review lanes that ran earlier against the code — the code has
 already passed those. This is the last check on the one artifact the loop
 produces after the code is done.
 
-Every loop except `dev-loop-ultralight` invokes this skill. In `ultralight`
-the lead checks the draft inline against the same criteria instead — one
-reviewer covering nine concerns already has no budget for a tenth agent over
-a document that loop's own eligibility rules keep short.
+Every loop except `dev-loop-ultralight` runs this skill delegated to
+`sidekick`, not invoked directly by the lead — that keeps the document out of
+the lead's context, which the return contract below depends on. In
+`ultralight` the lead checks the draft inline against the same criteria
+instead — one reviewer covering nine concerns already has no budget for a
+tenth agent over a document that loop's own eligibility rules keep short.
 
 ## Write-capable on the walkthrough file only
 
@@ -42,6 +44,10 @@ rather than writing findings for someone else to apply.
 one document; using it anywhere else defeats the reason it was granted.
 
 ## The checks
+
+Judge the draft against the same worked example `pr-walkthrough` resolves —
+its Exemplar resolution section defines the order — not from memory of the
+format.
 
 Work through these in order:
 

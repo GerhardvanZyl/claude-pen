@@ -169,8 +169,12 @@ The change has been reviewed, but the reasoning behind it still exists only in
 `notes.md`. This phase turns it into the document that ships with the PR.
 
 1. **Author it.** Invoke the `pr-walkthrough` skill. Delegate the draft to
-   `sidekick`, passing the `notes.md` path, the diff base, and the changed-file
-   list. **The notes are the brief, not the diff** — a draft briefed on the diff
+   `sidekick`, passing the `notes.md` path, the diff base, the changed-file
+   list, the path to `pr-walkthrough/SKILL.md`, and the resolved exemplar path
+   (newest file in `docs/walkthroughs/`, else the bundled
+   `references/example-walkthrough.md`). `sidekick` cannot fetch either
+   itself, so the format has to travel in the brief alongside the reasons.
+   **The notes are the brief, not the diff** — a draft briefed on the diff
    comes back as a narrated changelog, which is the one failure this phase
    exists to prevent. If `notes.md` is missing or thin, write the walkthrough
    yourself and record in `run.md` that the notes were inadequate; that is a
@@ -184,7 +188,7 @@ The change has been reviewed, but the reasoning behind it still exists only in
    `.csproj` files project files. Correct it in place.
 
 3. **Retake the working-tree snapshot and record it as the new baseline** for
-   Phase 6, per `references/tree-snapshot.md`. **Do this whether or not you wrote
+   Phase 6, per `dev-loop/references/tree-snapshot.md`. **Do this whether or not you wrote
    a walkthrough** — on a skip the digest simply matches the tree as it stood at
    the end of Phase 4, which the skipped walkthrough left untouched, and Phase 6
    compares against this step unconditionally, so it must always have a value to
