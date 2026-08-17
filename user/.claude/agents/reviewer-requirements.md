@@ -5,7 +5,7 @@ description: >
   findings and log files. Spawned by dev-loop; not for standalone review.
 model: opus
 effort: high
-tools: Read, Grep, Glob, Bash, Write
+tools: Read, Grep, Glob, Bash, PowerShell, Write
 disallowedTools:
   - Edit
   - NotebookEdit

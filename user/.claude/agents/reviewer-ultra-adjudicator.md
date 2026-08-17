@@ -7,7 +7,7 @@ description: >
   both reviewers drain, with the lane card name and model passed per invocation.
 model: sonnet
 effort: high
-tools: Read, Grep, Glob, Bash, Write
+tools: Read, Grep, Glob, Bash, PowerShell, Write
 disallowedTools:
   - Edit
   - NotebookEdit
