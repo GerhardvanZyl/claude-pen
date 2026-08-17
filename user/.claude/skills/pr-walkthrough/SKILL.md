@@ -1,0 +1,168 @@
+---
+name: pr-walkthrough
+description: >
+  Author the reviewer walkthrough document that ships with a change's PR. Walks a
+  senior engineer through the change by following one flow from its entrypoint to
+  the code that changed, explaining why each decision was taken. Use at the end of
+  every dev loop before the PR is raised, or when the user types /pr-walkthrough.
+  Not a changelog and not a PR description — those say what changed; this says why.
+---
+
+# PR walkthrough
+
+You are writing the document a reviewer opens before they open the diff. Its
+only job is to make the diff make sense.
+
+## When this runs
+
+At the end of every dev loop, after the final review round has passed and
+before Phase 9 (commit, push, PR). This is also the point where
+`pr-walkthrough-review` gets invoked next, so treat what you write here as a
+draft that will be checked, not a finished artifact.
+
+## Who you are writing for
+
+A senior engineer with basic project knowledge — they know how to read code,
+they do not know this codebase's particular shape. That calibrates everything:
+
+- **Explain what is specific to this codebase**: the module that owns a
+  concern, the convention this change follows or breaks, the reason a flow
+  goes through an extra hop.
+- **Explain nothing about the language or framework.** If a sentence would be
+  true of any C# repository, or any React app, it does not belong here — the
+  reader already knows it, and writing it down signals you don't trust them
+  with the parts that actually matter.
+
+## Why beats what
+
+A walkthrough that restates the diff in prose is a changelog with extra steps,
+and the reviewer already has the diff. Every section earns its place by
+answering *why*, not *what*.
+
+**The test:** delete the words "why" and "because" from a section. If it still
+reads fine, it was never explaining anything — it was narrating. Rewrite it or
+cut it.
+
+## Start at the entrypoint, not at the diff
+
+Do not walk the file list in commit order. Find where the change is triggered
+— the HTTP route, the message handler, the CLI command, the scheduled job —
+and follow execution from there down into the code that changed. A reviewer
+who starts at the entrypoint can hold the flow in their head; a reviewer handed
+files in diff order has to reconstruct that flow themselves before they can
+judge anything.
+
+State the entrypoint explicitly, early, in a small table:
+
+| Entrypoint | Trigger | First changed file it reaches |
+| --- | --- | --- |
+| e.g. `POST /orders` | HTTP request | `OrderController.cs` |
+
+## Highlight rarely used patterns
+
+If the flow uses something the rest of the codebase does not lean on often —
+a double-dispatch, a compensating transaction, a non-obvious caching layer —
+call it out explicitly, with why it was necessary here rather than the more
+common approach. A reviewer who has not seen the pattern before in this repo
+will otherwise assume it is a mistake and spend their review time relitigating
+a decision that was already made.
+
+## Diagrams
+
+**Mermaid only, never ASCII.** An ASCII diagram breaks the moment a line
+wraps or a name gets one character longer, and it cannot be checked
+mechanically. Mermaid renders in the PR and `pr-walkthrough-review` can
+verify it parses; ASCII art can do neither.
+
+## Anchors
+
+Every claim about "this file, this line" must cite a real anchor —
+`path/to/File.cs:142` — committed against the actual commit under review.
+`pr-walkthrough-review` spot-checks these; an invented line number is worse
+than no citation, because it sends the reviewer to the wrong place with false
+confidence.
+
+## What this is not
+
+Not a changelog — that lists what changed; this explains why. Not a PR
+description — that is a short summary for the PR list view; this is the
+document a reviewer reads before they start reviewing. If a section could be
+copy-pasted into either of those without editing, it belongs there instead.
+
+## Exemplar resolution
+
+Before drafting, read a worked example so the density of "why" you are
+aiming for is concrete rather than assumed:
+
+1. The most recently modified file in this repo's `docs/walkthroughs/`, if
+   one exists.
+2. Otherwise the bundled `references/example-walkthrough.md`, shipped with
+   this skill.
+
+The bundled exemplar is written against a fictional, generic codebase — it
+demonstrates the format and the "why" density expected, not this repo's
+domain.
+
+## Authoring is delegated
+
+**Delegate the draft to `sidekick`**, passing it the run's `notes.md`, the
+diff base, and the changed-file list. Do not brief it on the diff alone.
+
+Why this is safe here when it would not be elsewhere: a draft briefed only on
+the diff comes back as a narrated diff, because the diff is all the brief
+gave it to work with. `notes.md` is nothing but reasons — decisions,
+rejected alternatives, forced constraints, rejected requirements findings.
+A draft briefed on reasons cannot come back as a changelog; there is nothing
+in its brief to changelog from.
+
+Read the returned draft yourself for "why" content before it ships — delegation
+produces a draft, not a decision that it is done.
+
+If `notes.md` is missing or thin, do not delegate. Write the walkthrough
+yourself instead, and record in `run.md` that the notes were inadequate —
+that is a defect in the run worth surfacing, not something to paper over.
+
+## Opening diagrams
+
+The document opens with a Mermaid **architecture** diagram showing where the
+change sits in the system, then a Mermaid **sequence** diagram of the changed
+flow. Both come before the change table — a reviewer needs the shape of the
+system before the list of files means anything.
+
+## Structure
+
+In order:
+
+1. **Opening paragraph** — the story in one or two sentences, the
+   branch/PR/commit identifiers, and an explicit out-of-scope line.
+2. **Architecture diagram**, then **sequence diagram**.
+3. **Change table** — one row per file. Mark noise rows "ignore this" rather
+   than omitting them, so the reviewer knows they were considered and skipped
+   on purpose, not missed.
+4. **The flow** — entrypoint down to the changed code, per the sections
+   above.
+5. **The decisions**, file by file, ordered by the flow, not by filename.
+6. **Where to look to review this** — priority order, with line ranges,
+   anchored to the commit.
+7. **Tests** — what is covered and, if relevant, what deliberately is not.
+8. **Open questions** — carried verbatim from `notes.md`'s `## Open
+   questions` section.
+
+## Where it goes, per hosting
+
+| Host | Path | Link |
+| --- | --- | --- |
+| GitHub | `docs/walkthroughs/<slug>.md`, committed on the story branch | Relative link in the PR body |
+| Azure DevOps | same | ADO does not render bare relative paths in a PR description. Use the full form: `<org>/<project>/_git/<repo>?path=/docs/walkthroughs/<slug>.md&version=GB<branch>` |
+| No repository | `docs/walkthroughs/<slug>.md` in the working folder | No PR exists. Report the absolute path to the user in chat and record it in `run.md`. Anchors carry file+line with no commit hash, and the opening paragraph says so, because line numbers will drift with nothing to pin them to. |
+
+Detect the host from the git remote: `github.com` → GitHub;
+`dev.azure.com` or `visualstudio.com` → ADO; no remote or no repository →
+the third row.
+
+## Skip rule
+
+A purely mechanical change — a rename, a dependency bump, a formatting sweep
+— has no "why" worth a document. Skipping is allowed. **It is never silent**:
+report the skip and its reason in the PR description and in `run.md`. A
+missing walkthrough with no explanation reads as an omission, not a decision.
