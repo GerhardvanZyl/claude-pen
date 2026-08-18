@@ -18,7 +18,7 @@ When the user types `/graphify`, use the installed graphify skill or instruction
 # Coding standards & architecture
 
 - **All implementation and review must conform to the `coding-standards` skill and the `solution-architecture` skill.** Both are preloaded into the sidekick agents and into their owning review lanes.
-- The standards file is the only source of style rules. Do not enforce, or let a reviewer enforce, a rule that is not written in it.
+- Style rules come from exactly two files: the `coding-standards` skill — the cross-project baseline, edited once per machine — and the repository's own `.claude/standards.md`, which wins over the baseline on any subject it covers and is read from the repo rather than preloaded. Do not enforce, or let a reviewer enforce, a rule written in neither.
 - **`solution-architecture` is repository-agnostic.** It carries the reasoning, not any particular solution's structure. Establish the architecture actually in force — discovered documents, then the project reference graph, then convention inferred from existing examples — before judging anything against it. Never apply a remembered or textbook architecture to a repo you have not established the architecture of.
 - **The strength of an architectural finding is capped by how it was established.** Documented or structurally evident can block; inferred from convention cannot.
 - **Separation of concerns outranks every other architectural consideration.** Where a structural finding conflicts with a separation-of-concerns finding, separation of concerns wins.

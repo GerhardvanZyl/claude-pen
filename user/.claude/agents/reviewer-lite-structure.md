@@ -45,8 +45,8 @@ round number, a diff base, and the path to the lite lane cards file.
    single kind of work it owns and whether the diff gave it a second one. Then
    establish the architecture in force using the tier procedure in the preloaded
    `solution-architecture` skill and check placement and dependency direction
-   against it. Then the preloaded coding standards. Then surplus additions and
-   dead code. Read `.claude/review/conventions.md` first if it exists.
+   against it. Then the `coding-standards` skill and `.claude/standards.md`.
+   Then surplus additions and dead code. Read `.claude/review/conventions.md` first if it exists.
 5. Write findings to `<run>/round-N/lite-structure.json` and your log to
    `<run>/round-N/lite-structure.log.md`, in the formats the `dev-loop` skill
    defines.

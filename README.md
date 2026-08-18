@@ -159,7 +159,7 @@ end, against four fixed questions, and has no card.
 | technical | opus / xhigh | Logic, state, concurrency, boundaries, error paths |
 | architecture | opus / xhigh | **Separation of concerns**, dependency direction, placement |
 | security | opus / xhigh | Injection, authz, secrets, deserialization, crypto, exposure |
-| standards | sonnet / high | Rules written in the `coding-standards` skill |
+| standards | sonnet / high | Rules written in the `coding-standards` skill and `.claude/standards.md` |
 | tests | sonnet / high | Whether tests would fail if the code were wrong |
 | dead code | sonnet / high | Unreachable branches, orphaned paths |
 | minimalism | sonnet / high | Speculative guards, wrappers, config nobody asked for |
@@ -349,16 +349,18 @@ Copy-Item user\.claude\agents\* $HOME\.claude\agents\ -Recurse -Force
 Copy-Item user\.claude\skills\* $HOME\.claude\skills\ -Recurse -Force
 ```
 
-**Project level** — coding standards, sprint orchestration, and hook logging, per
-repository:
+**Project level** — the per-repository coding standards override, sprint
+orchestration, and hook logging:
 
 ```bash
 cp -r project/.claude/. /path/to/your/repo/.claude/
 ```
 
-Then merge `CLAUDE.md` into your own, restart Claude Code once (the agent
-directory watcher only covers directories that existed at startup), and run
-`/doctor` to confirm everything loaded.
+The bash and PowerShell commands above overwrite `~/.claude/skills/coding-standards/SKILL.md`
+and `<repo>/.claude/standards.md` unconditionally if either already exists — back them up or
+merge your customisations by hand; the installers (`install.sh` / `install.ps1`) do not. Then
+merge `CLAUDE.md` into your own, restart Claude Code once (the agent directory watcher only
+covers directories that existed at startup), and run `/doctor` to confirm everything loaded.
 
 ### Layout
 
@@ -373,13 +375,14 @@ user/.claude/
     ├── dev-loop-ultra/              SKILL.md
     ├── dev-loop-ultra-opus/         SKILL.md
     ├── solution-architecture/       SKILL.md   (repo-agnostic)
+    ├── coding-standards/            SKILL.md   ← edit this (baseline, once per machine)
     ├── implementation-notes/        SKILL.md
     ├── pr-walkthrough/              SKILL.md + references/example-walkthrough.md
     └── pr-walkthrough-review/       SKILL.md
 
 project/.claude/
 ├── agents/sprint-item-runner.md
-├── skills/coding-standards/SKILL.md          ← edit this
+├── standards.md                              ← edit this (per-repo override, optional)
 ├── skills/implement-sprint/                  SKILL.md + references/item-triage.md
 ├── sprint/skip.md
 ├── scripts/log-agent-event.ps1
@@ -396,10 +399,17 @@ Skill files **must** be named `SKILL.md`; the directory name identifies the skil
 
 ### Required before first use
 
-**`project/.claude/skills/coding-standards/SKILL.md` is a scaffold.** Replace it
-with your real rules. Its *Explicitly not standards* section matters as much as
-the rules — it is what stops the lane raising `var`-versus-explicit-type
-opinions. If an analyser or formatter catches it, it is not a review finding.
+**`~/.claude/skills/coding-standards/SKILL.md` is a scaffold, installed once
+per machine.** Replace its rule sections with your real cross-project rules.
+Its *Explicitly not standards* section matters as much as the rules — it is
+what stops the lane raising `var`-versus-explicit-type opinions. If an
+analyser or formatter catches it, it is not a review finding.
+
+**`<repo>/.claude/standards.md` is the per-repository override, optional.** A
+rule there on a subject the baseline also covers wins; a subject listed under
+its own *Explicitly not standards* removes a baseline rule outright for this
+repository. It ships with no active rules — leave it as shipped if this
+repository has nothing to override.
 
 ### Not required — discovered at runtime
 

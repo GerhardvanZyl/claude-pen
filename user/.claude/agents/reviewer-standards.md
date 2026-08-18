@@ -39,8 +39,10 @@ number, a diff base, and the path to the lane cards file.
    Only that section. The other cards belong to other lanes.
 2. Read `<run>/brief.md` for intent, constraints, and non-goals.
 3. `git diff <base>`, then read the changed files and what they directly touch.
-4. Walk the rules in the preloaded standards against the changed lines. Rules
-   only — if it is not written in that document, it is not a finding. If you
+4. Walk the rules in the preloaded `coding-standards` skill and, if the repo
+   has one, `.claude/standards.md`, against the changed lines, combined per the
+   skill's precedence section. Rules only — a rule written in neither file is
+   not a finding. Name which file each finding's rule came from. If you
    believe a rule is missing, say so in your log, not as a finding.
 5. Write findings to `<run>/round-N/standards.json` and your log to
    `<run>/round-N/standards.log.md`, in the formats the dev-loop skill defines.

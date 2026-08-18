@@ -49,7 +49,9 @@ nothing.
     presentation leaking downward; cross-cutting concerns hand-rolled inline.
   - **Architecture** — dependency direction, placement of new types, coupling,
     conformance to the architecture established in this solution.
-  - **Standards** — violations of rules written in the `coding-standards` skill.
+  - **Standards** — violations of rules written in the `coding-standards`
+    skill or `.claude/standards.md`, combined per the skill's precedence
+    section.
   - **Minimalism** — speculative guards, fallbacks, wrappers, configuration, and
     error handling for impossible errors that this diff added and nothing needs.
   - **Dead code** — unreachable branches, unused private members, and orphaned
@@ -64,9 +66,12 @@ nothing.
   from examples can never be a blocker. **Never apply a remembered or textbook
   architecture to a repository you have not established the architecture of, and
   never propose introducing a new pattern, layer, or abstraction to fix a local
-  problem.** For standards, raise only rules written in that document; if it is
-  not written there, it is not a finding. Check `.claude/review/conventions.md` —
-  anything recorded there is an accepted decision. Hold removal findings to a
+  problem.** For standards, raise only rules written in the `coding-standards`
+  skill or `.claude/standards.md`, naming which file; a rule written in neither
+  is not a finding. How the two combine — precedence, narrowing, and exclusion
+  — is the skill's own precedence section; apply it, do not restate it here.
+  Check `.claude/review/conventions.md` — anything recorded there is an
+  accepted decision. Hold removal findings to a
   higher bar than addition findings, and **never recommend removing a permission
   check, security control, idempotency guard, lock ordering, or migration safety
   check** unless you can state what else establishes that invariant. Pre-existing

@@ -77,8 +77,10 @@ Take these in order. Spend real attention on each, then move on.
    project reference graph using the preloaded `solution-architecture` skill, and
    set `evidence: inferred` if you had to infer it — inferred can never block.
 6. **Standards** — violations of rules written in the preloaded
-   `coding-standards` skill. Rules only; if it is not written there, it is not a
-   finding.
+   `coding-standards` skill or, if the repo has one, `.claude/standards.md`,
+   combined per the skill's precedence section. Rules only; a rule written in
+   neither file is not a finding. Name which file each finding's rule came
+   from.
 7. **Security** — injection, unvalidated input reaching a query or command,
    secrets in source or logs, data exposure through DTOs or error detail. The
    loop's eligibility rules should have kept authz and untrusted input away from

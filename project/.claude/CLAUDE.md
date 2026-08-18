@@ -9,7 +9,7 @@ The delegation policy and loop-selection rules live in the **user-level**
 
 ## Architecture and standards
 
-- `coding-standards` is the only source of style rules for this repo. Edit it — the shipped file is a scaffold.
+- Style rules come from two files: the user-level `coding-standards` skill carries the cross-project baseline, and this repo's `.claude/standards.md` overrides or extends it on the subjects it covers. A rule written in neither is not a rule here. Repository-specific rules go in `.claude/standards.md`; the baseline skill is edited once per machine, not per repo.
 - If this repo has an `ARCHITECTURE.md`, the architecture lane treats it as **Tier 1** and findings against it are not capped at Minor. Without one, most placement findings can never block. See `ARCHITECTURE.template.md`.
 - Where `ARCHITECTURE.md` and the `ProjectReference` (or equivalent module) graph disagree, **the graph is what is in force.** Report the conflict; fix the document.
 - `.claude/review/conventions.md` records decisions already taken. Nothing in it is a finding, from any lane. **Commit it**; the rest of `.claude/review/` is working output and must not be committed — lane logs quote the code they examined, and scratch worktrees live there too. The installer adds `.claude/review/runs/` to `.gitignore` for that reason; if the line is missing, put it back before running a loop.
