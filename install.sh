@@ -34,6 +34,21 @@ backup_tree() {
   DID_BACKUP=1
 }
 
+# Copies a directory's contents into $to, optionally leaving out one top-level
+# entry. That exclusion is how the repository's own standards.md stays out of
+# the project-layer copy: a file that is never overwritten has no window
+# between overwrite and restore for a failure to land in.
+copy_layer() {
+  local from="$1" to="$2" skip="${3:-}" entry
+  shopt -s dotglob nullglob
+  for entry in "$from"/*; do
+    if [ "${entry##*/}" != "$skip" ]; then
+      cp -r "$entry" "$to/"
+    fi
+  done
+  shopt -u dotglob nullglob
+}
+
 add_ignore_rule() {
   local repo="$1" rule="$2" why="$3"
   if [ -f "$repo/.gitignore" ] && grep -qF "$rule" "$repo/.gitignore"; then
@@ -64,19 +79,43 @@ if [ -z "$DRY" ]; then
     cp "$HERE/user/CLAUDE.md" "$CLAUDE/CLAUDE.md"; echo "  CLAUDE.md installed"
   fi
 else
-  echo "  would copy agents (22) and skills (5 loops + solution-architecture + 3 walkthrough)"
+  echo "  would copy agents (22) and skills (5 loops + solution-architecture + coding-standards + 3 walkthrough)"
 fi
 
 if [ -n "$REPO" ]; then
   [ -d "$REPO" ] || { echo "No such directory: $REPO" >&2; exit 1; }
   echo
   echo "=== Project level -> $REPO/.claude ==="
+
+  # standards.md is user-editable and lives inside the tree the bulk copy
+  # below overwrites wholesale. It is kept out of that copy rather than
+  # overwritten and put back afterwards: a run that died between the two --
+  # permission error, full disk, antivirus lock, Ctrl-C -- would take the one
+  # file this contract exists to protect. The bundled version is written as
+  # .new before anything else lands, so a copy that fails partway through has
+  # still honoured the same non-clobber contract CLAUDE.md gets above.
+  STANDARDS_DEST="$REPO/.claude/standards.md"
+  STANDARDS_EXISTED=""
+  if [ -f "$STANDARDS_DEST" ]; then STANDARDS_EXISTED=1; fi
+
   if [ -z "$DRY" ]; then
     mkdir -p "$REPO/.claude"
-    cp -r "$HERE/project/.claude/." "$REPO/.claude/"
+    if [ -n "$STANDARDS_EXISTED" ]; then
+      cp "$HERE/project/.claude/standards.md" "$REPO/.claude/standards.new.md"
+      copy_layer "$HERE/project/.claude" "$REPO/.claude" standards.md
+      echo "  ! $STANDARDS_DEST already exists. Wrote standards.new.md beside it -- MERGE MANUALLY."
+    else
+      copy_layer "$HERE/project/.claude" "$REPO/.claude"
+      echo "  standards.md installed"
+    fi
     cp "$HERE/project/ARCHITECTURE.template.md" "$REPO/"
   else
     echo "  would copy project layer -> $REPO/.claude"
+    if [ -f "$STANDARDS_DEST" ]; then
+      echo "  would NOT overwrite existing $STANDARDS_DEST -- would write standards.new.md beside it"
+    else
+      echo "  would write $STANDARDS_DEST"
+    fi
   fi
 
   # Run output quotes the source it examined. Ignoring it is not a nicety.
@@ -96,14 +135,17 @@ AGENTS=$(ls -1 "$CLAUDE/agents"/*.md 2>/dev/null | wc -l)
 SKILLS=$(ls -1d "$CLAUDE/skills"/*/ 2>/dev/null | wc -l)
 echo "  $AGENTS agent files, $SKILLS skill folders"
 if [ "$AGENTS" -lt 22 ]; then echo "  ! expected at least 22 agents"; fi
-if [ "$SKILLS" -lt 9 ];  then echo "  ! expected at least 9 skill folders"; fi
+if [ "$SKILLS" -lt 10 ]; then echo "  ! expected at least 10 skill folders"; fi
 if [ -n "$REPO" ]; then echo "  $(find "$REPO/.claude" -type f | wc -l) files in $REPO/.claude"; fi
 if [ -n "$DID_BACKUP" ]; then echo "  previous agents/skills preserved in $BACKUP"; fi
 
 echo
 echo "=== Do these by hand ==="
+echo "  * Edit $CLAUDE/skills/coding-standards/SKILL.md -- replace its rule sections with"
+echo "    your real cross-project rules. Leave its precedence section as shipped."
 if [ -n "$REPO" ]; then
-  echo "  1. Edit .claude/skills/coding-standards/SKILL.md -- it is a scaffold."
+  echo "  1. Put repository-specific rules in .claude/standards.md, which overrides the"
+  echo "     baseline -- optional, leave it alone if there is nothing to override."
   echo "  2. Fill in ARCHITECTURE.template.md, rename to ARCHITECTURE.md at the repo root."
   echo "  3. Set org/project/team in .claude/skills/implement-sprint/SKILL.md (Configuration)."
 fi

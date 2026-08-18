@@ -77,15 +77,17 @@ Each card has three parts:
 
 ## Standards
 
-- **Owns:** Violations of rules written in the `coding-standards` skill.
-- **Does not own:** Anything not written in that document, anything under its
-  "Explicitly not standards" section, and anything the formatter or analyser
-  fixes automatically.
-- **Quality brake:** You are matching against a document, not exercising taste.
-  A rule you feel strongly about but cannot quote is not a finding — raise it
-  as a suggestion that the standards document be amended instead. MUST
-  violations are Major, or Critical where they cause data loss, a security hole,
-  or a crash. SHOULD violations are Minor.
+- **Owns:** Violations of rules written in the `coding-standards` skill or the
+  repository's `.claude/standards.md`, combined per the skill's precedence
+  section. Name which file a raised rule came from.
+- **Does not own:** A rule written in neither file. A subject either file lists
+  under its own "Explicitly not standards" section, resolved per the skill's
+  precedence section. Anything the formatter or analyser fixes automatically.
+- **Quality brake:** You are matching against two documents, not exercising
+  taste. A rule you feel strongly about but cannot quote from one of them is
+  not a finding — raise it as a suggestion that the appropriate standards file
+  be amended instead. MUST violations are Major, or Critical where they cause
+  data loss, a security hole, or a crash. SHOULD violations are Minor.
 
 ## Security
 
