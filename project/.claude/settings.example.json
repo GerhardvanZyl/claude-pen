@@ -1,0 +1,28 @@
+{
+  "_comment_hooks": "Merge the hooks block into .claude/settings.json (project) or ~/.claude/settings.json (user). SubagentStart and SubagentStop fire in the main session when any subagent begins or completes. Leaving the matcher off means every subagent is logged; add \"matcher\": \"^reviewer-\" to log only review lanes. The command must be an absolute path -- hook cwd is not guaranteed to be the project root, which is what $CLAUDE_PROJECT_DIR is for. Invoke pwsh explicitly: a bare .ps1 path is not executable by the default shell. Verify with /doctor after merging; a misconfigured hook fails silently by design.",
+
+  "_comment_no_permissions_block": "There is deliberately no permissions.deny block here for the review lanes. settings.json permissions are session-wide, and the lead legitimately runs git add, git commit and git push in Phase 9 -- denying those to confine reviewers would break the loop that spawns them. Reviewer confinement lives in each agent's own disallowedTools, which binds only that agent. Because prefix rules cannot catch every spelling (a shell redirect inside a permitted command still writes), dev-loop also takes a content digest of the working tree before and after the lanes run and stops if it moved. That check, not the permission list, is what actually guarantees the reviewed diff is the shipped diff.",
+
+  "hooks": {
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -NonInteractive -File \"$CLAUDE_PROJECT_DIR/.claude/scripts/log-agent-event.ps1\""
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -NonInteractive -File \"$CLAUDE_PROJECT_DIR/.claude/scripts/log-agent-event.ps1\""
+          }
+        ]
+      }
+    ]
+  }
+}
