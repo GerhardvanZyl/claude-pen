@@ -1,27 +1,33 @@
-# Development-loop diagrams
+# Diagrams
 
-One draw.io diagram per loop, each showing that loop end to end: entry criteria,
-every phase, the review lanes and their model tiers, the integrity checks, the
-termination bounds, and the escalation exits.
+One draw.io diagram per skill that has a workflow worth drawing: each of the
+five dev loops end to end, and each of the two sprint skills. Reference skills
+— `coding-standards`, `solution-architecture`, `implementation-notes`,
+`pr-walkthrough`, `pr-walkthrough-review` — have no diagram, because they are
+rule sets and sub-steps rather than loops.
 
-| File | Loop | What the diagram is mostly about |
+| File | Skill | What the diagram is mostly about |
 | --- | --- | --- |
 | `dev-loop-ultralight.drawio` | `/dev-loop-ultralight` | The eligibility list, and the nine-item sweep one reviewer makes in a single pass |
 | `dev-loop-lite.drawio` | `/dev-loop-lite` | How nine concerns compress into four consolidated lanes, and what that costs |
 | `dev-loop.drawio` | `/dev-loop` | The nine gated lanes, one owner per concern, and the triage gates |
 | `dev-loop-ultra.drawio` | `/dev-loop-ultra` | The prosecution / defence / adjudicator triple, and the ratio it produces |
 | `dev-loop-ultra-opus.drawio` | `/dev-loop-ultra-opus` | The two deltas on ultra: model on every agent, and concurrency |
+| `sprint-planning.drawio` | `/sprint-planning` | The per-item cycle, the `grill-me` handover, the no-size-language rule, and the two gates that stop a write |
+| `implement-sprint.drawio` | `/implement-sprint` | Skip sources, ordering by supersession, and the six checkpoints that are not configurable |
 
-`dev-loops.pdf` is all five as one booklet, ordered the way you choose between
-them: the default loop first, then the two heavier ones, then the two lighter
-ones. `dev-loops.drawio` is the multi-page source it is exported from — each
-page is spliced verbatim from the single-loop file beside it, so edit the
-single-loop file and re-splice rather than editing the booklet.
+`dev-loops.pdf` is the five loops as one booklet, ordered the way you choose
+between them: the default loop first, then the two heavier ones, then the two
+lighter ones. `dev-loops.drawio` is the multi-page source it is exported from —
+each page is spliced verbatim from the single-loop file beside it, so edit the
+single-loop file and re-splice rather than editing the booklet. The two sprint
+diagrams are not in the booklet; they are not loops you choose between.
 
-They are drawn from the skill files in `user/.claude/skills/`, and they share the
-colour vocabulary of `../dev-loop-flow.mmd`: dark blue for a phase the lead owns,
-pale blue for an agent's work or an artifact, yellow for a gate or decision, red
-for a stop or an escalation, green for a pass.
+They are drawn from the skill files in `user/.claude/skills/` and
+`project/.claude/skills/`, and they share the colour vocabulary of
+`../dev-loop-flow.mmd`: dark blue for a phase the lead owns, pale blue for an
+agent's work or an artifact, yellow for a gate or decision, red for a stop or an
+escalation, green for a pass.
 
 ## Viewing and editing
 
