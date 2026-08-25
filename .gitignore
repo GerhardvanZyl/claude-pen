@@ -2,6 +2,7 @@
 .claude/sprint/*/manifest.json
 .claude/sprint/*/planning.json
 .claude/sprint/*/summary.md
+.claude/refinement/*/refinement.json
 .claude/settings.local.json
 .claude/agent-memory/
 graphify-out/

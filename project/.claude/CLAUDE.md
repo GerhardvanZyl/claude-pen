@@ -19,12 +19,17 @@ The delegation policy and loop-selection rules live in the **user-level**
 - Record the validation commands the loops must run in each brief's definition of done.
 - If the full suite cannot be run, **state the blocker** rather than silently scoping down, and prove the narrower scope is sufficient rather than asserting it.
 
-## Sprint planning
+## Backlog refinement
 
-- **To refine the sprint, run the `sprint-planning` skill.** Trigger:
-  `/sprint-planning`. It walks every item in the sprint in order, grills each one,
-  agrees a story point estimate, and writes concise bullet-only context, decisions
-  and acceptance criteria back onto the item.
+- **To refine backlog items, run the `backlog-refinement` skill.** Trigger:
+  `/backlog-refinement`. It walks each item in order, grills it, agrees an
+  estimate, and writes concise bullet-only context, decisions and acceptance
+  criteria back onto the item.
+- **The selection is whatever you give it** — no argument for the current sprint,
+  or `sprint <name>`, explicit IDs, `tag <label>`, `parent <id>`,
+  `query <expression>`, `board <column>`, or `resume`. A selector the tracker
+  cannot express, or that matches nothing, stops and asks rather than
+  substituting a nearby one.
 - **The grilling runs through `grill-me`, which only you can start.** That skill
   is user-invocation-only, so the session asks you to type `/grill-me` per item.
   If you decline or it is not installed, the session runs the interview itself
@@ -38,7 +43,7 @@ The delegation policy and loop-selection rules live in the **user-level**
   answer. Every question an item needs is asked before the next item starts.
 - **The repository is open for a reason.** Ground each item in the actual code
   before grilling it, so the questions cite files. **Read only** — a planning
-  session never edits the working tree, including for obvious fixes it finds.
+  refinement session never edits the working tree, even for obvious fixes.
 - **No size language before the estimate is asked for.** Not a point value, a
   range, "small"/"quick", **or a duration** — "half a day" anchors as hard as a
   number. This binds from the moment the item opens, not just in the summary.
@@ -52,7 +57,7 @@ The delegation policy and loop-selection rules live in the **user-level**
 - **The write-back is a contract, not a style preference**: three sections —
   Context, Decisions, Acceptance criteria — bullets only, one line each, capped
   at four/six/six, no sub-bullets and no prose. Reasoning and rejected
-  alternatives go in `.claude/sprint/<sprint>/planning.json`, not on the item.
+  alternatives go in `.claude/refinement/<slug>/refinement.json`, not on the item.
 - **It does not implement, split, close, or re-state anything.** It says an item
   should be split; a human splits it.
 

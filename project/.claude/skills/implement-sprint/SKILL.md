@@ -73,7 +73,7 @@ provider's CLI otherwise.
    criteria, tags, assignee, rank, parent, and linked items. Titles alone are not
    enough to triage against, and an item triaged from its title is an item you
    will re-triage later at the price of a wasted loop. Items refined by the
-   `sprint-planning` skill carry bullet-only context, decisions and acceptance
+   `backlog-refinement` skill carry bullet-only context, decisions and acceptance
    criteria; that shape is what triage and the item briefs read best.
 4. **A change marker for the sprint** — a timestamp, revision number, or ETag you
    can compare against later. Phase 4 re-polls the tracker before every item, and
@@ -409,7 +409,7 @@ Phase 5, and what tells the next run whether the ordering rules are working.
 
 ## What this loop does not do
 
-- It does not refine items. `sprint-planning` grills them, agrees estimates, and
+- It does not refine items. `backlog-refinement` grills them, agrees estimates, and
   writes the context, decisions and acceptance criteria this loop reads. If an
   item arrives here too vague to build a brief from, the answer is to plan it,
   not to guess at it.

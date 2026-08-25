@@ -51,7 +51,7 @@ seen.
 
 **Run `/doctor`.** With a repo wired up you should see 23 agents and 12 skills
 (22 agents and 10 skills user-level, plus `sprint-item-runner`, `implement-sprint`
-and `sprint-planning` from the project), with no duplicate names. If a skill shows
+and `backlog-refinement` from the project), with no duplicate names. If a skill shows
 up under a filename rather than its folder name, a `SKILL.md` was renamed
 somewhere.
 
@@ -92,16 +92,16 @@ well:
    architectural findings are capped at Minor and can never block a PR.
 3. **`.claude/skills/implement-sprint/SKILL.md`** has a *Configuration* table.
    Set the tracker, access route, coordinates, sprint identifier, code host and
-   base branch, or the skill will stop and ask. **`sprint-planning` reads the
+   base branch, or the skill will stop and ask. **`backlog-refinement` reads the
    same table** and adds two settings of its own — the estimate field and the
    scale — and needs its access route to have **write** access, which
    `implement-sprint` never does. Check that before the first planning session,
    not at the first write-back.
-4. **`grill-me` is optional and not bundled here.** `sprint-planning` runs its
-   interview through it, and you are the only one who can start it — the session
-   asks you to type `/grill-me`. If it is not installed, the skill runs the
-   interview itself under the same rules and says so. Claude Code does not
-   install skill dependencies for you; see the README's *Dependencies* section.
+4. **`grill-me` is optional and not bundled here.** `backlog-refinement` runs
+   its interview through it. Install with
+   `npx skills@latest add mattpocock/skills -g -s grill-me,grilling` — both
+   names are needed, and `-g` puts them at user level. Without it the skill
+   runs the interview itself under the same rules and says so.
 
 ## First run
 
