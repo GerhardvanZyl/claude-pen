@@ -214,11 +214,12 @@ number alone — `order-capture-idempotency.md`, not `us-1234.md`.
 | --- | --- | --- |
 | GitHub | `docs/walkthroughs/<slug>.md`, committed on the story branch | Relative link in the PR body |
 | Azure DevOps | same | ADO does not render bare relative paths in a PR description. Use the full form: `<org>/<project>/_git/<repo>?path=/docs/walkthroughs/<slug>.md&version=GB<branch>` |
+| Any other host — GitLab, Bitbucket, Gitea | same | Use a relative link first. If the host does not render it in a merge-request description, fall back to the host's own file URL for the branch, the way the ADO row does. |
 | No repository | `docs/walkthroughs/<slug>.md` in the working folder | No PR exists. Report the absolute path to the user in chat and record it in `run.md`. Anchors carry file+line with no commit hash, and the opening paragraph says so, because line numbers will drift with nothing to pin them to. |
 
-Detect the host from the git remote: `github.com` → GitHub;
-`dev.azure.com` or `visualstudio.com` → ADO; no remote or no repository →
-the third row.
+Detect the host from the git remote: `github.com` → GitHub; `dev.azure.com` or
+`visualstudio.com` → ADO; any other remote → the third row; no remote or no
+repository → the last row.
 
 ## Skip rule
 

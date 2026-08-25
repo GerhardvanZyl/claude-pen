@@ -144,7 +144,9 @@ if ($Repo) {
     Write-Host "  1. Put repository-specific rules in .claude\standards.md, which overrides the"
     Write-Host "     baseline -- optional, leave it alone if there is nothing to override."
     Write-Host "  2. Fill in ARCHITECTURE.template.md, rename to ARCHITECTURE.md at the repo root."
-    Write-Host "  3. Set org/project/team in .claude\skills\implement-sprint\SKILL.md (Configuration)."
+    Write-Host "  3. Fill in the Configuration table in .claude\skills\implement-sprint\SKILL.md"
+    Write-Host "     -- tracker, access route, coordinates, code host, base branch. sprint-planning"
+    Write-Host "     reads the same table, and needs its access route to have write access."
 }
 Write-Host "  * Merge .claude\settings.example.json into .claude\settings.json for hook logging,"
 Write-Host "    then run /doctor -- the hook fails silently if its path is wrong."

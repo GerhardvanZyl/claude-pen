@@ -147,7 +147,9 @@ if [ -n "$REPO" ]; then
   echo "  1. Put repository-specific rules in .claude/standards.md, which overrides the"
   echo "     baseline -- optional, leave it alone if there is nothing to override."
   echo "  2. Fill in ARCHITECTURE.template.md, rename to ARCHITECTURE.md at the repo root."
-  echo "  3. Set org/project/team in .claude/skills/implement-sprint/SKILL.md (Configuration)."
+  echo "  3. Fill in the Configuration table in .claude/skills/implement-sprint/SKILL.md"
+  echo "     -- tracker, access route, coordinates, code host, base branch. sprint-planning"
+  echo "     reads the same table, and needs its access route to have write access."
 fi
 echo "  * Merge .claude/settings.example.json into .claude/settings.json for hook logging,"
 echo "    then run /doctor -- the hook fails silently if its path is wrong."

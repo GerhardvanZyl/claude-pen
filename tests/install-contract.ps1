@@ -160,6 +160,8 @@ try {
         'project-level coding-standards skill does not come back'
     Assert-Exists (Join-Path $scratch '.claude\skills\implement-sprint') `
         'bulk project-layer copy still lands implement-sprint'
+    Assert-Exists (Join-Path $scratch '.claude\skills\sprint-planning\SKILL.md') `
+        'bulk project-layer copy still lands sprint-planning'
     Assert-NotExists (Join-Path $scratch '.claude\standards.new.md') `
         'no standards.new.md on a fresh install'
 

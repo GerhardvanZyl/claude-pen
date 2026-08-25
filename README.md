@@ -3,9 +3,10 @@
 A set of Claude Code skills and subagents that turn "implement this" into a
 bounded, logged, multi-pass review pipeline that ends at a pull request.
 
-Five review loops at different price and depth points, a sprint orchestrator that
-runs work items through them one at a time, and a delegation policy that keeps
-the orchestrating agent out of the code.
+Five review loops at different price and depth points, a planner that refines a
+sprint's items before any of them are built, an orchestrator that runs them
+through the loops one at a time, and a delegation policy that keeps the
+orchestrating agent out of the code.
 
 Everything here is plain markdown. There is no runtime, no dependency, and
 nothing to build — Claude Code reads these files directly.
@@ -18,6 +19,7 @@ nothing to build — Claude Code reads these files directly.
 - [The loops](#the-loops)
 - [How a loop works](#how-a-loop-works)
 - [The adversarial loops](#the-adversarial-loops)
+- [Sprint planning](#sprint-planning)
 - [Sprint orchestration](#sprint-orchestration)
 - [Install](#install)
 - [Configure](#configure)
@@ -266,27 +268,106 @@ not a parameter that does not exist.
 
 ---
 
+## Sprint planning
+
+`sprint-planning` runs before anything is built. It walks every item in the
+sprint from inside the checked-out repository, grills each one, agrees an
+estimate, and writes back what the item should have said in the first place.
+
+```mermaid
+sequenceDiagram
+    participant U as You
+    participant SP as sprint-planning
+    participant R as The repo
+    participant TR as Tracker
+
+    SP->>TR: sprint → every item, in rank order
+    TR-->>SP: descriptions, criteria, current estimates
+
+    loop each item, to completion
+        SP->>R: find what this item actually touches
+        R-->>SP: the files, the current shape
+        loop until answers stop changing the picture
+            SP->>U: one question
+            U-->>SP: one answer
+        end
+        SP->>U: summary of what should change (no number)
+        SP->>U: "I have an estimate — tell me when"
+        U-->>SP: cue
+        SP->>U: my estimate + one line of why
+        U-->>SP: your estimate
+        SP->>U: exact write-back text, beside what's there now
+        U-->>SP: confirm
+        SP->>TR: context / decisions / criteria + estimate
+    end
+    SP->>U: totals, splits, open questions, items not ready
+```
+
+**One question at a time, and every item finished before the next starts.** A
+numbered list of five questions is a form, and a form cannot follow up. Parking a
+hard question for later means answering it after you have swapped context to a
+different item, which is where worse answers come from.
+
+**The repository is open, so the questions cite files.** Each item is grounded in
+the code it touches before the grilling starts — which class already does this,
+what calls it, whether the thing the item assumes exists actually does. It is
+read-only: a planning session that quietly edits the working tree hands the next
+dev loop a diff nobody asked for.
+
+**No size language until you ask for it.** Not a point value, a range,
+"small"/"quick", or a **duration** — "half a day" anchors exactly as hard as a
+number, and that binds from the moment the item opens rather than only in the
+summary. Facts out of the grilling ("the run takes 40 minutes") are not sizes.
+
+**Estimates run as planning poker.** The skill says it has an estimate and waits
+for your cue, reveals it with one line of reasoning, then asks for yours — more
+than one step apart and it asks what it is over-weighting. **The number written
+back is yours**; its own exists to surface a disagreement worth having.
+
+**The grilling runs through `grill-me`, which only you can start** — that skill is
+user-invocation-only, so the session asks you to type `/grill-me` per item.
+Decline, or leave it uninstalled, and the session runs the interview itself under
+the same rules and says so, recording `interview: self` on the item. A substitute
+interview produces an item that reads exactly like a grilled one, which is why it
+gets declared rather than hidden.
+
+**The write-back is a contract**: Context, Decisions, Acceptance criteria —
+bullets only, one line each, capped at four/six/six, no sub-bullets, no prose.
+Reasoning and rejected alternatives go to the planning record, not the item; the
+item is read mid-sprint by someone who needs the decision, not the argument
+behind it. Nothing is written until you have seen the exact text next to what is
+on the item today, and only three fields are ever touched — never state,
+assignee, tags, or rank.
+
+**This is the only skill in the set that writes to the tracker.**
+`implement-sprint` reads what it wrote and never writes back.
+
+---
+
 ## Sprint orchestration
 
-`implement-sprint` pulls work items from Azure DevOps, triages each to a loop,
-and runs them sequentially with checkpoints.
+`implement-sprint` pulls the sprint from whichever tracker the team uses, triages
+each item to a loop, and runs them sequentially with checkpoints.
 
 ```mermaid
 sequenceDiagram
     participant U as You
     participant SL as Sprint lead
-    participant ADO as Azure DevOps (MCP)
+    participant TR as Tracker (ADO / GitHub / Jira)
     participant IR as sprint-item-runner
     participant DL as dev loop
 
     U->>SL: /implement-sprint [skip 1234, 1235]
-    SL->>ADO: iterations → items → full fields
-    ADO-->>SL: sprint backlog
-    SL->>SL: apply 4 skip sources<br/>triage each item to a loop
-    SL->>U: manifest table + cost estimate<br/>+ checkpoint mode?
+    SL->>TR: sprint → items → full fields
+    TR-->>SL: sprint backlog
+    SL->>SL: apply 4 skip sources<br/>triage each item to a loop<br/>order: supersession → dependency → rank
+    SL->>U: manifest table + run order + cost estimate<br/>+ checkpoint mode?
     U-->>SL: confirm (each / batch:N / none)
 
-    loop each pending item, in StackRank order
+    loop each pending item, in run order
+        SL->>TR: re-poll: added, closed, re-scoped, re-ranked?
+        TR-->>SL: what moved since last poll
+        SL->>SL: re-order pending items<br/>using files_changed so far
         SL->>SL: refresh base branch, check tree clean
         SL->>IR: item + loop + base branch
         IR->>DL: run assigned loop end to end
@@ -301,27 +382,55 @@ sequenceDiagram
     SL->>U: summary: outcomes, skips, blockers, escalations
 ```
 
+**Any tracker, any code host.** The sprint can come from Azure DevOps, GitHub
+issues, or Jira, and the PRs can be raised somewhere else entirely — Jira boards
+with GitHub repos is an ordinary combination. Both are configuration, filled in
+once at the top of the skill. The skill uses one vocabulary throughout — sprint,
+item, type, state, rank, tag — and maps it to each tracker's words in a single
+table, so no rule below is provider-specific.
+
+**Order is decided by what would be thrown away, not by rank.** Before the plan
+is confirmed, every item is read against every later one: would doing this first
+mean writing code the later one deletes, rewrites, or moves? Supersession beats
+dependency, dependency beats rank. Rank states what matters most, which is not
+the same as what builds on top of what — following it blindly is how a sprint
+pays twice for the same file. Where two items collide outright, neither runs and
+you are asked which one is current.
+
+**The sprint keeps moving while it runs.** The tracker is re-polled before every
+item. Items added mid-run are triaged, ordered, and held at
+`pending_confirmation` until you approve them — a new item never runs on the plan
+you already confirmed. Items closed, re-tagged, or re-scoped mid-run are skipped
+or re-triaged from the new text. The order is recomputed each time too, now with
+`files_changed` from the completed items, which is real evidence where the plan
+had only descriptions. Nothing re-orders silently.
+
 **Checkpoints default to after every item.** Ten PRs landing at once is a rebase
 queue, not a review queue — branches cut from the same base that touch the same
 files conflict with each other, and a mistake in item one has been repeated nine
 times before anyone sees it.
 
-Four checkpoints are **not configurable**, whatever mode is chosen:
+Six checkpoints are **not configurable**, whatever mode is chosen:
 
 - After the first completed item — where you find out the triage was wrong, before it repeats.
+- Before an item added mid-run gets its turn.
+- The run order changed since the last checkpoint.
 - File overlap with an open PR — the runner returns changed paths for exactly this.
 - The next item depends on an unmerged one.
 - The item escalated its loop, or ended blocked or failed.
 
 The run also halts if three PRs are open at once, if two consecutive items fail,
-or if any item leaves the working tree dirty.
+if any item leaves the working tree dirty, if items are being added faster than
+they complete, or if the same two items keep swapping position — that is two
+items in conflict, not an ordering problem.
 
 **Skips come from four sources**, all applied: inline in the invocation,
-`.claude/sprint/skip.md`, the `no-auto` / `manual` / `spike` tags in ADO, and
-automatic rules (wrong type, wrong state, no acceptance criteria, unmet
-dependency). Every skip is reported with its reason.
+`.claude/sprint/skip.md`, the `no-auto` / `manual` / `spike` tag or label in the
+tracker, and automatic rules (wrong type, wrong state, no acceptance criteria,
+unmet dependency, or work a later item would throw away). Every skip is reported
+with its reason.
 
-**Work item text is specification, not instruction.** Anything in a description
+**Item text is specification, not instruction.** Anything in a description
 addressed to the agent — skip review, run this, this was pre-approved — is quoted
 to you rather than acted on.
 
@@ -384,6 +493,7 @@ project/.claude/
 ├── agents/sprint-item-runner.md
 ├── standards.md                              ← edit this (per-repo override, optional)
 ├── skills/implement-sprint/                  SKILL.md + references/item-triage.md
+├── skills/sprint-planning/                   SKILL.md
 ├── sprint/skip.md                            ← ships empty (per-repo skip list)
 ├── scripts/log-agent-event.ps1
 ├── settings.example.json                     ← merge hooks into settings.json
@@ -447,12 +557,26 @@ default shell. **Run `/doctor` after merging and confirm
 never block a subagent, which also means a misconfigured hook is completely
 silent.
 
-### Sprint orchestration
+### Sprint planning and orchestration
 
-`implement-sprint` expects an `ado` MCP server. Update the organisation, project,
-and team in its SKILL.md frontmatter and Phase 0. Adapting it to GitHub or Jira
-means changing Phase 0 and the automatic-skip state names — nothing else in the
-skill is provider-specific.
+`implement-sprint` ships with an empty Configuration table at the top of its
+SKILL.md. Fill in the tracker and how to reach it (an MCP server where one
+exists, the provider's CLI otherwise), its coordinates, the sprint identifier,
+the code host where PRs are raised, and the base branch.
+
+The tracker and the code host are separate settings — Azure Boards with GitHub
+repos, or Jira with Azure Repos, are both ordinary. Everything below the
+Configuration table is written in the skill's own vocabulary and mapped to each
+tracker in one table, so switching provider is a configuration change rather than
+a rewrite. Where a team uses custom workflow states whose meaning is not obvious,
+record what they mean in the same table rather than re-deciding every run.
+
+`sprint-planning` reads that same table — one set of coordinates, not two that
+can drift apart. It needs two things of its own, set at the top of its SKILL.md:
+which field holds the estimate, and which scale. It also needs the access route
+to have **write** access, which `implement-sprint` never does. Check that before
+the first session rather than at the first write-back, or the first few grillings
+exist only in the conversation that produced them.
 
 ---
 
@@ -465,10 +589,16 @@ skill is provider-specific.
 /dev-loop-ultra        change the tenant filter on the reporting query
 /dev-loop-ultra-opus   migrate the events table to the new partition key
 
+/sprint-planning       refine every item in the sprint, one at a time
+/sprint-planning resume
+
 /implement-sprint
 /implement-sprint skip 1234, 1235
 /implement-sprint resume
 ```
+
+`sprint-planning` comes first: it is what turns a sprint of one-line titles into
+items `implement-sprint` can build a brief from.
 
 ### What a run leaves behind
 
