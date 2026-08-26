@@ -38,7 +38,7 @@ with the Draw.io Integration extension in VS Code.
 
 ```bash
 # one PNG
-drawio -x -f png -b 20 --width 1600 -o png/dev-loop.png dev-loop.drawio
+drawio -x -f png -b 20 --width 2000 -o png/dev-loop.png dev-loop.drawio
 
 # the booklet — --crop gives each page its own size, keeping one loop per page
 drawio -x -a --crop -b 20 -f pdf -o dev-loops.pdf dev-loops.drawio
@@ -59,6 +59,6 @@ makes it larger than the PNG and no sharper.
 
 A placeholder written `&lt;run-id&gt;` in the XML reaches the renderer as
 `<run-id>` and is swallowed as an unknown HTML tag — `runs/<run-id>/` displays as
-`runs//`. Double-escape it (`&amp;lt;run-id&amp;gt;`) to make it render.
-`backlog-refinement` and `implement-sprint` do this; the five loop diagrams
-predate the discovery and still show the bug.
+`runs//`. Double-escape it (`&amp;lt;run-id&amp;gt;`) to make it render. Every
+diagram here does this now. If you add a placeholder, double-escape it, and
+check it in the PNG rather than in the editor — the editor shows it either way.
