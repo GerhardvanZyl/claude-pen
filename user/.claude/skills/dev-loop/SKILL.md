@@ -89,6 +89,34 @@ Write the classification to `round-N/plan.md` **before** spawning anything.
 what the diff does not touch is a skip reason. Record each skip as
 `skipped — <what the diff does not touch>`.
 
+### Two scopes, from round 2 onward
+
+Every lane you spawn in round 2 or later is given two diff bases, and reviews
+against both. The **change base** is the Phase 0 diff base — `git diff <base>`
+is the whole change, from nothing to the current working tree. The **round
+base** is the previous round's snapshot commit — `git diff <round-base>` is
+what the last round's fixes changed, and nothing else. Findings are
+raised against the whole change, in every round. The round base tells a lane
+what has moved since it last looked; it does not bound what the lane may
+raise.
+
+Round 1 has no round base — there is no previous round to have a snapshot of —
+so the whole change is the only scope there.
+
+Neither base works alone. A lane given only the fix delta cannot see the
+interaction a fix created with code from an earlier round: the repair is in
+the delta, the thing it broke is not, so a lane confined to the delta will
+never find it. A lane given only the whole change re-reads several rounds of
+already-cleared code with no idea which part is new, and spreads its attention
+evenly over a diff whose risk is not evenly spread — it will read the round-1
+code as carefully as the line the last fix touched.
+
+**This is not the same thing as applicability.** Applicability — which lanes
+rerun at all — is still computed from the fix delta alone, exactly as before.
+Scope — what a rerun lane reviews once spawned — is the whole change plus the
+round base. A lane rerun because a fix touched one file still reviews the
+whole change, not just that file.
+
 ### Snapshot the tree, then set up the scratch worktree
 
 Still in Phase 3, **before you spawn anything**, follow
@@ -97,19 +125,26 @@ Still in Phase 3, **before you spawn anything**, follow
 1. Take the working-tree snapshot and record it in `round-N/plan.md` as
    `tree: <sha>`. This is what Phase 4 compares against to prove no reviewer
    wrote to the code it was reviewing.
-2. If the Tests lane is applicable, create the scratch worktree at
-   `round-N/scratch` and pass its path to that lane. It is the only place any
-   reviewer may write outside the run directory.
+2. Make the round snapshot commit, every round regardless of whether the Tests
+   lane is applicable, and record it in `round-N/plan.md` as `snapshot: <sha>`.
+   This is the round base the *next* round hands every lane, so it must exist
+   even in a round where nothing else needs it.
+3. If the Tests lane is applicable, create the scratch worktree at
+   `round-N/scratch`, from that snapshot commit, and pass its path to that
+   lane. It is the only place any reviewer may write outside the run
+   directory.
 
-Neither step is optional and neither belongs to a reviewer. A lane that had to
-create its own scratch space would be creating it from a tree it has already
-been told not to touch.
+None of these three steps is optional and none belongs to a reviewer. A lane
+that had to create its own scratch space would be creating it from a tree it
+has already been told not to touch.
 
 In round 2 and later, recompute applicability from the fix delta: rerun the
 lanes that owned accepted findings, plus any lane the fixes newly made
 applicable. Always rerun `reviewer-technical` after a behaviour-changing fix.
 Do not rerun every lane by reflex — a comment-only or test-only fix does not
-justify a full round.
+justify a full round. **This governs applicability only** — which lanes rerun.
+Every lane you do rerun reviews the whole change, per "Two scopes, from round 2
+onward" above, not just the fix delta that made it applicable.
 
 ## Phase 4 — Delegate
 
@@ -122,7 +157,10 @@ Give each reviewer:
 
 - The lane card path and the name of its card. Only its card.
 - The run directory path and round number.
-- The diff base, the changed files, and the brief path.
+- **Both scopes**: the change base — the Phase 0 diff base, unchanged every
+  round — and, from round 2, the round base, taken as the `snapshot:` value
+  from `round-(N-1)/plan.md`. Name them as such. Plus the changed files and
+  the brief path.
 - The validation commands available and any intentional tradeoffs.
 - **For the Tests lane only:** the scratch worktree path from Phase 3.
 
@@ -178,6 +216,16 @@ Read the findings files. Then, in this order:
 5. **Check `wontfix.json`** at the run root. Anything rejected in an earlier
    round is dropped, not re-litigated. Append every rejection with a one-line
    reason. This is what stops the loop oscillating **within** a run.
+
+   A lane reviewing the whole change will sometimes re-raise something an
+   earlier round already handled — that is the cost of the wider scope, not
+   the lane misbehaving, since it was never told what previous rounds
+   decided. If it was already **rejected**, drop it under `wontfix.json`,
+   classified the same way it was the first time — this does not count as
+   `rejected_wrong`. If it was already **fixed** and the lane still raises it,
+   that is not noise: either the fix did not work, which is what Phase 7's
+   repeat-concern bound exists to catch, or the lane is describing a second
+   site the fix missed.
 6. **Record durable decisions.** `wontfix.json` dies with the run. When a
    rejection reflects a *deliberate decision in this repository* — not merely
    something out of scope for this slice — append it to
@@ -263,7 +311,8 @@ Never loop unbounded. Yield falls off sharply after round two.
 ## Phase 8 — Independent verification
 
 Before the PR, spawn `reviewer-verify` once when validation is uncertain, the
-slice is risky, artifacts changed, or a Critical was fixed this run. Ask it only
+slice is risky, artifacts changed, or a Critical was fixed this run. Give it
+the change base and the final round base, alongside the rest. Ask it only
 whether the final diff preserves intent, validation matches the touched
 behaviour, required checks ran or have stated blockers, and deferrals have
 concrete reasons. Do not ask it to re-review the whole diff.

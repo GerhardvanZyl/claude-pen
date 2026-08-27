@@ -88,21 +88,34 @@ Set `ROUND`, starting at 1. Create `round-N/`. Classify each lane and write
 
 "The code looks fine" is never a skip reason. In round 2, rerun only the lanes
 that owned accepted findings, plus `reviewer-lite-correctness` after any
-behaviour-changing fix.
+behaviour-changing fix. **This is applicability only** — which lanes rerun.
+What a rerun lane reviews is wider; see below.
+
+**Two scopes in round 2.** The **change base** is the Phase 0 diff base;
+`git diff <base>` is the whole change and is what findings are raised
+against, in both rounds. The **round base**, round 2 only, is the `snapshot:`
+sha recorded in `round-1/plan.md`; `git diff <round-base>` is what round 1's
+fixes changed. Give a round-2 lane both. A lane handed only the fix delta
+cannot see what a fix broke in round 1's already-reviewed code — the repair is
+in the delta, the thing it broke is not.
 
 **Then snapshot the tree and set up the scratch worktree**, following
 `dev-loop/references/tree-snapshot.md`. Record the digest in `round-N/plan.md` as
-`tree: <sha>`, and create `round-N/scratch` for the Tests lane. Both are yours,
-not a reviewer's, and both happen before you spawn anything.
+`tree: <sha>`. Then make the round snapshot commit, every round regardless of
+the Tests lane, and record it as `snapshot: <sha>` — it is round 2's round
+base. If the Tests lane is applicable, create `round-N/scratch` from that
+commit. All of this is yours, not a reviewer's, and happens before you spawn
+anything.
 
 ## Phase 4 — Delegate
 
 Spawn the applicable lanes **in parallel, in one turn**. Four fit in a single
 batch; no waves needed.
 
-Give each: its card name and path, the run directory and round, the diff base,
-changed files, brief path, and available validation commands. Give the Tests
-lane the scratch worktree path as well.
+Give each: its card name and path, the run directory and round, **both
+scopes** — the change base and, from round 2, the round base — changed files,
+brief path, and available validation commands. Give the Tests lane the scratch
+worktree path as well.
 
 Each writes `round-N/<lane>.json` and `round-N/<lane>.log.md`, and returns one
 line — path and counts by severity.
@@ -127,7 +140,10 @@ Same rules as `dev-loop`, in this order:
 4. **Separate defect from remedy** — accepting a finding does not make its
    suggested fix authoritative. Prefer the smallest fix preserving intent.
 5. **Check `wontfix.json`**; append every rejection with a reason. It dies with
-   the run.
+   the run. A lane reviewing the whole change may re-raise something round 1
+   already settled — that is the wider scope's cost, not misbehaviour. Already
+   rejected: drop it, same classification, not `rejected_wrong`. Already fixed
+   and still raised: the fix missed, or missed a second site.
 6. **Record durable decisions** — a rejection that reflects a deliberate
    repository decision goes in `.claude/review/conventions.md`, whichever lane
    raised it. That file is the only thing that survives to the next run.

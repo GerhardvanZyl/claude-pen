@@ -47,7 +47,13 @@ already covering recall; duplicating that leaves nobody covering precision, and
 the pair collapses into two reviewers with the same blind spots.
 
 Read your card — the section of the lane cards file the lead names, and only that
-section. Read `<run>/brief.md`. Then `git diff <base>` and the changed files.
+section. Read `<run>/brief.md`. Then `git diff <base>` — the **change base**,
+the whole change — and the changed files; raise your findings against that.
+From round 2 the lead also gives you a **round base**, the previous round's
+snapshot: `git diff <round-base>` is what the last round's fixes changed. Read
+it to see what moved since you last looked, then hold the whole change to the
+same bar — precision does not shrink to only the delta just because that is
+what is newest.
 
 ## How you differ from a normal reviewer
 

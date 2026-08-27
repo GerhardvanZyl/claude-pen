@@ -46,7 +46,14 @@ cannot support — so the cost of raising a weak finding here is low, and the co
 of missing a real one is high. Optimise accordingly.
 
 Read your card — the section of the lane cards file the lead names, and only that
-section. Read `<run>/brief.md`. Then `git diff <base>` and the changed files.
+section. Read `<run>/brief.md`. Then `git diff <base>` — the **change base**,
+the whole change — and the changed files; raise your findings against that.
+From round 2 the lead also gives you a **round base**, the previous round's
+snapshot: `git diff <round-base>` is what the last round's fixes changed. Read
+it to see what moved since you last looked, then hunt across the whole change
+anyway — your job is recall, and a fix that repaired one call site and left
+another sibling broken is exactly the kind of thing confining yourself to the
+delta would miss.
 
 ## How you differ from a normal reviewer
 

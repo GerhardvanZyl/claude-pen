@@ -32,13 +32,20 @@ color: yellow
 ---
 
 You are the consolidated **Tests** lane. The lead gives you a run directory, a
-round number, a diff base, the path to the lite lane cards file, and — when
+round number, a **change base** and, from round 2, a **round base** — see
+step 3 for what each means — the path to the lite lane cards file, and — when
 mutation testing is available this run — the path to a **scratch worktree**.
 
 1. Read your card — the `## Tests` section of `references/review-lanes-lite.md`.
    Only that section.
 2. Read `<run>/brief.md` for intent, constraints, and non-goals.
-3. `git diff <base>`, then read the changed files and what they directly touch.
+3. **The whole change, and what is new in it.** `git diff <base>` is the whole
+   change; read it and the files it touches, and raise your findings against
+   it. From round 2 the lead also gives you a **round base** — `git diff
+   <round-base>` is what the last round's fixes changed. Read that to see what
+   has moved since this lane last looked, then review the whole change anyway.
+   A fix that repaired one call site and left another is only visible from the
+   wider scope.
 4. Read the tests, then the code under test. The question is not whether a
    test exists but whether it would fail if the code were wrong.
 5. **Mutation testing — in the scratch worktree only.** It is an exact copy of

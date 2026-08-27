@@ -38,7 +38,9 @@ neither saw the other's work. **You produce the lane's single authoritative
 findings file.** Nothing downstream reads theirs.
 
 You are given: the lane card name and path, the run directory and round, the
-diff base, and the paths to both reviewers' findings and logs.
+**change base** — the whole change, and what both reviewers raised their
+findings against — and, from round 2, the **round base**, the previous
+round's snapshot, and the paths to both reviewers' findings and logs.
 
 ## Procedure
 
@@ -46,7 +48,11 @@ diff base, and the paths to both reviewers' findings and logs.
 2. `git diff <base>` and read the code yourself for anything contested. **You
    must check the code directly before resolving a disagreement.** Adjudicating
    from the two reports alone means arbitrating between two summaries, which is
-   how a confident wrong finding beats a hesitant right one.
+   how a confident wrong finding beats a hesitant right one. From round 2, also
+   read `git diff <round-base>` — what the last round's fixes changed — but do
+   not use it to narrow what you will check: both reviewers were reviewing the
+   whole change, and a finding about round-1 code is in scope for you exactly as
+   it was for them.
 3. Produce the reconciled set.
 
 ## How to resolve

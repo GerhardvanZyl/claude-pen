@@ -66,11 +66,25 @@ skipped with a diff-based reason and write `round-N/plan.md`, using the same
 applicability table as `dev-loop`.
 
 **Then snapshot the tree and set up the scratch worktree**, per
-`dev-loop/references/tree-snapshot.md` — digest into `plan.md` as `tree: <sha>`,
-scratch worktree at `round-N/scratch` for the Tests lane's pair. Retake and
-compare **after each pair of lanes drains**, not only at the end of the round:
-with eighteen-plus agent runs against one tree, finding out at the end that it
-moved means re-running far more than one lane.
+`dev-loop/references/tree-snapshot.md` — digest into `plan.md` as `tree: <sha>`.
+Then make the round snapshot commit, every round regardless of the Tests lane,
+and record it in `plan.md` as `snapshot: <sha>` — this is the round base the
+next round hands every lane. Set up the scratch worktree at `round-N/scratch`,
+from that commit, for the Tests lane's pair. Retake and compare **after each
+pair of lanes drains**, not only at the end of the round: with eighteen-plus
+agent runs against one tree, finding out at the end that it moved means
+re-running far more than one lane.
+
+The two scopes work exactly as `dev-loop` Phase 3 defines them: the **change
+base** is the Phase 0 diff base and is what findings are raised against; the
+**round base**, from round 2, is the previous round's snapshot commit and
+shows what the last round's fixes changed. Applicability is still computed
+from the fix delta alone; scope is the whole change plus the round base,
+regardless of why a lane was rerun. Here that applies per agent, not per lane:
+**all three agents in a lane get both bases, the adjudicator included.** An
+adjudicator reconciling from a narrower diff than its reviewers used would
+discard a true finding about earlier-round code as out of scope, on the
+mistaken assumption that the reviewers were bounded to the delta.
 
 ## Phase 4 — Adversarial review
 
@@ -79,8 +93,10 @@ For each applicable lane, three agents in sequence:
 1. `reviewer-ultra-prosecution` and `reviewer-ultra-defence` **in parallel**.
 2. When both have returned, `reviewer-ultra-adjudicator` for that lane.
 
-Pass each agent the lane card name and path, the run directory and round, the
-diff base, and the brief path. Pass the adjudicator both reviewers' output paths.
+Pass each agent the lane card name and path, the run directory and round,
+**both scopes** — the change base and, from round 2, the round base — and the
+brief path. Pass the adjudicator both reviewers' output paths, and the same two
+scopes.
 
 ### Model per lane, passed per invocation
 

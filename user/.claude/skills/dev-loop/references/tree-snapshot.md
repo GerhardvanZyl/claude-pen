@@ -60,6 +60,36 @@ scratch worktree inside it — out of the digest. Verify `.claude/review/runs/` 
 actually ignored before relying on that; the installer adds it, but a repository
 that predates the installer may not have it.
 
+## The round snapshot commit
+
+`$TREE` is a tree object, not a commit — nothing can be diffed against it.
+Every round, whether or not the Tests lane is applicable, wrap it in a commit:
+
+```bash
+SNAP=$(git commit-tree "$TREE" -p HEAD -m "review snapshot <run-id> round N")
+echo "$SNAP"
+```
+
+PowerShell:
+
+```powershell
+$snap = (git commit-tree $tree -p HEAD -m "review snapshot <run-id> round N").Trim()
+$snap
+```
+
+Record it in `round-N/plan.md` as `snapshot: <sha>`, alongside `tree: <sha>`.
+
+It does two jobs. It is what the scratch worktree is created from, when the
+Tests lane needs one. And it is **the round base for round N+1** —
+`git diff <that sha>` is exactly what the next round's fixes changed. Without
+it there is nothing to diff a fix against, because the tree it replaced was
+never committed anywhere.
+
+The commit is unreachable from any branch and is never pushed. Git keeps
+unreachable objects for two weeks by default, which outlives any run, and
+`git worktree prune` does not remove it — so nothing else is needed to
+preserve it.
+
 ## The integrity check
 
 **Phase 3, before spawning any reviewer:** take the snapshot and record it in
@@ -101,16 +131,17 @@ The Tests lane proves a test is decorative by breaking the code it covers and
 showing the test still passes. That requires mutation. It happens here and
 nowhere else.
 
-**Phase 3, when the Tests lane is applicable**, after taking the snapshot:
+**Phase 3, when the Tests lane is applicable**, after making the round
+snapshot commit:
 
 ```bash
-SNAP=$(git commit-tree "$TREE" -p HEAD -m "review snapshot <run-id> round N")
 git worktree add --detach ".claude/review/runs/<run-id>/round-N/scratch" "$SNAP"
 ```
 
-The scratch worktree is an exact copy of the tree under review, including
-uncommitted and untracked files, on a detached commit that is not on any branch
-and will never be pushed. It sits inside the run directory, which is
+The scratch worktree is created from the round snapshot commit above, so it is
+an exact copy of the tree under review, including uncommitted and untracked
+files, on a detached commit that is not on any branch and will never be
+pushed. It sits inside the run directory, which is
 `.gitignore`d, so it does not appear in `git status` and cannot be staged by
 Phase 9.
 

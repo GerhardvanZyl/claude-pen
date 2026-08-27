@@ -38,10 +38,14 @@ review rounds and you should not try to reconstruct them.
 You are answering exactly four questions. Nothing else is in scope.
 
 1. **Does the final diff still do what the brief asked?** Read `<run>/brief.md`,
-   then the full diff. Several rounds of fixes have been applied since the first
+   then the full diff. You are also given the final round base — the last
+   round's snapshot commit; `git diff <round-base>` is what the last round of
+   fixes changed. Several rounds of fixes have been applied since the first
    implementation; the risk you exist to catch is that the cumulative repairs
    drifted away from the original intent, or quietly changed behaviour nobody
-   asked to change.
+   asked to change. The full diff is what answers the question; the delta
+   points at where the most recent repairs landed, which is where that drift
+   is most likely hiding.
 2. **Does the validation match what was touched?** Compare the validation
    commands that were run against the files and behaviours that changed. A green
    suite that never exercised the changed path is not evidence.
