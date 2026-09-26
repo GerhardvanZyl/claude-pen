@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dev-loop-lite — the lightweight development loop (dark)</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --color-paper: #0d1117;
+  --color-ink: #f0f6fc;
+  --color-muted: #9198a1;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+}
+body {
+  font-family: var(--font-sans);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+svg text {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.frame { max-width: 1280px; width: 100%; }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 0.5rem;
+}
+h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.5rem, 2.4vw + 0.75rem, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: var(--color-ink);
+  margin-bottom: 1.5rem;
+}
+svg { width: 100%; min-width: 900px; display: block; }
+</style>
+</head>
+<body>
+<div class="frame">
+<p class="eyebrow">Flowchart · Dev-Loop Diagrams</p>
+<h1>dev-loop-lite — the lightweight development loop (dark)</h1>
+<svg viewBox="0 0 1280 2976" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dev-loop-lite-dark-title dev-loop-lite-dark-desc">
+<title id="dev-loop-lite-dark-title">dev-loop-lite — the lightweight development loop</title>
+<desc id="dev-loop-lite-dark-desc">Flowchart of dev-loop-lite: the wrong-loop check; implement, tests, and round planning; four consolidated review lanes covering all nine full-loop concerns; the tree-integrity recovery loop; the round-1 Critical that escalates to the full dev-loop; the two-round cap with its loop-back and blocked exit; conditional verification; and the walkthrough and PR that close it out.</desc>
+<defs>
+<marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#9198a1"/></marker>
+<marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4493f8"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#0d1117"/>
+<rect x="160" y="40" width="960" height="316" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<text x="180" y="68" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">ENTRY · IS THIS THE WRONG LOOP?</text>
+<text x="180" y="86" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">stop and use the full dev-loop if any holds: auth/secrets/untrusted input · migration/schema/contract · &gt;1 project · hard rollback</text>
+<rect x="160" y="396" width="960" height="560" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<text x="180" y="424" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">IMPLEMENT · TESTS · PLAN THE ROUND</text>
+<text x="180" y="442" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">implementation and fixes are NOT downgraded</text>
+<rect x="160" y="996" width="960" height="324" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<text x="180" y="1024" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">FOUR CONSOLIDATED LANES — NINE FULL-LOOP CONCERNS, COMPRESSED</text>
+<rect x="160" y="1360" width="960" height="662" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<text x="180" y="1388" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">INTEGRITY CHECK · TRIAGE · THE ROUND-1 CRITICAL · FIX</text>
+<rect x="160" y="2062" width="960" height="774" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<text x="180" y="2090" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">LOOP OR EXIT (2 ROUNDS MAX) · CONDITIONAL VERIFICATION · SHIP</text>
+<line x1="640" y1="152" x2="640" y2="184" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="332" x2="640" y2="440" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="596.0" y="381.0" width="88" height="18" rx="3" fill="#151b23"/>
+<text x="640" y="394.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">NONE HOLD</text>
+<line x1="640" y1="548" x2="640" y2="568" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="666" x2="640" y2="686" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="784" x2="640" y2="804" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="932" x2="640" y2="1036" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="1134" x2="640" y2="1152" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="1302" x2="640" y2="1404" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="1542" x2="640" y2="1566" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="612.0" y="1549.0" width="56" height="18" rx="3" fill="#151b23"/>
+<text x="640" y="1562.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">CLEAN</text>
+<line x1="640" y1="1704" x2="640" y2="1728" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="1866" x2="640" y2="1890" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="588.0" y="1873.0" width="104" height="18" rx="3" fill="#151b23"/>
+<text x="640" y="1886.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">NO CRITICAL</text>
+<line x1="640" y1="1998" x2="640" y2="2106" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="2264" x2="640" y2="2288" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="616.0" y="2271.0" width="48" height="18" rx="3" fill="#151b23"/>
+<text x="640" y="2284.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">PASS</text>
+<line x1="640" y1="2446" x2="640" y2="2470" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="600.0" y="2453.0" width="80" height="18" rx="3" fill="#151b23"/>
+<text x="640" y="2466.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">NO: SKIP</text>
+<line x1="640" y1="2578" x2="640" y2="2602" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="2720" x2="640" y2="2744" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="490" y1="262.0" x2="404" y2="262.0" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="415.0" y="239.0" width="56" height="18" rx="3" fill="#151b23"/>
+<text x="443.0" y="252.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">HOLDS</text>
+<path d="M 500 1477.0 L 108 1477.0 Q 100 1477.0 100 1469.0 L 100 1097.0 Q 100 1089.0 108 1089.0 L 312 1089.0" fill="none" stroke="#9198a1" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+<rect x="52.0" y="1274.0" width="96" height="18" rx="3" fill="#0d1117"/>
+<text x="100" y="1287.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">RERUN LANE</text>
+<line x1="500" y1="1801.0" x2="404" y2="1801.0" stroke="#4493f8" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+<rect x="408.0" y="1778.0" width="80" height="18" rx="3" fill="#151b23"/>
+<text x="448.0" y="1791.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">CRITICAL</text>
+<path d="M 780 2189.0 L 1172 2189.0 Q 1180 2189.0 1180 2181.0 L 1180 880.0 Q 1180 872.0 1172 872.0 L 968 872.0" fill="none" stroke="#9198a1" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+<rect x="1144.0" y="1521.5" width="72" height="18" rx="3" fill="#0d1117"/>
+<text x="1180" y="1534.5" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">ROUND 2</text>
+<line x1="500" y1="2229.0" x2="444" y2="2229.0" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="432.0" y="2206.0" width="72" height="18" rx="3" fill="#151b23"/>
+<text x="468.0" y="2219.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">BLOCKED</text>
+<line x1="470" y1="2371.0" x2="444" y2="2371.0" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="433.0" y="2348.0" width="40" height="18" rx="3" fill="#151b23"/>
+<text x="453.0" y="2361.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">YES</text>
+<path d="M 306 2426.0 L 306 2520.0 Q 306 2528.0 314 2528.0 L 312 2528.0" fill="none" stroke="#9198a1" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+<rect x="530" y="92" width="220" height="60" rx="30.0" fill="#0d1117"/>
+<rect x="530" y="92" width="220" height="60" rx="30.0" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="128.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">/dev-loop-lite</text>
+<polygon points="640,192 790.0,262.0 640,332 490.0,262.0" fill="#0d1117"/>
+<polygon points="640,192 790.0,262.0 640,332 490.0,262.0" fill="#0d1117" stroke="#f0f6fc" stroke-width="1.2"/>
+<text x="640" y="258.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Any wrong-loop</text>
+<text x="640" y="278.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">criterion holds?</text>
+<rect x="176" y="232.0" width="220" height="60" rx="30.0" fill="#0d1117"/>
+<rect x="176" y="232.0" width="220" height="60" rx="30.0" fill="#0d1117" stroke="#f0f6fc" stroke-width="1" stroke-dasharray="5,4"/>
+<text x="286" y="268.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">→ dev-loop (full)</text>
+<rect x="320" y="448" width="640" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="448" width="640" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="482" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 0 — Frame the slice</text>
+<text x="640" y="510" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">requirement, non-goals, constraints, source branch → brief.md + notes.md</text>
+<rect x="320" y="576" width="640" height="90" rx="6" fill="#0d1117"/>
+<rect x="320" y="576" width="640" height="90" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="610" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 1 — Implement</text>
+<text x="640" y="638" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">sidekick by default · same tiering as the full loop</text>
+<rect x="320" y="694" width="640" height="90" rx="6" fill="#0d1117"/>
+<rect x="320" y="694" width="640" height="90" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="728" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 2 — Tests</text>
+<text x="640" y="756" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">unit · integration · UI — each must fail if behaviour regresses</text>
+<rect x="320" y="812" width="640" height="120" rx="6" fill="#0d1117"/>
+<rect x="320" y="812" width="640" height="120" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="846" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 3 — Plan the round</text>
+<text x="640" y="874" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">classify every lane applicable/skipped, diff-based · snapshot tree (round N)</text>
+<rect x="320" y="1044" width="640" height="90" rx="6" fill="#0d1117"/>
+<rect x="320" y="1044" width="640" height="90" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="1078" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 4 — Delegate</text>
+<text x="640" y="1106" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">spawn all four in parallel, one turn — no waves needed</text>
+<rect x="190" y="1166" width="210" height="130" rx="6" fill="#0d1117"/>
+<rect x="190" y="1166" width="210" height="130" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="295.0" y="1194" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Correctness</text>
+<rect x="235.0" y="1204" width="120" height="20" rx="3" fill="transparent" stroke="#656c76" stroke-width="0.8"/>
+<text x="295.0" y="1218" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">SONNET · HIGH</text>
+<text x="295.0" y="1282" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">req + technical + artifacts</text>
+<rect x="420" y="1166" width="210" height="130" rx="6" fill="#0d1117"/>
+<rect x="420" y="1166" width="210" height="130" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="525.0" y="1194" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Structure</text>
+<rect x="465.0" y="1204" width="120" height="20" rx="3" fill="transparent" stroke="#656c76" stroke-width="0.8"/>
+<text x="525.0" y="1218" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">SONNET · HIGH</text>
+<text x="525.0" y="1282" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">arch + standards + dead code</text>
+<rect x="650" y="1166" width="210" height="130" rx="6" fill="#0d1117"/>
+<rect x="650" y="1166" width="210" height="130" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="755.0" y="1194" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Tests</text>
+<rect x="695.0" y="1204" width="120" height="20" rx="3" fill="transparent" stroke="#656c76" stroke-width="0.8"/>
+<text x="755.0" y="1218" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">HAIKU · HIGH</text>
+<text x="755.0" y="1282" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">tests + validation</text>
+<rect x="880" y="1166" width="210" height="130" rx="6" fill="#0d1117"/>
+<rect x="880" y="1166" width="210" height="130" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="985.0" y="1194" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Security</text>
+<rect x="925.0" y="1204" width="120" height="20" rx="3" fill="transparent" stroke="#656c76" stroke-width="0.8"/>
+<text x="985.0" y="1218" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">SONNET · HIGH</text>
+<text x="985.0" y="1282" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">gated: I/O, queries, deps</text>
+<polygon points="640,1412 780.0,1477.0 640,1542 500.0,1477.0" fill="#0d1117"/>
+<polygon points="640,1412 780.0,1477.0 640,1542 500.0,1477.0" fill="#0d1117" stroke="#f0f6fc" stroke-width="1.2"/>
+<text x="640" y="1473.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Tree moved</text>
+<text x="640" y="1493.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">since round start?</text>
+<rect x="320" y="1574" width="640" height="130" rx="6" fill="#0d1117"/>
+<rect x="320" y="1574" width="640" height="130" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="1608" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 5 — Triage</text>
+<text x="640" y="1636" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">cluster by cause · evidence + cause gates · defect ≠ remedy · conventions.md</text>
+<polygon points="640,1736 780.0,1801.0 640,1866 500.0,1801.0" fill="#0d1117"/>
+<polygon points="640,1736 780.0,1801.0 640,1866 500.0,1801.0" fill="rgba(68,147,248,0.12)" stroke="#4493f8" stroke-width="1.2"/>
+<text x="640" y="1797.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Any Critical</text>
+<text x="640" y="1817.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">in round 1?</text>
+<rect x="176" y="1771.0" width="220" height="60" rx="30.0" fill="#0d1117"/>
+<rect x="176" y="1771.0" width="220" height="60" rx="30.0" fill="#0d1117" stroke="#f0f6fc" stroke-width="1" stroke-dasharray="5,4"/>
+<text x="286" y="1807.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">→ dev-loop (full)</text>
+<rect x="320" y="1898" width="640" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="1898" width="640" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="1932" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 6 — Fix</text>
+<text x="640" y="1960" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">would_have_been_bug → failing test first, then fix, then passing</text>
+<polygon points="640,2114 780.0,2189.0 640,2264 500.0,2189.0" fill="#0d1117"/>
+<polygon points="640,2114 780.0,2189.0 640,2264 500.0,2189.0" fill="#0d1117" stroke="#f0f6fc" stroke-width="1.2"/>
+<text x="640" y="2185.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Loop or</text>
+<text x="640" y="2205.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">exit?</text>
+<rect x="176" y="2159.0" width="260" height="60" rx="30.0" fill="#0d1117"/>
+<rect x="176" y="2159.0" width="260" height="60" rx="30.0" fill="#0d1117" stroke="#f0f6fc" stroke-width="1" stroke-dasharray="5,4"/>
+<text x="306" y="2195.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">BLOCKED — stop</text>
+<polygon points="640,2296 810.0,2371.0 640,2446 470.0,2371.0" fill="#0d1117"/>
+<polygon points="640,2296 810.0,2371.0 640,2446 470.0,2371.0" fill="#0d1117" stroke="#f0f6fc" stroke-width="1.2"/>
+<text x="640" y="2367.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Critical/Major fixed,</text>
+<text x="640" y="2387.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">or artifacts changed?</text>
+<rect x="176" y="2316.0" width="260" height="110" rx="6" fill="#0d1117"/>
+<rect x="176" y="2316.0" width="260" height="110" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="306.0" y="2344.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">reviewer-verify</text>
+<rect x="246.0" y="2354.0" width="120" height="20" rx="3" fill="transparent" stroke="#656c76" stroke-width="0.8"/>
+<text x="306.0" y="2368.0" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">OPUS · HIGH</text>
+<text x="306.0" y="2412.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">last gate before a human sees it</text>
+<rect x="320" y="2478" width="640" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="2478" width="640" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="2512" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 8b — Walkthrough</text>
+<text x="640" y="2540" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">author from notes.md, not the diff → review → snapshot = Phase 9 baseline</text>
+<rect x="320" y="2610" width="640" height="110" rx="6" fill="#0d1117"/>
+<rect x="320" y="2610" width="640" height="110" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="2644" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 9 — Commit, push, pull request</text>
+<text x="640" y="2672" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">stage incl. untracked · verify --stat + tree digest · PR targets source branch</text>
+<rect x="540" y="2752" width="200" height="60" rx="30.0" fill="#0d1117"/>
+<rect x="540" y="2752" width="200" height="60" rx="30.0" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="2788.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">PR opened</text>
+<text x="1040" y="830" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">lead’s job,</text>
+<text x="1040" y="848" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">not a reviewer’s</text>
+<text x="1040" y="1628.0" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">wontfix.json</text>
+<text x="1040" y="1650.0" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">dies here</text>
+<line x1="40" y1="2876" x2="1240" y2="2876" stroke="rgba(240,246,252,0.15)" stroke-width="0.8"/>
+<text x="40" y="2910" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">LEGEND</text>
+<rect x="125.196" y="2898" width="20" height="16" rx="3" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="155.196" y="2910" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Phase / step</text>
+<polygon points="287.916,2897 298.916,2906 287.916,2915 276.916,2906" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="307.916" y="2910" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Gate / decision</text>
+<rect x="454.81600000000003" y="2898" width="20" height="16" rx="3" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="484.81600000000003" y="2910" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Review lane</text>
+<rect x="599.476" y="2898" width="20" height="16" rx="8" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="629.476" y="2910" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Entry / exit</text>
+<rect x="752.196" y="2898" width="20" height="16" rx="8" fill="#0d1117" stroke="#9198a1" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="782.196" y="2910" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Blocked / escalate</text>
+<line x1="953.2760000000001" y1="2906" x2="973.2760000000001" y2="2906" stroke="#4493f8" stroke-width="1.4"/>
+<text x="983.2760000000001" y="2910" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Escalation exit</text>
+</svg>
+</div>
+</body>
+</html>

@@ -62,7 +62,9 @@ gating, evidence labels, causality, and clustering by locator.
 | --- | --- | --- | --- | --- |
 | `dev-loop-ultralight` | 1 reviewer, 9-item sweep | 1 | **0.19×** | Trivial contained changes |
 | `dev-loop-lite` | 4 consolidated | 2 | **0.57×** | Contained single-project changes |
+| `dev-loop-greybox` | 4 consolidated + Unity + Visual | 2 | **—** | Unity blockouts and visual prototypes |
 | `dev-loop` | 9, applicability-gated | 3 | **1.00×** | Default |
+| `dev-loop-unity` | 9 + Unity, gated | 3 | **—** | Unity game code |
 | `dev-loop-ultra` | 9, each an adversarial triple | 3 | **1.89×** | Expensive-to-miss defects |
 | `dev-loop-ultra-opus` | Same, every reviewer on Opus | 3 | **2.71×** | Severe, irreversible consequences |
 
@@ -73,24 +75,86 @@ sidekick tiers; only review depth and bounds differ. The exception is
 Selection is by **risk surface, not diff size**. A one-line change touching
 authorization goes to the full loop.
 
-```mermaid
-flowchart TD
-    A[Change to implement] --> B{Auth, secrets, or<br/>untrusted input?}
-    B -->|yes| F[dev-loop]
-    A --> C{Migration, schema,<br/>or public contract?}
-    C -->|yes| F
-    A --> D{More than<br/>one project?}
-    D -->|yes| F
-    F --> G{Expensive to miss?<br/>money, tenant isolation,<br/>destructive migration}
-    G -->|yes| H[dev-loop-ultra]
-    H --> I{Severe and<br/>irreversible?}
-    I -->|yes| J[dev-loop-ultra-opus]
-    B -->|no| K{Contained, ≤5 files,<br/>no concurrency,<br/>no new dependency?}
-    K -->|yes| L[dev-loop-ultralight]
-    K -->|no| M[dev-loop-lite]
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/loop-choice-dark.svg">
+  <img alt="Which loop — choosing a dev-loop for a change" src="docs/diagrams/loop-choice.svg">
+</picture>
 
 **When unsure, go heavier.** The savings never justify a missed Critical.
+
+### Each loop, end to end
+
+<details>
+<summary><code>dev-loop-ultralight</code> — the minimal loop</summary>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/dev-loop-ultralight-dark.svg">
+  <img alt="dev-loop-ultralight — the minimal loop" src="docs/diagrams/dev-loop-ultralight.svg">
+</picture>
+
+</details>
+
+<details>
+<summary><code>dev-loop-lite</code> — the lightweight development loop</summary>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/dev-loop-lite-dark.svg">
+  <img alt="dev-loop-lite — the lightweight development loop" src="docs/diagrams/dev-loop-lite.svg">
+</picture>
+
+</details>
+
+<details>
+<summary><code>dev-loop-greybox</code> — in-engine blockouts, judged by shot</summary>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/dev-loop-greybox-dark.svg">
+  <img alt="dev-loop-greybox — in-engine blockouts, judged by shot" src="docs/diagrams/dev-loop-greybox.svg">
+</picture>
+
+</details>
+
+<details>
+<summary><code>dev-loop</code> — the full development loop</summary>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/dev-loop-dark.svg">
+  <img alt="dev-loop — the full development loop" src="docs/diagrams/dev-loop.svg">
+</picture>
+
+</details>
+
+<details>
+<summary><code>dev-loop-unity</code> — Unity code at full-loop depth</summary>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/dev-loop-unity-dark.svg">
+  <img alt="dev-loop-unity — Unity code at full-loop depth" src="docs/diagrams/dev-loop-unity.svg">
+</picture>
+
+</details>
+
+<details>
+<summary><code>dev-loop-ultra</code> — the adversarial review loop</summary>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/dev-loop-ultra-dark.svg">
+  <img alt="dev-loop-ultra — the adversarial review loop" src="docs/diagrams/dev-loop-ultra.svg">
+</picture>
+
+</details>
+
+<details>
+<summary><code>dev-loop-ultra-opus</code> — adversarial review, every agent on Opus</summary>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/diagrams/dev-loop-ultra-opus-dark.svg">
+  <img alt="dev-loop-ultra-opus — adversarial review, every agent on Opus" src="docs/diagrams/dev-loop-ultra-opus.svg">
+</picture>
+
+</details>
+
+See [`docs/diagrams/dev-loop-flow.svg`](docs/diagrams/dev-loop-flow.svg) for the full-flow view, redrawn from `docs/dev-loop-flow.mmd`.
 
 ### Escalation is one-way and mandatory
 
@@ -105,6 +169,24 @@ Lighter loops abandon themselves rather than pressing on:
 The reasoning: a change that produced a Critical was misjudged, and the lanes the
 lighter loop skipped are precisely the ones that have not looked at it yet.
 Loops never de-escalate.
+
+---
+
+## Unity loops
+
+`dev-loop-unity` (overrides `dev-loop`) and `dev-loop-greybox` (overrides
+`dev-loop-lite`) are thin overrides in the `dev-loop-ultra-opus` pattern: follow
+the base loop in full, list only what differs. `dev-loop-unity` is for Unity
+game code; `dev-loop-greybox` is for in-engine blockouts and visual
+prototypes, adding a Unity lane and a Visual lane that judges rendered shots
+against an art brief.
+
+Both need a working Unity Editor — set `$UNITY_EDITOR`, or let
+`unity-batchmode.md` locate it from `ProjectSettings/ProjectVersion.txt` — and
+**the Editor closed before running either loop**: batchmode fails if
+`Temp/UnityLockfile` exists.
+
+Not modelled in `docs/cost-model.py`; the cost column above reads `—` for both.
 
 ---
 
@@ -366,7 +448,7 @@ covers directories that existed at startup), and run `/doctor` to confirm everyt
 
 ```
 user/.claude/
-├── agents/                 22 agents — sidekicks, Explore, all reviewers
+├── agents/                 24 agents — sidekicks, Explore, all reviewers
 └── skills/
     ├── dev-loop/                    SKILL.md + references/review-lanes.md
     │                                         + references/tree-snapshot.md
@@ -374,6 +456,9 @@ user/.claude/
     ├── dev-loop-ultralight/         SKILL.md
     ├── dev-loop-ultra/              SKILL.md
     ├── dev-loop-ultra-opus/         SKILL.md
+    ├── dev-loop-unity/              SKILL.md + references/review-lanes-unity.md
+    │                                         + references/unity-batchmode.md
+    ├── dev-loop-greybox/            SKILL.md + references/ShotCapture.cs
     ├── solution-architecture/       SKILL.md   (repo-agnostic)
     ├── coding-standards/            SKILL.md   ← edit this (baseline, once per machine)
     ├── implementation-notes/        SKILL.md

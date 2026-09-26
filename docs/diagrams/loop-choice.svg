@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1280 1496" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="loop-choice-title loop-choice-desc">
+<title id="loop-choice-title">Which loop — choosing a dev-loop for a change</title>
+<desc id="loop-choice-desc">Decision tree for picking a development loop: a Unity project goes straight to dev-loop-unity or dev-loop-greybox by kind of work; otherwise auth/secrets, a migration or contract change, or a multi-project change routes to dev-loop, which can escalate to dev-loop-ultra and then dev-loop-ultra-opus; everything else is ultralight or lite by how contained the change is.</desc>
+<defs>
+<marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#59636e"/></marker>
+<marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#0969da"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<line x1="640" y1="100" x2="640" y2="132" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<path d="M 735 195.0 L 1072 195.0 Q 1080 195.0 1080 203.0 L 1080 302" fill="none" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="887.5" y="172.0" width="40" height="18" rx="3" fill="#ffffff"/>
+<text x="907.5" y="185.0" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">YES</text>
+<path d="M 602.0 217.0 L 602.0 250 Q 602.0 258 594.0 258 L 238 258 Q 230 258 230 266 L 230 302" fill="none" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="400.0" y="241.0" width="32" height="18" rx="3" fill="#ffffff"/>
+<text x="416.0" y="254" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">NO</text>
+<path d="M 640 250 L 640 262 Q 640 270 632 270 L 528 270 Q 520 270 520 278 L 520 302" fill="none" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="564.0" y="253.0" width="32" height="18" rx="3" fill="#ffffff"/>
+<text x="580.0" y="266" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">NO</text>
+<path d="M 678.0 217.0 L 678.0 274 Q 678.0 282 686.0 282 L 802 282 Q 810 282 810 290 L 810 302" fill="none" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="728.0" y="265.0" width="32" height="18" rx="3" fill="#ffffff"/>
+<text x="744.0" y="278" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">NO</text>
+<path d="M 995 365.0 L 995 462 Q 995 470 987 470 L 918 470 Q 910 470 910 478 L 910 532" fill="none" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="908.5" y="447.0" width="88" height="18" rx="3" fill="#ffffff"/>
+<text x="952.5" y="460" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">GAME CODE</text>
+<path d="M 1165 365.0 L 1165 482 Q 1165 490 1157 490 L 1118 490 Q 1110 490 1110 498 L 1110 532" fill="none" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="1097.5" y="495.0" width="80" height="18" rx="3" fill="#ffffff"/>
+<text x="1137.5" y="508" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">BLOCKOUT</text>
+<path d="M 330 380.0 L 432 380.0 Q 440 380.0 440 388.0 L 440 562.0 Q 440 570.0 448 570.0 L 532 570.0" fill="none" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="365.0" y="357.0" width="40" height="18" rx="3" fill="#ffffff"/>
+<text x="385.0" y="370.0" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">YES</text>
+<path d="M 520 450 L 520 482 Q 520 490 528 490 L 632 490 Q 640 490 640 498 L 640 532" fill="none" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="560.0" y="467.0" width="40" height="18" rx="3" fill="#ffffff"/>
+<text x="580.0" y="480" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">YES</text>
+<path d="M 810 450 L 810 507 Q 810 515 802 515 L 688 515 Q 680 515 680 523 L 680 532" fill="none" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="725.0" y="492.0" width="40" height="18" rx="3" fill="#ffffff"/>
+<text x="745.0" y="505" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">YES</text>
+<line x1="230" y1="450" x2="230" y2="532" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="214.0" y="486.0" width="32" height="18" rx="3" fill="#f6f8fa"/>
+<text x="230" y="499.0" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">NO</text>
+<line x1="640" y1="600" x2="640" y2="782" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<path d="M 80 645.0 L 78 645.0 Q 70 645.0 78 645.0 L 102 645.0 Q 110 645.0 110 653.0 L 110 782" fill="none" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="20.0" y="622.0" width="40" height="18" rx="3" fill="#ffffff"/>
+<text x="40" y="635.0" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">YES</text>
+<path d="M 380 645.0 L 382 645.0 Q 390 645.0 382 645.0 L 358 645.0 Q 350 645.0 350 653.0 L 350 782" fill="none" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="404.0" y="622.0" width="32" height="18" rx="3" fill="#ffffff"/>
+<text x="420" y="635.0" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">NO</text>
+<line x1="640" y1="1000" x2="640" y2="1032" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="620.0" y="1011.0" width="40" height="18" rx="3" fill="#f6f8fa"/>
+<text x="640" y="1024.0" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">YES</text>
+<line x1="640" y1="1100" x2="640" y2="1124" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="1262" x2="640" y2="1286" stroke="#59636e" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="620.0" y="1269.0" width="40" height="18" rx="3" fill="#f6f8fa"/>
+<text x="640" y="1282.0" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">YES</text>
+<rect x="510" y="40" width="260" height="60" rx="30.0" fill="#ffffff"/>
+<rect x="510" y="40" width="260" height="60" rx="30.0" fill="#ffffff" stroke="#1f2328" stroke-width="1"/>
+<text x="640" y="76.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Change to implement</text>
+<polygon points="640,140 735.0,195.0 640,250 545.0,195.0" fill="#ffffff"/>
+<polygon points="640,140 735.0,195.0 640,250 545.0,195.0" fill="#ffffff" stroke="#1f2328" stroke-width="1.2"/>
+<text x="640" y="191.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Unity</text>
+<text x="640" y="211.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">project?</text>
+<polygon points="230,310 330.0,380.0 230,450 130.0,380.0" fill="#ffffff"/>
+<polygon points="230,310 330.0,380.0 230,450 130.0,380.0" fill="#ffffff" stroke="#1f2328" stroke-width="1.2"/>
+<text x="230" y="376.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Auth, secrets, or</text>
+<text x="230" y="396.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">untrusted input?</text>
+<polygon points="520,310 630.0,380.0 520,450 410.0,380.0" fill="#ffffff"/>
+<polygon points="520,310 630.0,380.0 520,450 410.0,380.0" fill="#ffffff" stroke="#1f2328" stroke-width="1.2"/>
+<text x="520" y="376.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Migration, schema,</text>
+<text x="520" y="396.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">or public contract?</text>
+<polygon points="810,310 910.0,380.0 810,450 710.0,380.0" fill="#ffffff"/>
+<polygon points="810,310 910.0,380.0 810,450 710.0,380.0" fill="#ffffff" stroke="#1f2328" stroke-width="1.2"/>
+<text x="810" y="376.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">More than</text>
+<text x="810" y="396.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">one project?</text>
+<polygon points="1080,310 1165.0,365.0 1080,420 995.0,365.0" fill="#ffffff"/>
+<polygon points="1080,310 1165.0,365.0 1080,420 995.0,365.0" fill="#ffffff" stroke="#1f2328" stroke-width="1.2"/>
+<text x="1080" y="361.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Kind of</text>
+<text x="1080" y="381.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">work?</text>
+<rect x="540" y="540" width="200" height="60" rx="30.0" fill="#ffffff"/>
+<rect x="540" y="540" width="200" height="60" rx="30.0" fill="#0969da" fill-opacity="0.08" stroke="#0969da" stroke-width="1"/>
+<text x="640" y="576.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">dev-loop</text>
+<rect x="825" y="540" width="170" height="60" rx="30.0" fill="#ffffff"/>
+<rect x="825" y="540" width="170" height="60" rx="30.0" fill="#ffffff" stroke="#1f2328" stroke-width="1"/>
+<text x="910" y="576.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">dev-loop-unity</text>
+<rect x="1015" y="540" width="190" height="60" rx="30.0" fill="#ffffff"/>
+<rect x="1015" y="540" width="190" height="60" rx="30.0" fill="#ffffff" stroke="#1f2328" stroke-width="1"/>
+<text x="1110" y="576.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">dev-loop-greybox</text>
+<polygon points="230,540 380.0,645.0 230,750 80.0,645.0" fill="#ffffff"/>
+<polygon points="230,540 380.0,645.0 230,750 80.0,645.0" fill="#ffffff" stroke="#1f2328" stroke-width="1.2"/>
+<text x="230" y="631.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Contained, ≤5 files,</text>
+<text x="230" y="651.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">no concurrency,</text>
+<text x="230" y="671.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">no new dependency?</text>
+<polygon points="640,790 800.0,895.0 640,1000 480.0,895.0" fill="#ffffff"/>
+<polygon points="640,790 800.0,895.0 640,1000 480.0,895.0" fill="#ffffff" stroke="#1f2328" stroke-width="1.2"/>
+<text x="640" y="881.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Expensive to miss?</text>
+<text x="640" y="901.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">money, tenant isolation,</text>
+<text x="640" y="921.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">destructive migration</text>
+<rect x="5" y="790" width="210" height="60" rx="30.0" fill="#ffffff"/>
+<rect x="5" y="790" width="210" height="60" rx="30.0" fill="#ffffff" stroke="#1f2328" stroke-width="1"/>
+<text x="110" y="826.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">dev-loop-ultralight</text>
+<rect x="265" y="790" width="170" height="60" rx="30.0" fill="#ffffff"/>
+<rect x="265" y="790" width="170" height="60" rx="30.0" fill="#ffffff" stroke="#1f2328" stroke-width="1"/>
+<text x="350" y="826.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">dev-loop-lite</text>
+<rect x="530" y="1040" width="220" height="60" rx="30.0" fill="#ffffff"/>
+<rect x="530" y="1040" width="220" height="60" rx="30.0" fill="#ffffff" stroke="#1f2328" stroke-width="1"/>
+<text x="640" y="1076.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">dev-loop-ultra</text>
+<polygon points="640,1132 735.0,1197.0 640,1262 545.0,1197.0" fill="#ffffff"/>
+<polygon points="640,1132 735.0,1197.0 640,1262 545.0,1197.0" fill="#ffffff" stroke="#1f2328" stroke-width="1.2"/>
+<text x="640" y="1193.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Severe and</text>
+<text x="640" y="1213.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">irreversible?</text>
+<rect x="525" y="1294" width="230" height="60" rx="30.0" fill="#ffffff"/>
+<rect x="525" y="1294" width="230" height="60" rx="30.0" fill="#0969da" fill-opacity="0.08" stroke="#0969da" stroke-width="1"/>
+<text x="640" y="1330.0" fill="#1f2328" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">dev-loop-ultra-opus</text>
+<line x1="40" y1="1394" x2="1240" y2="1394" stroke="#1f2328" stroke-opacity="0.15" stroke-width="0.8"/>
+<text x="40" y="1428" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">LEGEND</text>
+<polygon points="135.196,1415 146.196,1424 135.196,1433 124.196,1424" fill="#ffffff" stroke="#1f2328" stroke-width="1"/>
+<text x="155.196" y="1428" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Gate / decision</text>
+<rect x="302.096" y="1416" width="20" height="16" rx="8" fill="#ffffff" stroke="#1f2328" stroke-width="1"/>
+<text x="332.096" y="1428" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Loop outcome</text>
+<rect x="454.81600000000003" y="1416" width="20" height="16" rx="8" fill="#0969da" fill-opacity="0.08" stroke="#0969da" stroke-width="1"/>
+<text x="484.81600000000003" y="1428" fill="#59636e" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Default / highest-stakes</text>
+</svg>

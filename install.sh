@@ -79,7 +79,7 @@ if [ -z "$DRY" ]; then
     cp "$HERE/user/CLAUDE.md" "$CLAUDE/CLAUDE.md"; echo "  CLAUDE.md installed"
   fi
 else
-  echo "  would copy agents (22) and skills (5 loops + solution-architecture + coding-standards + 3 walkthrough)"
+  echo "  would copy agents (24) and skills (7 loops + solution-architecture + coding-standards + 3 walkthrough)"
 fi
 
 if [ -n "$REPO" ]; then
@@ -134,7 +134,7 @@ echo "=== Verify ==="
 AGENTS=$(ls -1 "$CLAUDE/agents"/*.md 2>/dev/null | wc -l)
 SKILLS=$(ls -1d "$CLAUDE/skills"/*/ 2>/dev/null | wc -l)
 echo "  $AGENTS agent files, $SKILLS skill folders"
-if [ "$AGENTS" -lt 22 ]; then echo "  ! expected at least 22 agents"; fi
+if [ "$AGENTS" -lt 24 ]; then echo "  ! expected at least 24 agents"; fi
 if [ "$SKILLS" -lt 10 ]; then echo "  ! expected at least 10 skill folders"; fi
 if [ -n "$REPO" ]; then echo "  $(find "$REPO/.claude" -type f | wc -l) files in $REPO/.claude"; fi
 if [ -n "$DID_BACKUP" ]; then echo "  previous agents/skills preserved in $BACKUP"; fi

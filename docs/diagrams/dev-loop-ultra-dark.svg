@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1280 2424" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dev-loop-ultra-dark-title dev-loop-ultra-dark-desc">
+<title id="dev-loop-ultra-dark-title">dev-loop-ultra — the adversarial review loop</title>
+<desc id="dev-loop-ultra-dark-desc">Flowchart of dev-loop-ultra: identical framing, implementation and test phases to dev-loop, but each of the nine review lanes is run as a prosecution/defence/adjudicator triple instead of a single reviewer, two lanes at a time. Verification always runs, and triage escalates to dev-loop-ultra-opus when a lane’s coverage is reported thin twice.</desc>
+<defs>
+<marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#9198a1"/></marker>
+<marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4493f8"/></marker>
+</defs>
+<rect width="100%" height="100%" fill="#0d1117"/>
+<rect x="160" y="40" width="960" height="276" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<text x="180" y="68" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">ENTRY · IMPLEMENT · TEST</text>
+<text x="180" y="86" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">identical to dev-loop — implementation is not changed by this loop</text>
+<rect x="160" y="356" width="960" height="308" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<text x="180" y="384" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">PLAN THE ROUND · DELEGATE</text>
+<rect x="160" y="708" width="960" height="462" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<text x="180" y="736" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">ONE LANE, THREE AGENTS — ALL NINE LANES RUN THIS WAY</text>
+<text x="180" y="754" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">blind to each other</text>
+<rect x="160" y="1210" width="960" height="308" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<text x="180" y="1238" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">TRIAGE · FIX</text>
+<rect x="160" y="1558" width="960" height="724" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<text x="180" y="1586" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">LOOP OR EXIT · VERIFY · SHIP</text>
+<line x1="640" y1="152" x2="640" y2="184" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="292" x2="640" y2="400" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="508" x2="640" y2="532" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="640" x2="640" y2="752" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="470" y1="640" x2="470" y2="752" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="810" y1="640" x2="810" y2="752" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<path d="M 470 860 L 470 875 Q 470 883 478 883 L 592 883 Q 600 883 600 891 L 600 898" fill="none" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<path d="M 810 860 L 810 875 Q 810 883 802 883 L 688 883 Q 680 883 680 891 L 680 898" fill="none" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="1016" x2="640" y2="1042" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="1152" x2="640" y2="1254" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="1362" x2="640" y2="1386" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="1494" x2="640" y2="1602" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="1770" x2="640" y2="1794" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="616.0" y="1777.0" width="48" height="18" rx="3" fill="#151b23"/>
+<text x="640" y="1790.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">PASS</text>
+<line x1="640" y1="1902" x2="640" y2="1926" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="2034" x2="640" y2="2058" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<line x1="640" y1="2166" x2="640" y2="2190" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<path d="M 720 1690.0 L 1172 1690.0 Q 1180 1690.0 1180 1682.0 L 1180 466.0 Q 1180 458.0 1172 458.0 L 968 458.0" fill="none" stroke="#4493f8" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+<rect x="1136.0" y="1065.0" width="88" height="18" rx="3" fill="#0d1117"/>
+<text x="1180" y="1078.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">ROUND + 1</text>
+<path d="M 320 1312.0 L 96 1312.0 Q 88 1312.0 88 1320.0 L 88 1642.0 Q 88 1650.0 96 1650.0 L 168 1650.0" fill="none" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="48.0" y="1472.0" width="80" height="18" rx="3" fill="#0d1117"/>
+<text x="88" y="1485.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">ESCALATE</text>
+<line x1="560" y1="1730.0" x2="484" y2="1730.0" stroke="#9198a1" stroke-width="1" marker-end="url(#arrow)"/>
+<rect x="482.0" y="1707.0" width="72" height="18" rx="3" fill="#151b23"/>
+<text x="518.0" y="1720.0" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">BLOCKED</text>
+<rect x="530" y="92" width="220" height="60" rx="30.0" fill="#0d1117"/>
+<rect x="530" y="92" width="220" height="60" rx="30.0" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="128.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">/dev-loop-ultra</text>
+<rect x="320" y="192" width="640" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="192" width="640" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="226" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phases 0 to 2 — Frame, implement, test</text>
+<text x="640" y="254" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Same brief.md + notes.md, same sidekick tiers — ultra buys scrutiny, not code</text>
+<rect x="320" y="408" width="640" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="408" width="640" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="442" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 3 — Plan the round</text>
+<text x="640" y="470" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Classify lanes · snapshot tree · scratch worktree for the Tests pair</text>
+<rect x="320" y="540" width="640" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="540" width="640" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="574" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 4 — Adversarial review</text>
+<text x="640" y="602" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Each applicable lane, three agents in sequence — 2 lanes/4 reviewers at a time</text>
+<rect x="320" y="760" width="300" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="760" width="300" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="470" y="794" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">reviewer-ultra-prosecution</text>
+<text x="470" y="822" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Recall — assumes the code is broken</text>
+<rect x="660" y="760" width="300" height="100" rx="6" fill="#0d1117"/>
+<rect x="660" y="760" width="300" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="810" y="794" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">reviewer-ultra-defence</text>
+<text x="810" y="822" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Precision — assumes the code is correct</text>
+<rect x="430" y="906" width="320" height="110" rx="6" fill="#0d1117"/>
+<rect x="430" y="906" width="320" height="110" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="590" y="940" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">reviewer-ultra-adjudicator</text>
+<text x="590" y="968" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Produces the lane’s authoritative set</text>
+<rect x="815" y="906" width="280" height="110" rx="6" fill="#0d1117"/>
+<rect x="815" y="906" width="280" height="110" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="955" y="940" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">What the lead reads</text>
+<text x="955" y="968" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Only .json + coverage line</text>
+<rect x="170" y="1056" width="460" height="90" rx="6" fill="#0d1117"/>
+<rect x="170" y="1056" width="460" height="90" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="400.0" y="1084" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">4 lanes</text>
+<rect x="340.0" y="1094" width="120" height="20" rx="3" fill="none" stroke="#656c76" stroke-width="0.8"/>
+<text x="400.0" y="1108" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">OPUS · HIGH</text>
+<text x="400.0" y="1132" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">requirements · technical · architecture · security</text>
+<rect x="650" y="1056" width="460" height="90" rx="6" fill="#0d1117"/>
+<rect x="650" y="1056" width="460" height="90" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="880.0" y="1084" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">5 lanes</text>
+<rect x="820.0" y="1094" width="120" height="20" rx="3" fill="none" stroke="#656c76" stroke-width="0.8"/>
+<text x="880.0" y="1108" fill="#656c76" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle" letter-spacing="0.03em">SONNET · HIGH</text>
+<text x="880.0" y="1132" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">standards · tests · deadcode · minimal · artifacts</text>
+<rect x="320" y="1262" width="640" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="1262" width="640" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="1296" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 5 — Triage</text>
+<text x="640" y="1324" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Cluster by cause · gate on evidence &amp; cause · read each lane’s coverage line</text>
+<rect x="320" y="1394" width="640" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="1394" width="640" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="1428" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 6 — Fix</text>
+<text x="640" y="1456" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">One brief; regression test fails → fix → passes; technical always reruns</text>
+<polygon points="640,1610 720.0,1690.0 640,1770 560.0,1690.0" fill="#0d1117"/>
+<polygon points="640,1610 720.0,1690.0 640,1770 560.0,1690.0" fill="#4493f8" fill-opacity="0.12" stroke="#4493f8" stroke-width="1.2"/>
+<text x="640" y="1686.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Loop or</text>
+<text x="640" y="1706.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">exit?</text>
+<rect x="320" y="1802" width="640" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="1802" width="640" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="1836" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 8 — Verification</text>
+<text x="640" y="1864" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">reviewer-verify, opus — spawned every round, always, not only when risky</text>
+<rect x="320" y="1934" width="640" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="1934" width="640" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="1968" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 8b — Walkthrough</text>
+<text x="640" y="1996" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">From notes.md · adds raised_p/raised_d/kept per lane to Reviewers section</text>
+<rect x="320" y="2066" width="640" height="100" rx="6" fill="#0d1117"/>
+<rect x="320" y="2066" width="640" height="100" rx="6" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="2100" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Phase 9 — Commit, push, pull request</text>
+<text x="640" y="2128" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">Stage incl. untracked · verify diff · PR states this was an adversarial run</text>
+<rect x="530" y="2198" width="220" height="60" rx="30.0" fill="#0d1117"/>
+<rect x="530" y="2198" width="220" height="60" rx="30.0" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="640" y="2234.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">PR opened</text>
+<rect x="176" y="1610.0" width="300" height="158" rx="16" fill="#0d1117"/>
+<rect x="176" y="1610.0" width="300" height="158" rx="16" fill="#0d1117" stroke="#9198a1" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="192" y1="1689.0" x2="460" y2="1689.0" stroke="#f0f6fc" stroke-opacity="0.15" stroke-width="0.8"/>
+<text x="326.0" y="1638.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">ESCALATE → dev-loop-ultra-opus</text>
+<text x="326.0" y="1658.0" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">coverage: both thin, twice, on a Critical lane</text>
+<text x="326.0" y="1715.0" fill="#f0f6fc" font-size="17" font-weight="600" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">BLOCKED — stop &amp; report</text>
+<text x="326.0" y="1735.0" fill="#9198a1" font-size="14" font-family="system-ui, -apple-system, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif" text-anchor="middle">round&gt;3 · same fix twice · no progress</text>
+<text x="245" y="784" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">PROSECUTION HOT →</text>
+<text x="245" y="802" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">FEW SURVIVE</text>
+<text x="245" y="838" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">DEFENCE QUIET →</text>
+<text x="245" y="856" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">DRIFTS AGREEABLE</text>
+<text x="245" y="892" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">BOTH AGREE →</text>
+<text x="245" y="910" fill="#9198a1" font-size="14" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" text-anchor="middle">NOT OPPOSING</text>
+<line x1="40" y1="2322" x2="1240" y2="2322" stroke="#f0f6fc" stroke-opacity="0.15" stroke-width="0.8"/>
+<text x="40" y="2356" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" letter-spacing="0.1em">LEGEND</text>
+<rect x="125.196" y="2344" width="20" height="16" rx="3" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="155.196" y="2356" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Phase / step</text>
+<polygon points="287.916,2343 298.916,2352 287.916,2361 276.916,2352" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="307.916" y="2356" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Gate / decision</text>
+<rect x="454.81600000000003" y="2344" width="20" height="16" rx="3" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="484.81600000000003" y="2356" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Review lane</text>
+<rect x="599.476" y="2344" width="20" height="16" rx="8" fill="#0d1117" stroke="#f0f6fc" stroke-width="1"/>
+<text x="629.476" y="2356" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Entry / exit</text>
+<rect x="752.196" y="2344" width="20" height="16" rx="8" fill="#0d1117" stroke="#9198a1" stroke-width="1" stroke-dasharray="3,2"/>
+<text x="782.196" y="2356" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Blocked / escalate</text>
+<line x1="953.2760000000001" y1="2352" x2="973.2760000000001" y2="2352" stroke="#4493f8" stroke-width="2.6"/>
+<text x="983.2760000000001" y="2356" fill="#9198a1" font-size="13" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace">Loop-back</text>
+</svg>
