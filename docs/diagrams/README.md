@@ -16,6 +16,8 @@ they are rule sets and sub-steps, not loops.
 | `dev-loop-ultra-opus.drawio` | `/dev-loop-ultra-opus` | The two deltas on ultra: model on every agent, and concurrency |
 | `backlog-refinement.drawio` | `/backlog-refinement` | The selector, the per-item cycle, the `grill-me` handover, and the two gates that stop a write |
 | `implement-sprint.drawio` | `/implement-sprint` | Skip sources, ordering by supersession, and the six checkpoints that are not configurable |
+| `dev-loop-unity.drawio` | `/dev-loop-unity` | dev-loop's five changes for Unity: batchmode validation, the Unity lane, and escalation that carries both forward |
+| `dev-loop-greybox.drawio` | `/dev-loop-greybox` | dev-loop-lite's six changes for greybox work: the art brief, ShotCapture, the two-wave Unity/Visual lanes, and shots that ship with the walkthrough |
 
 `png/` holds a render of each, quantized to a 128-colour palette — these are flat
 diagrams, so it is lossless in practice and about a quarter the size. Those are
@@ -24,8 +26,9 @@ what the root README embeds. Regenerate them whenever you edit a `.drawio`.
 `dev-loops.pdf` is the five loops as one booklet, ordered the way you choose
 between them. `dev-loops.drawio` is its multi-page source — each page is spliced
 verbatim from the single-loop file beside it, so edit the single-loop file and
-re-splice rather than editing the booklet. The selection and tracker diagrams are
-not in the booklet.
+re-splice rather than editing the booklet. The selection and tracker diagrams —
+and, for the same reason, the two Unity loops — are not in the booklet; it is
+"the five loops," not every loop.
 
 Colour vocabulary, shared with `../dev-loop-flow.mmd`: dark blue for a phase the
 lead owns, pale blue for an agent's work or an artifact, yellow for a gate or

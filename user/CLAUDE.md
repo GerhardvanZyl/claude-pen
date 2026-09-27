@@ -57,6 +57,8 @@ Work **down** this list and stop at the first loop that fits. Nine of ten change
 
 **When unsure, go heavier.** The savings never justify a missed Critical. But note the cost column: `ultra` is three times a full run and `ultra-opus` roughly eight. Reaching past the point where the extra scrutiny changes the outcome is spending, not diligence — and the honest default for most work remains `dev-loop`.
 
+**Unity repos:** `/dev-loop-unity` for code, `/dev-loop-greybox` for blockouts and visual prototypes. Both follow a base loop and override only what differs.
+
 **Escalation is one-way and mandatory.** It climbs the same ladder:
 
 | Loop | Escalate when | To |

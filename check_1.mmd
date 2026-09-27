@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant U as User
+    participant L as Lead
+    participant DLL as dev-loop-lite (base)
+    participant SC as Unity batchmode (ShotCapture.Run)
+    participant W1 as Wave 1 — lite's 4 lanes
+    participant W2 as Wave 2 — Unity + Visual
+
+    U->>L: /dev-loop-greybox
+    L->>DLL: read dev-loop-greybox/SKILL.md, then dev-loop-lite/SKILL.md
+    L->>L: Phase 0 -- brief.md + art brief (named-shot table)
+    L->>L: Phase 1 -- build blockout, place Shot_<name> cameras
+    L->>SC: batchmode -executeMethod ShotCapture.Run (after Phase 2, after every Fix)
+    SC-->>L: round-N/shots/<name>.png, exit 0
+    L->>W1: spawn lite's 4 lanes, let it drain
+    L->>W2: spawn Unity + Visual as a second wave
+    W2-->>L: unity.json, visual.json (both scopes: change base + round base)
+    L->>L: Phase 5 -- Triage, one combined round across both waves

@@ -63,8 +63,8 @@ Backup-Tree (Join-Path $claude 'agents') 'agents'
 Backup-Tree (Join-Path $claude 'skills') 'skills'
 if ($didBackup) { Write-Host "  backed up existing agents/skills -> $backup" -ForegroundColor Yellow }
 
-Copy-Tree (Join-Path $here 'user\.claude\agents') (Join-Path $claude 'agents') 'agents (22)'
-$skillsLabel = 'skills (5 loops + solution-architecture + coding-standards + 3 walkthrough)'
+Copy-Tree (Join-Path $here 'user\.claude\agents') (Join-Path $claude 'agents') 'agents (24)'
+$skillsLabel = 'skills (7 loops + solution-architecture + coding-standards + 3 walkthrough)'
 Copy-Tree (Join-Path $here 'user\.claude\skills') (Join-Path $claude 'skills') $skillsLabel
 if (-not $WhatIfOnly) {
     $userClaude = Join-Path $here 'user\CLAUDE.md'
@@ -129,7 +129,7 @@ Write-Host "`n=== Verify ===" -ForegroundColor Cyan
 $agents = (Get-ChildItem (Join-Path $claude 'agents') -Filter *.md -ErrorAction SilentlyContinue).Count
 $skills = (Get-ChildItem (Join-Path $claude 'skills') -Directory -ErrorAction SilentlyContinue).Count
 Write-Host "  $agents agent files, $skills skill folders in $claude"
-if ($agents -lt 22) { Write-Host "  ! expected at least 22 agents" -ForegroundColor Yellow }
+if ($agents -lt 24) { Write-Host "  ! expected at least 24 agents" -ForegroundColor Yellow }
 if ($skills -lt 10) { Write-Host "  ! expected at least 10 skill folders" -ForegroundColor Yellow }
 if ($Repo) {
     $ps = (Get-ChildItem (Join-Path $Repo '.claude') -Recurse -File).Count

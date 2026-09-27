@@ -14,6 +14,7 @@ the code. Plain markdown — no runtime, nothing to build.
 - [Choosing a loop](#choosing-a-loop)
 - [How a loop works](#how-a-loop-works)
 - [The adversarial loops](#the-adversarial-loops)
+- [Unity loops](#unity-loops)
 - [Backlog refinement](#backlog-refinement)
 - [Sprint orchestration](#sprint-orchestration)
 - [Cost](#cost)
@@ -39,6 +40,14 @@ are invoked by them.
 
 All five run the same shape: **frame → implement → tests → review lanes → triage
 → fix → loop → verify → walkthrough → PR.** Only review depth and bounds differ.
+
+**Two Unity loops**, layered onto the two above for Unity repos — no cost
+figures, since `docs/cost-model.py` doesn't model them:
+
+| Skill | Review shape | Rounds | Overrides |
+| --- | --- | --- | --- |
+| `/dev-loop-unity` | 9 gated lanes plus a Unity lane | 3 | `/dev-loop` |
+| `/dev-loop-greybox` | 4 consolidated lanes plus Unity and Visual, in a second wave | 2 | `/dev-loop-lite` |
 
 **The two tracker skills:**
 
@@ -126,6 +135,9 @@ concerns only). Where a document and the graph disagree, **the graph wins**.
 /dev-loop-ultra        change the tenant filter on the reporting query
 /dev-loop-ultra-opus   migrate the events table to the new partition key
 
+/dev-loop-unity        add a new pickup interaction to the inventory system
+/dev-loop-greybox      block out the tutorial room and light it
+
 /backlog-refinement                       the current sprint
 /backlog-refinement sprint "Sprint 12"    a named sprint or milestone
 /backlog-refinement 1234, 1235, 1240      explicit items, in that order
@@ -154,6 +166,11 @@ committed: `.claude/review/conventions.md` and `docs/walkthroughs/<slug>.md`.
 ## Choosing a loop
 
 ![Choosing a loop](docs/diagrams/png/loop-selection.png)
+
+Unity repos substitute a loop rather than adding a branch to this tree: code
+goes to `/dev-loop-unity` wherever this chart would say `/dev-loop`, and
+blockouts or visual prototypes go to `/dev-loop-greybox` wherever it would say
+`/dev-loop-lite`.
 
 ---
 
@@ -233,6 +250,28 @@ one lane at a time. It raises the **model** tier, not effort: the Agent tool has
 `model` parameter and no `effort` parameter, so effort is whatever the agent file
 declares. `sidekick-heavy` reaches `xhigh` only because it is a separate file
 that declares it.
+
+---
+
+## Unity loops
+
+![The dev-loop-unity loop](docs/diagrams/png/dev-loop-unity.png)
+
+`/dev-loop-unity` is `/dev-loop` plus Unity batchmode validation — compile
+check, EditMode tests, PlayMode tests, and an Editor-lock precondition before
+every run — and a tenth lane, Unity (opus, high), owning serialized-field data
+loss, asset/`.meta` integrity, and lifecycle-order defects. Escalation to
+`dev-loop-ultra` carries all five changes forward.
+
+![The dev-loop-greybox loop](docs/diagrams/png/dev-loop-greybox.png)
+
+`/dev-loop-greybox` is `/dev-loop-lite` plus an art brief with named shots, a
+`ShotCapture` batchmode step run after Tests and after every Fix round, and two
+more lanes — Unity (sonnet) and Visual (opus) — spawned as a second wave after
+lite's four. A missing shot fails the definition of done outright; escalation
+goes to `dev-loop-unity`, not the full loop.
+
+Neither diagram is in `dev-loops.pdf` — see `docs/diagrams/README.md`.
 
 ---
 

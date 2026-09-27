@@ -1,0 +1,25 @@
+flowchart LR
+    subgraph Base["Base loops (untouched, byte-identical to aa3aaab)"]
+        DL["dev-loop skill"]
+        DLL["dev-loop-lite skill"]
+    end
+    subgraph New["New this change"]
+        DLU["dev-loop-unity skill\n(5 Change N sections)"]
+        DLG["dev-loop-greybox skill\n(6 Change N sections)"]
+        RU["reviewer-unity agent"]
+        RV["reviewer-visual agent"]
+        SC["ShotCapture.cs\n(verified in real Unity, ported byte-identical)"]
+        BM["unity-batchmode.md\n(lead-only reference)"]
+    end
+    Test["tests/override-headings.sh\ndrift guard"]
+
+    DLU -->|"Follow ... in full"| DL
+    DLG -->|"Follow ... in full"| DLL
+    DLU --> RU
+    DLG --> RU
+    DLG --> RV
+    DLG -->|copies in if absent| SC
+    DLU --> BM
+    DLG --> BM
+    Test -->|asserts quoted headings exist verbatim in| DL
+    Test -->|asserts quoted headings exist verbatim in| DLL
