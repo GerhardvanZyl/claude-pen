@@ -1,58 +1,50 @@
 #!/usr/bin/env python3
-"""Export a diagram-design HTML file to png/<name>.png.
+"""Export .drawio diagrams to png/<name>.png, or bind the loop PNGs into a booklet.
 
-Follows the diagram-design export procedure (diagram only, the first <svg>),
-but renders with headless Chrome instead of Playwright:
-
-    python export.py dev-loop.html [more.html ...]
+    python export.py dev-loop.drawio [more.drawio ...]
     python export.py --booklet dev-loop-ultralight dev-loop-lite ...   # PNGs -> dev-loops.pdf
 
-Needs Chrome (or Edge) and Pillow. Output is quantized to 128 colours.
+Needs the draw.io desktop app, Chrome (or Edge) for the booklet, and Pillow.
+PNGs are quantized to 128 colours.
 """
 import os
-import re
+import shutil
 import subprocess
 import sys
 import tempfile
 
 from PIL import Image
 
-SCALE = 2
+DRAWIO = [
+    r"C:\Program Files\draw.io\draw.io.exe",
+    "/Applications/draw.io.app/Contents/MacOS/draw.io",
+    "drawio",
+    "draw.io",
+]
 BROWSERS = [
     r"C:\Program Files\Google\Chrome\Application\chrome.exe",
     r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
     "google-chrome",
     "chromium",
 ]
-FONTS = ("@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1"
-         "&amp;family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;display=swap');")
+
+
+def find(candidates, what):
+    for candidate in candidates:
+        if os.path.isfile(candidate) or shutil.which(candidate):
+            return candidate
+    sys.exit("No %s found" % what)
 
 
 def browser():
-    for candidate in BROWSERS:
-        if os.path.isfile(candidate) or not os.path.isabs(candidate):
-            return candidate
-    sys.exit("No Chrome or Edge found")
+    return find(BROWSERS, "Chrome or Edge")
 
 
-def export(html_path):
-    html = open(html_path, encoding="utf-8").read()
-    svg = re.search(r"<svg\b.*?</svg>", html, re.S).group(0)
-    width, height = (float(v) for v in re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg).groups())
-    page = ("<!doctype html><html><head><style>" + FONTS.replace("&amp;", "&")
-            + "html,body{margin:0;background:#f5f5f5}svg{display:block;width:%dpx;height:%dpx}"
-            % (width, height) + "</style></head><body>" + svg + "</body></html>")
-
-    out = os.path.join(os.path.dirname(os.path.abspath(html_path)), "png",
-                       os.path.splitext(os.path.basename(html_path))[0] + ".png")
-    with tempfile.TemporaryDirectory() as tmp:
-        src = os.path.join(tmp, "page.html")
-        open(src, "w", encoding="utf-8").write(page)
-        subprocess.run([browser(), "--headless=new", "--hide-scrollbars", "--virtual-time-budget=5000",
-                        "--force-device-scale-factor=%d" % SCALE,
-                        "--window-size=%d,%d" % (width, height),
-                        "--screenshot=" + out, "file:///" + src.replace("\\", "/")],
-                       check=True, capture_output=True)
+def export(drawio_path):
+    out = os.path.join(os.path.dirname(os.path.abspath(drawio_path)), "png",
+                       os.path.splitext(os.path.basename(drawio_path))[0] + ".png")
+    subprocess.run([find(DRAWIO, "draw.io"), "-x", "-f", "png", "-b", "20", "--width", "2000",
+                    "-o", out, drawio_path], check=True, capture_output=True)
     image = Image.open(out).convert("RGB").quantize(colors=128)
     image.save(out, optimize=True)
     print(out)

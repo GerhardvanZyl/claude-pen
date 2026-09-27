@@ -28,6 +28,8 @@ the code. Plain markdown — no runtime, nothing to build.
 Fourteen skills, twenty-five subagents. The loops are what you invoke; the rest
 are invoked by them.
 
+![How the skills hand off to each other](docs/diagrams/png/skills-overview.png)
+
 **The five dev loops** — pick one per change:
 
 | Skill | Review shape | Rounds | Cost |
