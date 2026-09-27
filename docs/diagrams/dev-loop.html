@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dev-loop</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --color-paper:   #f5f5f5;
+    --color-ink:     #2d3142;
+    --color-muted:   #4f5d75;
+    --color-accent:  #eb6c36;
+    --font-sans:     'Geist', system-ui, sans-serif;
+    --font-serif:    'Instrument Serif', serif;
+    --font-mono:     'Geist Mono', ui-monospace, monospace;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+  }
+  .frame { max-width: 1280px; width: 100%; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 0.5rem;
+  }
+  h1 {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--color-ink);
+    margin-bottom: 1.25rem;
+  }
+  svg { width: 100%; min-width: 900px; display: block; }
+  svg text { font-family: var(--font-sans); }
+</style>
+</head>
+<body>
+<div class="frame">
+  <p class="eyebrow">Development loop · Diagram Design</p>
+  <h1>dev-loop &mdash; nine gated lanes, triage gates, escalation</h1>
+
+  <svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dev-loop-title dev-loop-desc">
+    <title id="dev-loop-title">dev-loop: nine-lane gated review with triage gates and escalation</title>
+    <desc id="dev-loop-desc">Swimlane diagram of the full dev-loop across Lead, Implementation, Review, and Verify &amp; Ship lanes: three rounds of nine review lanes spawned in three waves of up to four, the evidence and cause triage gates, and escalation to dev-loop-ultra.</desc>
+    <defs>
+      <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+      <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+    </defs>
+
+    <style>
+      .lane-div   { stroke: rgba(45,49,66,0.14); stroke-width: 0.8; }
+      .lane-lbl   { font: 500 8px 'Geist Mono'; letter-spacing: 0.14em; text-transform: uppercase; fill: #4f5d75; }
+      .zone-lbl   { font: 500 7px 'Geist Mono'; letter-spacing: 0.10em; text-transform: uppercase; fill: #7a8399; }
+      .box        { fill: #ffffff; stroke: #2d3142; stroke-width: 1; }
+      .chip       { fill: #ffffff; stroke: #2d3142; stroke-width: 0.8; }
+      .zone       { fill: #ececec; stroke: rgba(45,49,66,0.16); stroke-width: 1; }
+      .focal      { fill: rgba(235,108,54,0.08); stroke: #eb6c36; stroke-width: 1.2; }
+      .focal-tag  { fill: transparent; stroke: #eb6c36; stroke-width: 0.8; }
+      .focal-tag-t{ font: 500 6.5px 'Geist Mono'; letter-spacing: 0.04em; fill: #eb6c36; }
+      .ext        { fill: rgba(45,49,66,0.03); stroke: rgba(45,49,66,0.32); stroke-width: 1; stroke-dasharray: 4,3; }
+      .paper-mask { fill: #f5f5f5; }
+      .name       { font: 600 12px 'Geist'; fill: #2d3142; }
+      .name-sm    { font: 600 11px 'Geist'; fill: #2d3142; }
+      .sub        { font: 400 9px 'Geist Mono'; fill: #4f5d75; }
+      .gate       { font: 400 7px 'Geist Mono'; fill: #7a8399; }
+      .gate-ext   { font: 400 7px 'Geist Mono'; fill: #7a8399; }
+      .arrow-lbl  { font: 500 8px 'Geist Mono'; letter-spacing: 0.06em; fill: #4f5d75; text-anchor: middle; }
+      .arrow-lbl-a{ font: 500 8px 'Geist Mono'; letter-spacing: 0.06em; fill: #eb6c36; text-anchor: middle; }
+      .caption    { font: 400 7px 'Geist Mono'; fill: #7a8399; }
+      .legend-t   { font: 400 8px 'Geist Mono'; letter-spacing: 0.05em; fill: #4f5d75; }
+    </style>
+
+    <rect width="100%" height="100%" fill="#f5f5f5"/>
+
+    <!-- ===== lane dividers ===== -->
+    <g class="lane-div">
+      <line x1="40" y1="40"  x2="1240" y2="40"/>
+      <line x1="40" y1="128" x2="1240" y2="128"/>
+      <line x1="40" y1="216" x2="1240" y2="216"/>
+      <line x1="40" y1="488" x2="1240" y2="488"/>
+      <line x1="40" y1="648" x2="1240" y2="648"/>
+    </g>
+    <g class="lane-lbl">
+      <text x="64" y="54">LEAD</text>
+      <text x="64" y="142">IMPLEMENTATION</text>
+      <text x="64" y="230">REVIEW &middot; 9 LANES</text>
+      <text x="64" y="502">VERIFY &amp; SHIP</text>
+    </g>
+    <g class="caption">
+      <text x="64" y="248">SCOPE R1: CHANGE BASE</text>
+      <text x="64" y="259">SCOPE R2&ndash;3: + ROUND BASE</text>
+    </g>
+
+    <!-- ===== zones (review waves) — painted before arrows/nodes ===== -->
+    <g>
+      <rect class="zone" x="476" y="228" width="152" height="240" rx="8"/>
+      <rect class="zone" x="644" y="228" width="152" height="240" rx="8"/>
+      <rect class="zone" x="812" y="228" width="152" height="84"  rx="8"/>
+    </g>
+    <g class="zone-lbl">
+      <text x="484" y="242">WAVE 1 &middot; 4 PARALLEL</text>
+      <text x="652" y="242">WAVE 2 &middot; 4 PARALLEL</text>
+      <text x="820" y="242">WAVE 3 &middot; 1 LANE</text>
+    </g>
+
+    <!-- ===== arrows (drawn before nodes) ===== -->
+    <g fill="none" stroke="#4f5d75" stroke-width="1">
+      <!-- Frame -> Implement (routed via Frame's right edge to clear the IMPLEMENTATION lane label) -->
+      <path d="M 148 94 L 156 94 Q 164 94 164 102 L 164 176" marker-end="url(#arrow)"/>
+      <!-- Implement -> Tests (shared y, straight) -->
+      <line x1="248" y1="176" x2="264" y2="176" marker-end="url(#arrow)"/>
+      <!-- Tests -> Plan (attach at Plan bottom x=400) -->
+      <path d="M 306 152 L 306 135 Q 306 127 314 127 L 392 127 Q 400 127 400 119 L 400 120" marker-end="url(#arrow)"/>
+      <!-- Plan (attach x=424) -> Wave1 zone -->
+      <path d="M 424 120 L 424 250 Q 424 250 432 250 L 468 250 Q 476 250 476 250" marker-end="url(#arrow)"/>
+      <!-- Wave1 -> Wave2 (shared y, straight) -->
+      <line x1="628" y1="250" x2="644" y2="250" marker-end="url(#arrow)"/>
+      <!-- Wave2 -> Wave3 (shared y, straight) -->
+      <line x1="796" y1="250" x2="812" y2="250" marker-end="url(#arrow)"/>
+      <!-- Wave3 -> Triage (vertical run at x=964, clear of the Fix box at x=980-1092) -->
+      <path d="M 964 250 L 964 108 Q 964 100 972 100 L 980 100" marker-end="url(#arrow)"/>
+      <!-- Triage -> Fix (shared x, straight) -->
+      <line x1="1036" y1="124" x2="1036" y2="152" marker-end="url(#arrow)"/>
+      <!-- Fix -> Plan loop-back (dashed, attach x=1000, loop x=448) -->
+      <path d="M 1000 200 L 1000 654 L 448 654 L 448 120" fill="none" stroke="#4f5d75" stroke-width="1" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+      <!-- Fix -> Verify pass path (attach x=1064) -->
+      <path d="M 1064 200 L 1064 470 Q 1064 470 1072 470 L 1160 470 Q 1168 470 1168 478 L 1168 496" marker-end="url(#arrow)"/>
+      <!-- Verify -> Walkthrough (shared x, straight) -->
+      <line x1="1168" y1="540" x2="1168" y2="548" marker-end="url(#arrow)"/>
+      <!-- Walkthrough -> PR (shared x, straight) -->
+      <line x1="1168" y1="592" x2="1168" y2="600" marker-end="url(#arrow)"/>
+    </g>
+    <!-- Triage -> Escalate (dashed, accent) -->
+    <line x1="1092" y1="92" x2="1108" y2="92" fill="none" stroke="#eb6c36" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#arrow-accent)"/>
+
+    <!-- ===== arrow labels (masked) ===== -->
+    <g>
+      <rect class="paper-mask" x="678" y="632" width="56" height="12" rx="2"/>
+      <text class="arrow-lbl" x="706" y="641">LOOP &times;3</text>
+      <rect class="paper-mask" x="1040" y="326" width="48" height="12" rx="2"/>
+      <text class="arrow-lbl" x="1064" y="335">PASS</text>
+    </g>
+    <g class="caption">
+      <text x="620" y="618" text-anchor="middle">blocked: &gt;3 rounds, no progress, or a repeat concern</text>
+    </g>
+
+    <!-- ===== nodes: Lead lane ===== -->
+    <g>
+      <rect class="box" x="48" y="70" width="100" height="48" rx="6"/>
+      <text class="name-sm" x="98" y="92" text-anchor="middle">Frame</text>
+      <text class="sub" x="98" y="106" text-anchor="middle">brief &middot; run dir</text>
+    </g>
+    <g>
+      <rect class="box" x="350" y="64" width="124" height="56" rx="6"/>
+      <text class="name-sm" x="412" y="86" text-anchor="middle">Plan round</text>
+      <text class="sub" x="412" y="100" text-anchor="middle">classify + snapshot</text>
+      <text class="gate" x="412" y="112" text-anchor="middle">tree (before): sha</text>
+    </g>
+    <g>
+      <rect class="paper-mask" x="980" y="60" width="112" height="64" rx="6"/>
+      <rect class="focal" x="980" y="60" width="112" height="64" rx="6"/>
+      <text class="name-sm" x="1036" y="80" text-anchor="middle">Triage</text>
+      <rect class="focal-tag" x="988" y="86" width="47" height="12" rx="2"/>
+      <text class="focal-tag-t" x="1011" y="94.5" text-anchor="middle">EVIDENCE</text>
+      <rect class="focal-tag" x="1037" y="86" width="47" height="12" rx="2"/>
+      <text class="focal-tag-t" x="1060" y="94.5" text-anchor="middle">CAUSE</text>
+      <text class="gate" x="1036" y="112" text-anchor="middle">re-digest: tree (after)</text>
+    </g>
+    <g>
+      <rect class="paper-mask" x="1108" y="60" width="120" height="64" rx="6"/>
+      <rect class="ext" x="1108" y="60" width="120" height="64" rx="6"/>
+      <text class="name-sm" x="1168" y="80" text-anchor="middle">Escalate</text>
+      <text class="sub" x="1168" y="93" text-anchor="middle">dev-loop-ultra</text>
+      <text class="gate-ext" x="1168" y="105" text-anchor="middle">unexpected-lane critical</text>
+      <text class="gate-ext" x="1168" y="115" text-anchor="middle">or repeat after fix</text>
+    </g>
+
+    <!-- ===== nodes: Implementation lane ===== -->
+    <g>
+      <rect class="box" x="164" y="152" width="84" height="48" rx="6"/>
+      <text class="name-sm" x="206" y="174" text-anchor="middle">Implement</text>
+      <text class="sub" x="206" y="188" text-anchor="middle">sidekick</text>
+    </g>
+    <g>
+      <rect class="box" x="264" y="152" width="84" height="48" rx="6"/>
+      <text class="name-sm" x="306" y="174" text-anchor="middle">Tests</text>
+      <text class="sub" x="306" y="188" text-anchor="middle">sidekick</text>
+    </g>
+    <g>
+      <rect class="box" x="980" y="152" width="112" height="48" rx="6"/>
+      <text class="name-sm" x="1036" y="174" text-anchor="middle">Fix</text>
+      <text class="sub" x="1036" y="188" text-anchor="middle">sidekick(-heavy)</text>
+    </g>
+
+    <!-- ===== nodes: Review lane chips ===== -->
+    <g>
+      <!-- Wave 1 -->
+      <rect class="chip" x="484" y="252" width="136" height="44" rx="4"/>
+      <text class="name-sm" x="552" y="266" text-anchor="middle">Requirements</text>
+      <text class="sub" x="552" y="278" text-anchor="middle">opus &middot; high</text>
+      <text class="gate" x="552" y="289" text-anchor="middle">always</text>
+
+      <rect class="chip" x="484" y="304" width="136" height="44" rx="4"/>
+      <text class="name-sm" x="552" y="318" text-anchor="middle">Technical</text>
+      <text class="sub" x="552" y="330" text-anchor="middle">opus &middot; xhigh</text>
+      <text class="gate" x="552" y="341" text-anchor="middle">always</text>
+
+      <rect class="chip" x="484" y="356" width="136" height="44" rx="4"/>
+      <text class="name-sm" x="552" y="370" text-anchor="middle">Tests</text>
+      <text class="sub" x="552" y="382" text-anchor="middle">sonnet &middot; high</text>
+      <text class="gate" x="552" y="393" text-anchor="middle">always</text>
+
+      <rect class="chip" x="484" y="408" width="136" height="44" rx="4"/>
+      <text class="name-sm" x="552" y="422" text-anchor="middle">Architecture</text>
+      <text class="sub" x="552" y="434" text-anchor="middle">opus &middot; xhigh</text>
+      <text class="gate" x="552" y="445" text-anchor="middle">types/deps moved</text>
+    </g>
+    <g>
+      <!-- Wave 2 -->
+      <rect class="chip" x="652" y="252" width="136" height="44" rx="4"/>
+      <text class="name-sm" x="720" y="266" text-anchor="middle">Standards</text>
+      <text class="sub" x="720" y="278" text-anchor="middle">sonnet &middot; high</text>
+      <text class="gate" x="720" y="289" text-anchor="middle">any source file</text>
+
+      <rect class="chip" x="652" y="304" width="136" height="44" rx="4"/>
+      <text class="name-sm" x="720" y="318" text-anchor="middle">Security</text>
+      <text class="sub" x="720" y="330" text-anchor="middle">opus &middot; xhigh</text>
+      <text class="gate" x="720" y="341" text-anchor="middle">input/authz/IO/deps</text>
+
+      <rect class="chip" x="652" y="356" width="136" height="44" rx="4"/>
+      <text class="name-sm" x="720" y="370" text-anchor="middle">Dead code</text>
+      <text class="sub" x="720" y="382" text-anchor="middle">sonnet &middot; high</text>
+      <text class="gate" x="720" y="393" text-anchor="middle">paths removed/refactored</text>
+
+      <rect class="chip" x="652" y="408" width="136" height="44" rx="4"/>
+      <text class="name-sm" x="720" y="422" text-anchor="middle">Minimalism</text>
+      <text class="sub" x="720" y="434" text-anchor="middle">sonnet &middot; high</text>
+      <text class="gate" x="720" y="445" text-anchor="middle">guards/wrappers added</text>
+    </g>
+    <g>
+      <!-- Wave 3 -->
+      <rect class="chip" x="820" y="252" width="136" height="44" rx="4"/>
+      <text class="name-sm" x="888" y="266" text-anchor="middle">Artifacts</text>
+      <text class="sub" x="888" y="278" text-anchor="middle">sonnet &middot; high</text>
+      <text class="gate" x="888" y="289" text-anchor="middle">migration/schema/CI</text>
+    </g>
+
+    <!-- ===== nodes: Verify & Ship lane ===== -->
+    <g>
+      <rect class="box" x="1108" y="496" width="120" height="44" rx="6"/>
+      <text class="name-sm" x="1168" y="510" text-anchor="middle">Verify</text>
+      <text class="sub" x="1168" y="522" text-anchor="middle">opus &middot; high</text>
+      <text class="gate" x="1168" y="534" text-anchor="middle">if risky/critical</text>
+    </g>
+    <g>
+      <rect class="box" x="1108" y="548" width="120" height="44" rx="6"/>
+      <text class="name-sm" x="1168" y="564" text-anchor="middle">Walkthrough</text>
+      <text class="sub" x="1168" y="577" text-anchor="middle">pr-walkthrough</text>
+    </g>
+    <g>
+      <rect class="box" x="1108" y="600" width="120" height="44" rx="6"/>
+      <text class="name-sm" x="1168" y="616" text-anchor="middle">Open PR</text>
+      <text class="sub" x="1168" y="629" text-anchor="middle">target: source branch</text>
+    </g>
+
+    <!-- ===== legend ===== -->
+    <line x1="40" y1="672" x2="1240" y2="672" stroke="rgba(45,49,66,0.14)" stroke-width="0.8"/>
+    <g>
+      <rect class="box" x="64" y="684" width="16" height="12" rx="2"/>
+      <text class="legend-t" x="88" y="694">PROCESS STEP</text>
+
+      <rect class="zone" x="284" y="684" width="16" height="12" rx="2"/>
+      <text class="legend-t" x="308" y="694">REVIEW LANE (WAVE)</text>
+
+      <rect class="focal" x="564" y="684" width="16" height="12" rx="2"/>
+      <text class="legend-t" x="588" y="694">TRIAGE GATES (FOCAL)</text>
+
+      <rect class="ext" x="844" y="684" width="16" height="12" rx="2"/>
+      <text class="legend-t" x="868" y="694">ESCALATION / LOOP-BACK</text>
+    </g>
+  </svg>
+</div>
+</body>
+</html>

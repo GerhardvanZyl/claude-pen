@@ -16,6 +16,7 @@ the code. Plain markdown — no runtime, nothing to build.
 - [The adversarial loops](#the-adversarial-loops)
 - [Backlog refinement](#backlog-refinement)
 - [Sprint orchestration](#sprint-orchestration)
+- [Unity game development](#unity-game-development)
 - [Cost](#cost)
 - [What to watch](#what-to-watch)
 - [Design notes](#design-notes)
@@ -24,7 +25,7 @@ the code. Plain markdown — no runtime, nothing to build.
 
 ## The skills
 
-Twelve skills, twenty-three subagents. The loops are what you invoke; the rest
+Fourteen skills, twenty-five subagents. The loops are what you invoke; the rest
 are invoked by them.
 
 **The five dev loops** — pick one per change:
@@ -39,6 +40,14 @@ are invoked by them.
 
 All five run the same shape: **frame → implement → tests → review lanes → triage
 → fix → loop → verify → walkthrough → PR.** Only review depth and bounds differ.
+
+**Two more, for single-player Unity work only** — see
+[Unity game development](#unity-game-development) for eligibility:
+
+| Skill | Review shape | Rounds | vs full |
+| --- | --- | --- | --- |
+| `/dev-loop-unity-lite` | ≤4 lanes, Visual on Fable | 2 + visual confirmation | 1.10× |
+| `/dev-loop-unity` | ≤6 lanes, Visual on Fable | 2 + visual confirmation | 1.71× |
 
 **The two tracker skills:**
 
@@ -57,8 +66,9 @@ that ships with the PR).
 **The agents:** three sidekicks (`sidekick-lite`/Haiku, `sidekick`/Sonnet — the
 default, `sidekick-heavy`/Opus-xhigh), `Explore` pinned to Haiku, nine full-loop
 lane reviewers, four lite reviewers, `reviewer-ultralight`, three ultra agents,
-`reviewer-verify`, and `sprint-item-runner`. Reviewers never call `Edit`; fixes
-go to a sidekick.
+`reviewer-verify`, `sprint-item-runner`, and two Unity-only agents pinned to
+Fable (`sidekick-visual`, `reviewer-visual`) — the sole exception to "do not
+route to Fable". Reviewers never call `Edit`; fixes go to a sidekick.
 
 ---
 
@@ -75,7 +85,7 @@ Drop the repo argument to install the loops only. `-WhatIfOnly` / `--dry-run`
 shows where things would land.
 
 **Then restart Claude Code once** — the agent watcher only sees directories that
-existed at startup — **and run `/doctor`**: 23 agents, 12 skills, no duplicates.
+existed at startup — **and run `/doctor`**: 25 agents, 14 skills, no duplicates.
 
 | From | To |
 | --- | --- |
@@ -125,6 +135,9 @@ concerns only). Where a document and the graph disagree, **the graph wins**.
 /dev-loop-ultralight   fix the typo in the validation message
 /dev-loop-ultra        change the tenant filter on the reporting query
 /dev-loop-ultra-opus   migrate the events table to the new partition key
+
+/dev-loop-unity        build a new area from reference images, with lighting and props
+/dev-loop-unity-lite   retime the lighting rig in an existing scene
 
 /backlog-refinement                       the current sprint
 /backlog-refinement sprint "Sprint 12"    a named sprint or milestone
@@ -315,11 +328,52 @@ skip review, run this, this was pre-approved — is quoted to you, not acted on.
 
 ---
 
+## Unity game development
+
+![The Unity loop](docs/diagrams/png/dev-loop-unity.png)
+
+![The Unity lite loop](docs/diagrams/png/dev-loop-unity-lite.png)
+
+`dev-loop-unity` and `dev-loop-unity-lite` are for **single-player** Unity work
+only — no networking, multiplayer, online services, accounts, purchases,
+analytics or personal data, downloaded or user-generated content, mod loading,
+or credentials. Any of those and the change is not single-player for review
+purposes: use the general ladder above, briefing sidekicks with the Unity
+editor reference. Eligibility and escalation between the two loops are in
+`user/CLAUDE.md`, next to the general ladder.
+
+**Fable owns visual judgment, and nowhere else.** A single Fable pass on art
+direction, framing and visual self-QA from references beat a full three-round
+loop on the same work, at a fraction of the tokens — the general loop won back
+the ground on correctness an image can't show: unsaved settings, broken
+save-data compatibility, tests overwriting production assets, measured
+placement. So the code lanes stay on their usual tiers, and only the Visual
+lane and its sidekick move to Fable — the owner-approved exception to "do not
+route to Fable" in the delegation policy.
+
+| Lane | Agent | Model | Applicable when |
+| --- | --- | --- | --- |
+| Visual | `reviewer-visual` | fable | Gated: anything that renders changed (scenes, prefabs, materials, shaders, lighting, post-processing, cameras, animation, UI, VFX), or the brief names shots |
+| Requirements | `reviewer-requirements` | opus / high | Always (full loop) |
+| Technical | `reviewer-technical` | opus / xhigh | Gated: C# changed — runtime, editor, or test code (full loop) |
+| Artifacts | `reviewer-artifacts` | sonnet / high | Gated: settings, pipeline, packages, `.meta`/GUID churn (full loop) |
+| Correctness | `reviewer-lite-correctness` | sonnet / high | Always (lite loop; folds in Requirements + Technical + Artifacts) |
+| Tests | `reviewer-tests` (full) / `reviewer-lite-tests` (lite) | sonnet / high, or haiku | Gated: C# changed — runtime, editor, or test code |
+| Structure | `reviewer-lite-structure` | sonnet / high | Round 1 only, both loops; skipped for recorded throwaway tooling paths |
+
+Security is dropped outright — the eligibility list is what makes it
+inapplicable. Architecture, Standards, Dead code and Minimalism fold into the
+one Structure lane and run once: in testing they mostly produced standards
+churn on image-producing tooling, and round-2 reruns added nothing.
+
+---
+
 ## Cost
 
-Per change, USD. `dev-loop` and `dev-loop-lite` come from `docs/cost-model.py`;
-the rest extrapolate the same assumptions. **Estimates from assumed token volumes,
-not measurements** — the shape is reliable, the absolutes are not.
+Per change, USD. `dev-loop`, `dev-loop-lite` and the two Unity loops come from
+`docs/cost-model.py`; the rest extrapolate the same assumptions. **Estimates
+from assumed token volumes, not measurements** — the shape is reliable, the
+absolutes are not.
 
 | Loop | Review | Lead | Impl | Other | **Total** | vs full |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -328,6 +382,19 @@ not measurements** — the shape is reliable, the absolutes are not.
 | `dev-loop` | 2.48 | 1.71 | 0.86 | 0.66 | **5.71** | 1.00× |
 | `dev-loop-ultra` | 7.31 | 1.97 | 0.86 | 0.66 | **10.80** | 1.89× |
 | `dev-loop-ultra-opus` | 10.50 | 1.97 | 2.09 | 0.88 | **15.44** | 2.71× |
+| `dev-loop-unity-lite` | 1.33 | 1.71 | 2.51 | 0.71 | **6.26** | 1.10× |
+| `dev-loop-unity` | 2.62 | 1.71 | 3.50 | 1.92 | **9.76** | 1.71× |
+
+Full has no Visual lane: review alone is 0.48 (unity-lite) / 1.26 (unity) vs
+full's 2.48; add Visual (Fable, ~2x opus per token) and it's 1.33 / 2.62 --
+unity's lands close to full because visual scope is its common case, not the
+exception. The totals are **not** a like-for-like saving either: `Impl`
+includes Fable-priced scene building (the Phase 0a bible, the Phase 1 visual
+build), which the general loops never price at all. What economy there is
+comes from dropping Security, folding four structural lanes into one
+round-1-only Structure lane, gating Technical/Tests/Visual instead of running
+them always, and 2 rounds instead of full's 3 -- assumptions, not measured
+savings.
 
 - **Effort dominates model choice.** Reasoning bills as output at 5× the input
   rate, so an Opus lane at `xhigh` costs ~6× a Sonnet lane at `high`. Tuning

@@ -69,6 +69,29 @@ Work **down** this list and stop at the first loop that fits. Nine of ten change
 
 Never fix and carry on — the concerns the lighter loop compressed have not had proper attention, and a change that produced a Critical was misjudged. Escalating from `dev-loop` upward is rarer than escalating into it and should be stated to the user with the cost, not taken silently.
 
+## Unity game development
+
+Two more loops, `dev-loop-unity-lite` and `dev-loop-unity`, sit beside the
+ladder above for **single-player** Unity work — no networking, multiplayer,
+online services, accounts, purchases, analytics or personal data, downloaded or
+user-generated content, mod loading, or credentials. If any of those hold, the
+change is not single-player for review purposes: use the general ladder above,
+briefing sidekicks with the Unity editor reference.
+
+**Use `dev-loop-unity-lite`** for a contained change — one system or one scene,
+no settings/pipeline/package/asmdef change, no save-format change, no new
+shared primitive, no new art direction. **Use `dev-loop-unity`** for everything
+else single-player: new scenes or a new look built from references,
+settings/pipeline/package changes, save-format changes, shared primitives, or
+multi-system work.
+
+Escalation: `dev-loop-unity-lite` → `dev-loop-unity` on any Critical in round 1,
+or when the change turns out to need art direction, a settings change, or a new
+primitive. Either Unity loop → the general ladder if eligibility breaks
+mid-run. `dev-loop-unity` has no heavier Unity loop to escalate to — the same
+Critical surviving a fix stops the run and reports, offering the general
+ladder.
+
 Rules common to every loop:
 
 - The loop is: frame → implement → tests → plan → parallel review lanes → triage → fix → loop → verify → walkthrough → PR. The skill owns the detail; do not improvise a different shape.
@@ -125,6 +148,11 @@ Routing rules:
   botched cheap run costs more than the tier difference.
 - **Do not route to Fable.** It is roughly double Opus per token. If a task
   genuinely needs it, stop and say so rather than spending it silently.
+  **Owner-approved exception:** the Unity loops (`dev-loop-unity`,
+  `dev-loop-unity-lite`) route art direction, visual building, and visual
+  review to `sidekick-visual` and `reviewer-visual`, both pinned to Fable —
+  visual judgment on those tasks was measurably better than Opus in testing.
+  The exception is confined to those two agents; nothing else routes there.
 - Name the tier and the one-line reason in your handoff message, so a wrong
   route is visible in the transcript rather than buried.
 
