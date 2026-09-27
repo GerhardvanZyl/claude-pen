@@ -37,8 +37,8 @@ Everything else is copied over the top.
 
 | From | To |
 | --- | --- |
-| `user/.claude/agents/` | `~/.claude/agents/` — 22 agents |
-| `user/.claude/skills/` | `~/.claude/skills/` — 5 loops + `solution-architecture` + `coding-standards` + 3 walkthrough |
+| `user/.claude/agents/` | `~/.claude/agents/` — 24 agents |
+| `user/.claude/skills/` | `~/.claude/skills/` — 7 loops + `solution-architecture` + `coding-standards` + 3 walkthrough |
 | `user/CLAUDE.md` | `~/.claude/CLAUDE.md` — delegation policy, loop selection |
 | `project/.claude/` | `<repo>/.claude/` — per-project standards override, the 2 sprint skills, `sprint-item-runner`, hook script |
 | `project/ARCHITECTURE.template.md` | `<repo>/` — fill in and rename |
@@ -49,8 +49,8 @@ Everything else is copied over the top.
 that existed when the session started, so a fresh `agents/` needs a restart to be
 seen.
 
-**Run `/doctor`.** With a repo wired up you should see 23 agents and 12 skills
-(22 agents and 10 skills user-level, plus `sprint-item-runner`, `implement-sprint`
+**Run `/doctor`.** With a repo wired up you should see 25 agents and 14 skills
+(24 agents and 12 skills user-level, plus `sprint-item-runner`, `implement-sprint`
 and `backlog-refinement` from the project), with no duplicate names. If a skill shows
 up under a filename rather than its folder name, a `SKILL.md` was renamed
 somewhere.

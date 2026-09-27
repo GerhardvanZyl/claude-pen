@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dev-loop-unity — Development and review loop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #f5f5f5;
+      --color-ink:     #2d3142;
+      --color-muted:   #4f5d75;
+      --color-accent:  #eb6c36;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .frame { max-width: 1280px; width: 100%; }
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+    svg { width: 100%; min-width: 1100px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Swimlane · Diagram Design</p>
+    <h1>dev-loop-unity — the single-player Unity development &amp; review loop</h1>
+
+    <svg viewBox="0 0 1280 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dlu-title dlu-desc">
+      <title id="dlu-title">dev-loop-unity swimlane</title>
+      <desc id="dlu-desc">Swimlane diagram of the single-player Unity development and review loop, showing the Lead, Implementation, Review and Verify &amp; Ship lanes, the Fable-driven Visual lane and sidekick-visual agent as the focal pair, six gated review lanes split across two waves, two review rounds plus a visual confirmation, the recurring-concern-to-primitive rule, and the loop's escalations.</desc>
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#f5f5f5"/>
+
+      <!-- ============ LANE DIVIDERS ============ -->
+      <!-- Lead: 40-120, Implementation: 120-264, Review: 264-536, Verify & Ship: 536-680 -->
+      <line x1="40" y1="40" x2="1240" y2="40" stroke="rgba(45,49,66,0.22)" stroke-width="1"/>
+      <line x1="40" y1="120" x2="1240" y2="120" stroke="rgba(45,49,66,0.22)" stroke-width="1"/>
+      <line x1="40" y1="264" x2="1240" y2="264" stroke="rgba(45,49,66,0.22)" stroke-width="1"/>
+      <line x1="40" y1="536" x2="1240" y2="536" stroke="rgba(45,49,66,0.22)" stroke-width="1"/>
+      <line x1="40" y1="680" x2="1240" y2="680" stroke="rgba(45,49,66,0.22)" stroke-width="1"/>
+      <line x1="176" y1="40" x2="176" y2="680" stroke="rgba(45,49,66,0.22)" stroke-width="1"/>
+
+      <!-- Lane labels -->
+      <text x="48" y="84" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.16em">LEAD</text>
+      <text x="48" y="196" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.16em">IMPLEMENT-</text>
+      <text x="48" y="208" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.16em">ATION</text>
+      <text x="48" y="404" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.16em">REVIEW</text>
+      <text x="48" y="600" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.16em">VERIFY &amp;</text>
+      <text x="48" y="612" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.16em">SHIP</text>
+
+      <!-- ============ ZONE CONTAINERS (Review lane) ============ -->
+      <rect x="686" y="266" width="124" height="262" rx="8" fill="#ececec" stroke="rgba(45,49,66,0.16)" stroke-width="1"/>
+      <text x="698" y="276" fill="#4f5d75" font-size="7" font-family="'Geist Mono', monospace" letter-spacing="0.14em">WAVE 1</text>
+      <rect x="834" y="266" width="124" height="144" rx="8" fill="#ececec" stroke="rgba(45,49,66,0.16)" stroke-width="1"/>
+      <text x="846" y="276" fill="#4f5d75" font-size="7" font-family="'Geist Mono', monospace" letter-spacing="0.14em">WAVE 2</text>
+
+      <!-- ============ ARROWS (drawn before nodes) ============ -->
+      <!-- Frame -> Bible -->
+      <path d="M 290 72 L 302 72 Q 306 72 306 76 L 306 156 Q 306 160 310 160 L 314 160" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Bible -> Inventory (straight, same column) -->
+      <line x1="366" y1="184" x2="366" y2="200" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Inventory -> Systems (elbow, offset exit) -->
+      <path d="M 414 208 L 426 208 Q 430 208 430 204 L 430 164 Q 430 160 434 160 L 438 160" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Inventory -> Visual build (straight, offset exit lower) -->
+      <line x1="414" y1="236" x2="438" y2="236" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+      <!-- Systems -> Tests (straight, same row) -->
+      <line x1="538" y1="160" x2="562" y2="160" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Visual build -> Capture (straight, same row) -->
+      <line x1="538" y1="224" x2="562" y2="224" stroke="#eb6c36" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+      <!-- Tests -> Snapshot (straight up, same column) -->
+      <line x1="612" y1="136" x2="612" y2="104" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Capture -> Snapshot (elbow around Tests box) -->
+      <path d="M 562 214 L 550 214 Q 546 214 546 210 L 546 84 Q 546 80 550 80 L 562 80" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Snapshot -> Wave 1 zone (enters at Visual chip's height, clear of the WAVE 1 label) -->
+      <path d="M 662 72 L 674 72 Q 678 72 678 76 L 678 300 Q 678 304 682 304 L 686 304" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Wave 1 zone -> Wave 2 zone -->
+      <line x1="810" y1="300" x2="834" y2="300" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Wave 2 zone -> Triage -->
+      <path d="M 958 300 L 970 300 Q 974 300 974 296 L 974 84 Q 974 80 978 80 L 982 80" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Triage -> Fix (straight, same column) -->
+      <line x1="1032" y1="104" x2="1032" y2="168" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Fix -> Round cap -->
+      <path d="M 1082 192 L 1094 192 Q 1098 192 1098 188 L 1098 84 Q 1098 80 1102 80 L 1106 80" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Round cap -> Verify (long vertical, clear column) -->
+      <line x1="1158" y1="104" x2="1158" y2="548" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Verify -> Walkthrough (straight, same column) -->
+      <line x1="1158" y1="616" x2="1158" y2="624" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Fix -> Plan & snapshot loop-back (dashed, round cap ≤2), routed around the outside -->
+      <path d="M 1032 216 L 1032 770 L 20 770 L 20 48 L 612 48 L 612 56" fill="none" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow)"/>
+
+      <!-- Pass label on the long Round cap -> Verify connector -->
+      <rect x="1140" y="300" width="36" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="1158" y="309" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">PASS</text>
+
+      <!-- Loop label on the Fix -> Plan & snapshot loop-back -->
+      <rect x="270" y="42" width="64" height="12" rx="2" fill="#f5f5f5"/>
+      <text x="302" y="51" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">LOOP ≤2</text>
+
+      <!-- ============ NODES ============ -->
+      <!-- Lead lane -->
+      <!-- Frame -->
+      <rect x="190" y="56" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="240" y="74" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Frame</text>
+      <text x="240" y="87" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">eligibility · editor</text>
+      <text x="240" y="97" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">check · shot DoD</text>
+
+      <!-- Snapshot -->
+      <rect x="562" y="56" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="612" y="74" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Plan &amp; snapshot</text>
+      <text x="612" y="87" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sidekick-lite</text>
+      <text x="612" y="97" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">capture → digest</text>
+
+      <!-- Triage -->
+      <rect x="982" y="56" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="1032" y="74" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Triage</text>
+      <text x="1032" y="87" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">recurring concern →</text>
+      <text x="1032" y="97" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">shared primitive</text>
+
+      <!-- Round cap -->
+      <rect x="1106" y="56" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="1156" y="74" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Round cap ≤2</text>
+      <text x="1156" y="87" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">→ visual confirm</text>
+      <text x="1156" y="97" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">→ pass / blocked</text>
+
+      <!-- Implementation lane -->
+      <!-- Bible (0a) -->
+      <rect x="314" y="136" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="364" y="154" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Bible (0a)</text>
+      <text x="364" y="167" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sidekick-visual</text>
+      <text x="364" y="177" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">scene-bible.md</text>
+
+      <!-- Inventory (0b) -->
+      <rect x="314" y="200" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="364" y="218" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Inventory (0b)</text>
+      <text x="364" y="231" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sidekick · assets +</text>
+      <text x="364" y="241" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">primitives, harness</text>
+
+      <!-- Systems (Phase 1, code) -->
+      <rect x="438" y="136" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="488" y="154" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Systems</text>
+      <text x="488" y="167" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sidekick</text>
+      <text x="488" y="177" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">C#, normal ladder</text>
+
+      <!-- Visual build (CORAL FOCAL 1) -->
+      <rect x="438" y="200" width="100" height="48" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+      <text x="488" y="218" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Visual build</text>
+      <text x="488" y="231" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sidekick-visual</text>
+      <text x="488" y="241" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">fable · ≤2 QA</text>
+
+      <!-- Tests -->
+      <rect x="562" y="136" width="100" height="60" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="612" y="154" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Tests</text>
+      <text x="612" y="167" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">EditMode/PlayMode</text>
+      <text x="612" y="177" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">logic · frames ·</text>
+      <text x="612" y="187" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">physics</text>
+
+      <!-- Capture harness -->
+      <rect x="562" y="200" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="612" y="218" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Capture</text>
+      <text x="612" y="231" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sidekick-lite</text>
+      <text x="612" y="241" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">pre-snapshot shots</text>
+
+      <!-- Fix (merged: code + visual) -->
+      <rect x="982" y="168" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="1032" y="186" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Fix</text>
+      <text x="1032" y="199" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sidekick / heavy</text>
+      <text x="1032" y="209" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sidekick-visual</text>
+
+      <!-- Review lane: Wave 1 chips -->
+      <rect x="698" y="280" width="100" height="48" rx="6" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+      <text x="748" y="298" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Visual</text>
+      <text x="748" y="311" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">fable · high</text>
+      <text x="748" y="321" fill="#eb6c36" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">renders changed</text>
+
+      <rect x="698" y="344" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="748" y="362" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Requirements</text>
+      <text x="748" y="375" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">opus · high</text>
+      <text x="748" y="385" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">always</text>
+
+      <rect x="698" y="408" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="748" y="426" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Technical</text>
+      <text x="748" y="439" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">opus · xhigh</text>
+      <text x="748" y="449" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">C# changed</text>
+
+      <rect x="698" y="472" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="748" y="490" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Tests</text>
+      <text x="748" y="503" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sonnet · high</text>
+      <text x="748" y="513" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">C# changed</text>
+
+      <!-- Review lane: Wave 2 chips -->
+      <rect x="846" y="280" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="896" y="298" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Artifacts</text>
+      <text x="896" y="311" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sonnet · high</text>
+      <text x="896" y="321" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">settings/pkg/.meta</text>
+
+      <rect x="846" y="344" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="896" y="362" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Structure</text>
+      <text x="896" y="375" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">sonnet · high</text>
+      <text x="896" y="385" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">round 1 only</text>
+
+      <!-- Verify & Ship lane -->
+      <rect x="1106" y="548" width="100" height="68" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="1156" y="566" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Verify</text>
+      <text x="1156" y="579" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">if critical fixed,</text>
+      <text x="1156" y="589" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">risky, uncertain,</text>
+      <text x="1156" y="599" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">Artifacts ran, or</text>
+      <text x="1156" y="609" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">visual unconfirmed</text>
+
+      <rect x="1106" y="624" width="100" height="48" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="1156" y="642" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Walkthrough</text>
+      <text x="1156" y="655" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">notes.md → docs</text>
+      <text x="1156" y="665" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">→ PR, source branch</text>
+
+      <!-- ============ LEGEND ============ -->
+      <line x1="40" y1="700" x2="1240" y2="700" stroke="rgba(45,49,66,0.10)" stroke-width="0.8"/>
+      <text x="40" y="716" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.16em">LEGEND</text>
+
+      <rect x="40" y="730" width="14" height="10" rx="2" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+      <text x="60" y="738" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">Step</text>
+
+      <rect x="120" y="730" width="14" height="10" rx="2" fill="rgba(235,108,54,0.08)" stroke="#eb6c36" stroke-width="1"/>
+      <text x="140" y="738" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">Fable — focal (sidekick-visual, reviewer-visual)</text>
+
+      <rect x="400" y="730" width="14" height="10" rx="2" fill="#ffffff" stroke="#2d3142" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="420" y="738" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">Round 1 only</text>
+
+      <rect x="520" y="730" width="14" height="10" rx="2" fill="#ececec" stroke="rgba(45,49,66,0.16)" stroke-width="1"/>
+      <text x="540" y="738" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">Review wave (delegate ≤4 lanes)</text>
+
+      <line x1="850" y1="736" x2="878" y2="736" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <text x="886" y="738" fill="#4f5d75" font-size="8.5" font-family="'Geist', sans-serif">Flow</text>
+
+      <!-- ============ ANNOTATION CALLOUTS (escalations, max 2) ============ -->
+      <text x="40" y="800" fill="#2d3142" font-size="13" font-style="italic" font-family="'Instrument Serif', serif">Escalation, Frame — eligibility breaks mid-run (networking, accounts,</text>
+      <text x="40" y="816" fill="#2d3142" font-size="13" font-style="italic" font-family="'Instrument Serif', serif">purchases, UGC, credentials) → the general ladder, briefed regardless</text>
+
+      <text x="1240" y="800" fill="#2d3142" font-size="13" font-style="italic" font-family="'Instrument Serif', serif" text-anchor="end">Escalation, Round cap — the same Critical survives a fix and recurs</text>
+      <text x="1240" y="816" fill="#2d3142" font-size="13" font-style="italic" font-family="'Instrument Serif', serif" text-anchor="end">→ blocked, stop, report; no heavier Unity loop — offer the general ladder</text>
+    </svg>
+  </div>
+</body>
+</html>

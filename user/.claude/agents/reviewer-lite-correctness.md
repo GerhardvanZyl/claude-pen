@@ -35,8 +35,9 @@ You are the consolidated **Correctness** lane. The lead gives you a run director
 round number, a **change base** and, from round 2, a **round base** — see
 step 3 for what each means — and the path to the lite lane cards file.
 
-1. Read your card — the `## Correctness` section of `references/review-lanes-lite.md`.
-   Only that section.
+1. Read your card — the `## Correctness` section of the lane cards file the
+   lead names (default `references/review-lanes-lite.md`). Only that
+   section.
 2. Read `<run>/brief.md` for intent, constraints, and non-goals.
 3. **The whole change, and what is new in it.** `git diff <base>` is the whole
    change; read it and the files it touches, and raise your findings against
