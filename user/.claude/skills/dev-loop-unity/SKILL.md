@@ -36,7 +36,7 @@ Tests lane needs are shared with the general loop; follow
 `dev-loop/references/tree-snapshot.md`.
 
 **Everything this file does not restate is exactly `dev-loop`'s**: the
-`implementation-notes` invocation at Phase 0 and the reasoning asked back in
+`implementation-notes` invocation at Phase 0 and the decision record asked back in
 every implement/test/fix brief, the `pr-walkthrough` / `pr-walkthrough-review`
 pipeline at Phase 8b, the tree digest before and after reviewers, the evidence
 and cause gates including `missing-required`, regression-test-before-fix,
@@ -114,7 +114,7 @@ lighting, framing, posing, and materials go to `sidekick-visual`: it builds,
 captures, *looks at every capture*, fixes, at most two self-QA iterations per
 handoff, one scene set per handoff. Both obey the reference; neither changes
 project-wide rendering or settings unless the brief says so. Both briefs ask
-for the reasoning back, same as `dev-loop`.
+for a decision record back, same as `dev-loop`.
 
 ### Phase 2 — Tests
 

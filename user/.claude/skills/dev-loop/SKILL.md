@@ -50,10 +50,10 @@ Delegate to the appropriate sidekick tier. The brief must require conformance to
 the `coding-standards` skill and the `solution-architecture` skill, both
 preloaded into the sidekick agents.
 
-**The brief must ask for the reasoning back.** Require the sidekick to return,
+**The brief must ask for a decision record back.** Require the sidekick to return,
 alongside its summary, the decisions it took, the alternatives it rejected and
 why, and any constraint that forced a shape. Append what comes back to
-`notes.md`. Without this the reasoning dies when the agent returns, and the
+`notes.md`. Without this the rationale dies when the agent returns, and the
 walkthrough in Phase 8b has nothing to work from but the diff.
 
 ## Phase 2 — Tests

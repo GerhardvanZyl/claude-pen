@@ -27,7 +27,7 @@ with the general loop; follow `dev-loop/references/tree-snapshot.md`.
 **Everything this file does not restate is exactly `dev-loop-unity`'s**,
 which is in turn exactly `dev-loop`'s except where its own file states a
 delta: implementation and review conform to `coding-standards` and
-`solution-architecture`; notes (`implementation-notes` at Phase 0, reasoning
+`solution-architecture`; notes (`implementation-notes` at Phase 0, decision record
 asked back in every implement/test/fix brief) and the walkthrough
 (`pr-walkthrough` / `pr-walkthrough-review` at Phase 8b); the tree digest
 before and after reviewers; the evidence and cause gates, including

@@ -45,7 +45,7 @@ Report format:
 3. Build / test result.
 4. Anything you skipped and why.
 
-**Report your reasoning, not only your result.** Return the decisions you took
+**Return a decision record with your result.** List the decisions you took
 and any alternative you considered and rejected. Mechanical work usually has
 none — say `none considered` rather than inventing one. An honest "none" is
 useful; a manufactured alternative is worse than silence.
