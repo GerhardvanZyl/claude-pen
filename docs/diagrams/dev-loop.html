@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The full dev loop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #0b131b;   /* deep navy ground — one step below brand navy */
+      --color-panel:   #1a2a38;   /* navy-80 — node fill */
+      --color-ink:     #ffffff;
+      --color-muted:   #c8ccd0;
+      --color-soft:    #93989c;
+      --color-accent:  #f05126;   /* full-strength Tecala orange */
+      --font-sans:     'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1320px; width: 100%; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 0.35rem;
+    }
+
+    .standfirst {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--color-muted);
+      max-width: 62ch;
+      margin-bottom: 1.5rem;
+    }
+
+    svg { width: 100%; min-width: 960px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Flowchart · dev-loop</p>
+    <h1>The full dev loop</h1>
+    <p class="standfirst">Nine gated lanes, one owner per concern, three rounds. Four Opus lanes and five Sonnet — the honest default for most work, and the 1× against which the other four loops are priced.</p>
+
+    <svg viewBox="0 0 1280 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dev-loop-title dev-loop-desc">
+      <title id="dev-loop-title">The full dev loop</title>
+      <desc id="dev-loop-desc">Flowchart of the full dev-loop process: a change is framed, implemented and tested, then a review round spawns nine gated reviewer lanes in parallel; a tree-integrity check gates triage and fixing, and the loop either repeats for up to three rounds, stops as blocked, or passes through optional independent verification and a walkthrough to commit, push and pull request.</desc>
+
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#c8ccd0"/></marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#f05126"/></marker>
+        <marker id="arrow-soft" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#93989c"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#0b131b"/>
+
+      <!-- ============ ZONE FRAMES (painted first) ============ -->
+      <rect x="40" y="44" width="1200" height="116" rx="8" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>
+      <text x="56" y="66" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">01 · BUILD</text>
+
+      <rect x="40" y="200" width="1200" height="216" rx="8" fill="rgba(240,81,38,0.05)" stroke="rgba(240,81,38,0.38)" stroke-width="1"/>
+      <text x="1208" y="222" fill="#f05126" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end" letter-spacing="0.18em">02 · REVIEW ROUND — UP TO THREE</text>
+
+      <rect x="40" y="440" width="1200" height="124" rx="8" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>
+      <text x="56" y="462" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">03 · TRIAGE &amp; FIX</text>
+
+      <rect x="40" y="588" width="1200" height="124" rx="8" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>
+      <text x="56" y="610" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">04 · SHIP</text>
+
+      <!-- ============ CONNECTORS (before nodes) ============ -->
+      <!-- Band 01, left to right -->
+      <path d="M284 116 H328" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M588 116 H632" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M892 116 H936" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Band 01 -> Band 02 (Tests -> Plan the round) -->
+      <path d="M1068 148 V164 Q1068 172 1060 172 H128 Q120 172 120 180 V228" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Plan -> Delegate -->
+      <path d="M148 296 V312" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Delegate -> lane grid -->
+      <path d="M228 348 H272" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Lane grid -> tree-integrity check -->
+      <path d="M320 396 V458" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Tree check: MOVED -> back to Delegate (dashed return) -->
+      <path d="M240 502 H188 Q180 502 180 494 V384" fill="none" stroke="#93989c" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow-soft)"/>
+
+      <!-- Tree check: CLEAN -> Triage -->
+      <path d="M400 502 H428" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Triage -> Fix -->
+      <path d="M608 502 H636" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Fix -> Loop or exit -->
+      <path d="M816 502 H844" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- Loop or exit: BLOCKED -> stop -->
+      <path d="M1008 502 H1052" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Loop or exit: ROUND + 1 -> back to Plan the round (FOCAL) -->
+      <path d="M928 462 V436 Q928 428 936 428 H1220 Q1228 428 1228 420 V196 Q1228 188 1220 188 H184 Q176 188 176 196 V228"
+            fill="none" stroke="#f05126" stroke-width="1.6" marker-end="url(#arrow-accent)"/>
+
+      <!-- Loop or exit: PASS -> ship -->
+      <path d="M928 542 V568 Q928 576 936 576 H1060 Q1068 576 1068 584 V616" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Band 04, right to left -->
+      <path d="M928 652 H900" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M616 652 H588" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M304 652 H276" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- ============ ARROW LABELS ============ -->
+      <rect x="234" y="326" width="32" height="12" rx="2" fill="#16161c"/>
+      <text x="250" y="335" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">SPAWN</text>
+
+      <rect x="332" y="418" width="64" height="12" rx="2" fill="#0b131b"/>
+      <text x="336" y="427" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">ALL DRAINED</text>
+
+      <rect x="192" y="398" width="80" height="12" rx="2" fill="#16161c"/>
+      <text x="196" y="407" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">MOVED · RERUN</text>
+
+      <rect x="1160" y="402" width="60" height="12" rx="2" fill="#16161c"/>
+      <text x="1216" y="411" fill="#f05126" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end" letter-spacing="0.06em">ROUND + 1</text>
+
+      <rect x="400" y="476" width="28" height="12" rx="2" fill="#111921"/>
+      <text x="414" y="485" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">CLEAN</text>
+
+      <rect x="1012" y="476" width="40" height="12" rx="2" fill="#111921"/>
+      <text x="1032" y="485" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">BLOCKED</text>
+
+      <rect x="940" y="548" width="32" height="12" rx="2" fill="#111921"/>
+      <text x="944" y="557" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">PASS</text>
+
+      <rect x="1000" y="594" width="56" height="12" rx="2" fill="#111921"/>
+      <text x="1052" y="603" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end" letter-spacing="0.06em">IF RISKY</text>
+
+      <!-- ============ BAND 01 — BUILD ============ -->
+      <rect x="84" y="92" width="200" height="48" rx="20" fill="#1a2a38" stroke="rgba(255,255,255,0.34)" stroke-width="1.2"/>
+      <text x="184" y="121" fill="#ffffff" font-size="12" font-weight="500" font-family="'Geist Mono', monospace" text-anchor="middle">/dev-loop</text>
+
+      <rect x="332" y="84" width="256" height="64" rx="6" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="460" y="112" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Frame the slice</text>
+      <text x="460" y="128" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">brief.md · non-goals · done</text>
+
+      <rect x="636" y="84" width="256" height="64" rx="6" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="764" y="112" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Implement</text>
+      <text x="764" y="128" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">sidekick tier · lead writes none</text>
+
+      <rect x="940" y="84" width="256" height="64" rx="6" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="1068" y="112" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Tests</text>
+      <text x="1068" y="128" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">second handoff · must fail</text>
+
+      <!-- ============ BAND 02 — REVIEW ROUND ============ -->
+      <rect x="68" y="232" width="160" height="64" rx="6" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="148" y="260" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Plan the round</text>
+      <text x="148" y="276" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">applicable or skipped</text>
+
+      <rect x="68" y="316" width="160" height="64" rx="6" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="148" y="344" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Delegate</text>
+      <text x="148" y="360" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">parallel · max 4</text>
+
+      <!-- Lane chips — row 1 -->
+      <rect x="280" y="236" width="288" height="48" rx="4" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+      <text x="294" y="257" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif">Requirements</text>
+      <text x="554" y="257" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">opus · high</text>
+      <text x="294" y="273" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">always</text>
+
+      <rect x="600" y="236" width="288" height="48" rx="4" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+      <text x="614" y="257" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif">Technical</text>
+      <text x="874" y="257" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">opus · xhigh</text>
+      <text x="614" y="273" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">always</text>
+
+      <rect x="920" y="236" width="288" height="48" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+      <text x="934" y="257" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif">Tests</text>
+      <text x="1194" y="257" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">sonnet · high</text>
+      <text x="934" y="273" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">always · mutation in the scratch worktree</text>
+
+      <!-- Lane chips — row 2 -->
+      <rect x="280" y="292" width="288" height="48" rx="4" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+      <text x="294" y="313" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif">Architecture</text>
+      <text x="554" y="313" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">opus · xhigh</text>
+      <text x="294" y="329" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">types moved or responsibilities shifted</text>
+
+      <rect x="600" y="292" width="288" height="48" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+      <text x="614" y="313" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif">Standards</text>
+      <text x="874" y="313" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">sonnet · high</text>
+      <text x="614" y="329" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">any source file changed</text>
+
+      <rect x="920" y="292" width="288" height="48" rx="4" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+      <text x="934" y="313" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif">Security</text>
+      <text x="1194" y="313" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">opus · xhigh</text>
+      <text x="934" y="329" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">input · authn/authz · secrets · deps</text>
+
+      <!-- Lane chips — row 3 -->
+      <rect x="280" y="348" width="288" height="48" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+      <text x="294" y="369" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif">Dead code</text>
+      <text x="554" y="369" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">sonnet · high</text>
+      <text x="294" y="385" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">paths removed, replaced or narrowed</text>
+
+      <rect x="600" y="348" width="288" height="48" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+      <text x="614" y="369" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif">Minimalism</text>
+      <text x="874" y="369" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">sonnet · high</text>
+      <text x="614" y="385" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">guards, wrappers or config added</text>
+
+      <rect x="920" y="348" width="288" height="48" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+      <text x="934" y="369" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif">Artifacts</text>
+      <text x="1194" y="369" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">sonnet · high</text>
+      <text x="934" y="385" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">migrations · schema · lockfile · CI</text>
+
+      <!-- ============ BAND 03 — TRIAGE &amp; FIX ============ -->
+      <polygon points="320,462 400,502 320,542 240,502" fill="#1a2a38" stroke="rgba(255,255,255,0.34)" stroke-width="1.2"/>
+      <text x="320" y="500" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Tree moved?</text>
+      <text x="320" y="516" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">snapshot vs plan</text>
+
+      <rect x="432" y="470" width="176" height="64" rx="6" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="520" y="498" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Triage</text>
+      <text x="520" y="514" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">evidence · cause · remedy</text>
+
+      <rect x="640" y="470" width="176" height="64" rx="6" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="728" y="498" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Fix</text>
+      <text x="728" y="514" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">failing test, then fix</text>
+
+      <!-- FOCAL: the loop's control point -->
+      <polygon points="928,462 1008,502 928,542 848,502" fill="#111921"/>
+      <polygon points="928,462 1008,502 928,542 848,502" fill="rgba(240,81,38,0.16)" stroke="#f05126" stroke-width="1.6"/>
+      <text x="928" y="500" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Loop or exit?</text>
+      <text x="928" y="516" fill="#f05126" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">max 3 rounds</text>
+
+      <rect x="1056" y="470" width="160" height="64" rx="6" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="1136" y="498" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Blocked — stop</text>
+      <text x="1136" y="514" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">round &gt; 3 · no progress</text>
+
+      <!-- ============ BAND 04 — SHIP ============ -->
+      <rect x="928" y="620" width="280" height="64" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.24)" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="1068" y="648" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">reviewer-verify</text>
+      <text x="1068" y="664" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">intent · validation · deferrals</text>
+
+      <rect x="616" y="620" width="280" height="64" rx="6" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="756" y="648" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Walkthrough</text>
+      <text x="756" y="664" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">drafted from notes.md, not the diff</text>
+
+      <rect x="304" y="620" width="280" height="64" rx="6" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="444" y="648" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Commit, push, PR</text>
+      <text x="444" y="664" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">verify by content · source branch</text>
+
+      <rect x="72" y="628" width="200" height="48" rx="20" fill="#1a2a38" stroke="rgba(255,255,255,0.34)" stroke-width="1.2"/>
+      <text x="172" y="657" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">done</text>
+
+      <!-- ============ LEGEND ============ -->
+      <line x1="40" y1="740" x2="1240" y2="740" stroke="rgba(255,255,255,0.16)" stroke-width="0.8"/>
+      <text x="40" y="760" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+
+      <rect x="140" y="748" width="20" height="12" rx="6" fill="#1a2a38" stroke="rgba(255,255,255,0.34)" stroke-width="1"/>
+      <text x="168" y="760" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">START / END</text>
+
+      <rect x="320" y="748" width="20" height="12" rx="2" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="348" y="760" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">PHASE STEP</text>
+
+      <polygon points="506,746 520,754 506,762 492,754" fill="#1a2a38" stroke="rgba(255,255,255,0.34)" stroke-width="1"/>
+      <text x="528" y="760" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">DECISION</text>
+
+      <rect x="672" y="748" width="20" height="12" rx="2" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+      <text x="700" y="760" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">REVIEW LANE</text>
+
+      <rect x="848" y="748" width="20" height="12" rx="2" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.24)" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="876" y="760" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">CONDITIONAL</text>
+
+      <line x1="1024" y1="754" x2="1044" y2="754" stroke="#f05126" stroke-width="1.6"/>
+      <text x="1052" y="760" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">LOOP BACK</text>
+    </svg>
+  </div>
+</body>
+</html>

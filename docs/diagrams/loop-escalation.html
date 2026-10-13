@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escalation is one way</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:  #0b131b;
+      --color-ink:    #ffffff;
+      --color-muted:  #c8ccd0;
+      --color-soft:   #93989c;
+      --color-accent: #f05126;
+      --font-sans:  'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono:  'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .frame { max-width: 1320px; width: 100%; }
+    .eyebrow {
+      font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-accent); margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.15;
+      margin-bottom: 0.35rem;
+    }
+    .standfirst {
+      font-size: 0.85rem; font-weight: 300; color: var(--color-muted);
+      max-width: 64ch; margin-bottom: 1.5rem;
+    }
+    .source {
+      font-family: var(--font-mono); font-size: 0.6rem; color: var(--color-soft);
+      letter-spacing: 0.04em; margin-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.12); padding-top: 0.75rem;
+    }
+    svg { width: 100%; min-width: 960px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">State machine · dev-loop</p>
+    <h1>Escalation is one way</h1>
+    <p class="standfirst">You pick a loop once, but the run can overrule you. Every trigger climbs; nothing descends. A Critical never gets fixed in place and carried on with — the concerns the lighter loop compressed have not had proper attention, and a change that produced one was misjudged.</p>
+
+    <svg viewBox="0 0 1280 760" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="loop-esc-title loop-esc-desc">
+      <title id="loop-esc-title">Escalation is one way</title>
+      <desc id="loop-esc-desc">State machine of the five dev loops stacked as a ladder from ultralight up to ultra-opus, with the named finding that forces each climb; a skip transition takes ultralight straight to the full loop when a Critical or a security, architecture or concurrency Major lands, and no transition ever descends.</desc>
+
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#c8ccd0"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#0b131b"/>
+
+      <!-- Transitions (drawn before states) -->
+      <path d="M640 650 V628" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M640 552 V500" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M640 424 V372" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M640 296 V244" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <path d="M640 168 V116" fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Skip transition: ultralight straight to the full loop -->
+      <path d="M760 588 H800 Q808 588 808 580 V348 Q808 340 800 340 H764"
+            fill="none" stroke="#c8ccd0" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Guard labels -->
+      <rect x="240" y="519" width="368" height="12" rx="2" fill="#0b131b"/>
+      <text x="608" y="528" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">any other Major · more than four findings · a lane could not cover</text>
+
+      <rect x="480" y="391" width="128" height="12" rx="2" fill="#0b131b"/>
+      <text x="608" y="400" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">any Critical in round 1</text>
+
+      <rect x="262" y="263" width="346" height="12" rx="2" fill="#0b131b"/>
+      <text x="608" y="272" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">a Critical in an unexpected lane, or one recurring after a fix</text>
+
+      <rect x="334" y="135" width="274" height="12" rx="2" fill="#0b131b"/>
+      <text x="608" y="144" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">an adjudicator reports coverage: both thin, twice</text>
+
+      <rect x="824" y="458" width="352" height="12" rx="2" fill="#0b131b"/>
+      <text x="828" y="467" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">any Critical · a Major in security, architecture or concurrency</text>
+
+      <!-- States -->
+      <rect x="520" y="40" width="240" height="72" rx="8" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="640" y="70" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">dev-loop-ultra-opus</text>
+      <text x="640" y="90" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">8× · 81 reviewers · all Opus</text>
+
+      <rect x="520" y="168" width="240" height="72" rx="8" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="640" y="198" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">dev-loop-ultra</text>
+      <text x="640" y="218" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">3× · 81 reviewers · 3 rounds</text>
+
+      <rect x="520" y="296" width="240" height="72" rx="8" fill="rgba(240,81,38,0.16)" stroke="#f05126" stroke-width="1.6"/>
+      <text x="640" y="326" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">dev-loop</text>
+      <text x="640" y="346" fill="#f05126" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">1× · 27 reviewers · 3 rounds</text>
+
+      <rect x="520" y="424" width="240" height="72" rx="8" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="640" y="454" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">dev-loop-lite</text>
+      <text x="640" y="474" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">0.3× · 8 reviewers · 2 rounds</text>
+
+      <rect x="520" y="552" width="240" height="72" rx="8" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="640" y="582" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">dev-loop-ultralight</text>
+      <text x="640" y="602" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">0.1× · 1 reviewer · 1 round</text>
+
+      <!-- Start -->
+      <circle cx="640" cy="656" r="6" fill="#c8ccd0"/>
+      <text x="656" y="660" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">WORK DOWN THE LIST · STOP AT THE FIRST THAT FITS</text>
+
+      <!-- Legend -->
+      <line x1="40" y1="700" x2="1240" y2="700" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+      <text x="40" y="716" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+
+      <circle cx="148" cy="731" r="5" fill="#c8ccd0"/>
+      <text x="164" y="735" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">START</text>
+
+      <rect x="300" y="726" width="16" height="10" rx="2" fill="#1a2a38" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+      <text x="324" y="735" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">LOOP LEVEL</text>
+
+      <rect x="500" y="726" width="16" height="10" rx="2" fill="rgba(240,81,38,0.16)" stroke="#f05126" stroke-width="1.2"/>
+      <text x="524" y="735" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">THE DEFAULT</text>
+
+      <line x1="700" y1="731" x2="720" y2="731" stroke="#c8ccd0" stroke-width="1.2"/>
+      <text x="728" y="735" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">ESCALATION — ONE WAY, NEVER BACK</text>
+    </svg>
+
+    <p class="source">Transitions and their guards are quoted from the escalation table in CLAUDE.md. Reviewer counts are lanes × reviewers per lane × rounds. Escalating from dev-loop upward is rarer than escalating into it, and is stated to the user with the cost rather than taken silently.</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Where the money stops buying review</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:  #0b131b;
+      --color-ink:    #ffffff;
+      --color-muted:  #c8ccd0;
+      --color-soft:   #93989c;
+      --color-accent: #f05126;
+      --font-sans:  'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono:  'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .frame { max-width: 1080px; width: 100%; }
+    .eyebrow {
+      font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-accent); margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.15;
+      margin-bottom: 0.35rem;
+    }
+    .standfirst {
+      font-size: 0.85rem; font-weight: 300; color: var(--color-muted);
+      max-width: 64ch; margin-bottom: 1.5rem;
+    }
+    .source {
+      font-family: var(--font-mono); font-size: 0.6rem; color: var(--color-soft);
+      letter-spacing: 0.04em; margin-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.12); padding-top: 0.75rem;
+    }
+    svg { width: 100%; min-width: 820px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Line chart · dev-loop</p>
+    <h1>Where the money stops buying review</h1>
+    <p class="standfirst">Review depth is already at its ceiling by <strong style="font-weight:600">ultra</strong> — nine lanes, three reviewers each, three rounds. The last step up the ladder adds no further reviewers at all. It buys the same eighty-one invocations on a more expensive model, and that is the entire difference between 3× and 8×.</p>
+
+    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="loop-dvc-title loop-dvc-desc">
+      <title id="loop-dvc-title">Where the money stops buying review</title>
+      <desc id="loop-dvc-desc">Line chart comparing review depth against token cost across the five dev loops, each indexed to the heaviest loop. Depth reaches one hundred per cent at ultra while cost is still at thirty-seven per cent; the final step to ultra-opus adds no reviewers and takes cost to one hundred per cent.</desc>
+
+      <rect width="100%" height="100%" fill="#0b131b"/>
+
+      <!-- Gridlines -->
+      <line x1="80" y1="352" x2="960" y2="352" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+      <line x1="80" y1="284" x2="960" y2="284" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+      <line x1="80" y1="216" x2="960" y2="216" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+      <line x1="80" y1="148" x2="960" y2="148" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+      <line x1="80" y1="80"  x2="960" y2="80"  stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+
+      <!-- Axes -->
+      <line x1="80" y1="40" x2="80" y2="420" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+      <line x1="80" y1="420" x2="960" y2="420" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+
+      <!-- Y tick labels -->
+      <text x="72" y="424" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">0</text>
+      <text x="72" y="356" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">20</text>
+      <text x="72" y="288" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">40</text>
+      <text x="72" y="220" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">60</text>
+      <text x="72" y="152" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">80</text>
+      <text x="72" y="84"  fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">100</text>
+
+      <!-- Y axis title -->
+      <text transform="rotate(-90 24 230)" x="24" y="230" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">% OF THE HEAVIEST LOOP</text>
+
+      <!-- Series: review depth (non-focal) -->
+      <polyline points="120,416 320,386 520,307 720,80 920,80"
+                fill="none" stroke="#9caf8f" stroke-width="1.2" stroke-linejoin="round"/>
+
+      <!-- Series: token cost (focal) -->
+      <polyline points="120,416 320,407 520,378 720,292 920,80"
+                fill="none" stroke="#f05126" stroke-width="1.8" stroke-linejoin="round"/>
+      <circle cx="120" cy="416" r="4" fill="#f05126"/>
+      <circle cx="320" cy="407" r="4" fill="#f05126"/>
+      <circle cx="520" cy="378" r="4" fill="#f05126"/>
+      <circle cx="720" cy="292" r="4" fill="#f05126"/>
+      <circle cx="920" cy="80"  r="4" fill="#f05126"/>
+
+      <!-- Value callouts at the widest gap -->
+      <rect x="692" y="56" width="56" height="12" rx="2" fill="#0b131b"/>
+      <text x="720" y="65" fill="#9caf8f" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">81 OF 81</text>
+
+      <rect x="732" y="296" width="72" height="12" rx="2" fill="#0b131b"/>
+      <text x="736" y="305" fill="#f05126" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">3× OF 8×</text>
+
+      <!-- X category labels -->
+      <text x="120" y="440" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">ultralight</text>
+      <text x="320" y="440" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">lite</text>
+      <text x="520" y="440" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">dev-loop</text>
+      <text x="720" y="440" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">ultra</text>
+      <text x="920" y="440" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">ultra-opus</text>
+
+      <!-- Legend -->
+      <line x1="40" y1="462" x2="960" y2="462" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+      <text x="40" y="478" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+
+      <rect x="140" y="489" width="16" height="8" fill="none" stroke="#f05126" stroke-width="1.8"/>
+      <text x="164" y="497" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">TOKEN COST</text>
+
+      <rect x="320" y="489" width="16" height="8" fill="none" stroke="#9caf8f" stroke-width="1.2"/>
+      <text x="344" y="497" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">REVIEW DEPTH — REVIEWER INVOCATIONS</text>
+
+      <text x="960" y="497" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end" letter-spacing="0.06em">BOTH INDEXED TO ULTRA-OPUS = 100%</text>
+    </svg>
+
+    <p class="source">Depth = lanes × reviewers per lane × rounds, the maximum reviewer invocations a run can make: 1 · 8 · 27 · 81 · 81. Cost = the multiplier in the loop table: 0.1× · 0.3× · 1× · 3× · 8×. Both series are indexed to their own maximum so two different units share one axis; the absolute figures are printed above. Rounds 2 and 3 rerun only the lanes that owned accepted findings, so depth is a ceiling, not a typical run.</p>
+  </div>
+</body>
+</html>

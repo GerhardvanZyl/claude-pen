@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What each loop costs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:  #0b131b;
+      --color-ink:    #ffffff;
+      --color-muted:  #c8ccd0;
+      --color-soft:   #93989c;
+      --color-accent: #f05126;
+      --font-sans:  'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono:  'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .frame { max-width: 1080px; width: 100%; }
+    .eyebrow {
+      font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-accent); margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.15;
+      margin-bottom: 0.35rem;
+    }
+    .standfirst {
+      font-size: 0.85rem; font-weight: 300; color: var(--color-muted);
+      max-width: 64ch; margin-bottom: 1.5rem;
+    }
+    .source {
+      font-family: var(--font-mono); font-size: 0.6rem; color: var(--color-soft);
+      letter-spacing: 0.04em; margin-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.12); padding-top: 0.75rem;
+    }
+    svg { width: 100%; min-width: 820px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Bar chart · dev-loop</p>
+    <h1>What each loop costs</h1>
+    <p class="standfirst">Review cost, priced against the full loop. The two cheapest loops are barely visible on a scale that has to hold the most expensive one — which is the whole argument for choosing deliberately rather than reaching for the heaviest option.</p>
+
+    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="loop-cost-title loop-cost-desc">
+      <title id="loop-cost-title">What each loop costs</title>
+      <desc id="loop-cost-desc">Bar chart of review token cost for the five dev loops, expressed as a multiple of the full loop: ultralight 0.1x, lite 0.3x, dev-loop 1x, ultra 3x and ultra-opus 8x — an eighty-fold spread between the cheapest and the most expensive.</desc>
+
+      <rect width="100%" height="100%" fill="#0b131b"/>
+
+      <!-- Gridlines -->
+      <line x1="80" y1="344" x2="960" y2="344" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+      <line x1="80" y1="268" x2="960" y2="268" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+      <line x1="80" y1="192" x2="960" y2="192" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+      <line x1="80" y1="116" x2="960" y2="116" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+      <line x1="80" y1="40"  x2="960" y2="40"  stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+
+      <!-- Axes -->
+      <line x1="80" y1="40" x2="80" y2="420" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+      <line x1="80" y1="420" x2="960" y2="420" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+
+      <!-- Y tick labels -->
+      <text x="72" y="424" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">0</text>
+      <text x="72" y="348" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">2</text>
+      <text x="72" y="272" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">4</text>
+      <text x="72" y="196" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">6</text>
+      <text x="72" y="120" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">8</text>
+      <text x="72" y="44"  fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">10</text>
+
+      <!-- Y axis title -->
+      <text transform="rotate(-90 24 230)" x="24" y="230" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">TOKEN COST ×</text>
+
+      <!-- Bars -->
+      <rect x="112" y="416" width="112" height="4"   fill="#0b131b"/>
+      <rect x="112" y="416" width="112" height="4"   fill="rgba(200,204,208,0.15)" stroke="#c8ccd0" stroke-width="1"/>
+      <text x="168" y="408" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">0.1×</text>
+
+      <rect x="288" y="409" width="112" height="11"  fill="#0b131b"/>
+      <rect x="288" y="409" width="112" height="11"  fill="rgba(200,204,208,0.15)" stroke="#c8ccd0" stroke-width="1"/>
+      <text x="344" y="401" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">0.3×</text>
+
+      <rect x="464" y="382" width="112" height="38"  fill="#0b131b"/>
+      <rect x="464" y="382" width="112" height="38"  fill="rgba(240,81,38,0.16)" stroke="#f05126" stroke-width="1.2"/>
+      <text x="520" y="374" fill="#f05126" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">1×</text>
+
+      <rect x="640" y="306" width="112" height="114" fill="#0b131b"/>
+      <rect x="640" y="306" width="112" height="114" fill="rgba(200,204,208,0.15)" stroke="#c8ccd0" stroke-width="1"/>
+      <text x="696" y="298" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">3×</text>
+
+      <rect x="816" y="116" width="112" height="304" fill="#0b131b"/>
+      <rect x="816" y="116" width="112" height="304" fill="rgba(200,204,208,0.15)" stroke="#c8ccd0" stroke-width="1"/>
+      <text x="872" y="108" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle">8×</text>
+
+      <!-- X category labels -->
+      <text x="168" y="440" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">ultralight</text>
+      <text x="344" y="440" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">lite</text>
+      <text x="520" y="440" fill="#f05126" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">dev-loop</text>
+      <text x="696" y="440" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">ultra</text>
+      <text x="872" y="440" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">ultra-opus</text>
+
+      <!-- Legend -->
+      <line x1="40" y1="462" x2="960" y2="462" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+      <text x="40" y="478" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+
+      <rect x="140" y="488" width="16" height="10" fill="rgba(240,81,38,0.16)" stroke="#f05126" stroke-width="1"/>
+      <text x="164" y="497" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">THE DEFAULT — 1× REFERENCE</text>
+
+      <rect x="380" y="488" width="16" height="10" fill="rgba(200,204,208,0.15)" stroke="#c8ccd0" stroke-width="1"/>
+      <text x="404" y="497" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">PRICED AGAINST IT</text>
+
+      <text x="960" y="497" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end" letter-spacing="0.06em">REVIEW COST ONLY · IMPLEMENTATION IS THE SAME IN FOUR OF THE FIVE</text>
+    </svg>
+
+    <p class="source">Source: the loop table in CLAUDE.md · axis starts at zero and runs to 10× · ultralight and lite draw at 4px and 11px because that is what 0.1× and 0.3× are on a scale holding 8×</p>
+  </div>
+</body>
+</html>
