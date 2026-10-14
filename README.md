@@ -5,7 +5,8 @@ ends at a pull request.
 
 Five review loops at different price points, a backlog refiner, a sprint
 orchestrator, and a delegation policy that keeps the orchestrating agent out of
-the code. Plain markdown — no runtime, nothing to build.
+the code. The skills are plain markdown; one optional mod is TypeScript that
+Claude Code loads from source. Nothing to build either way.
 
 - [The skills](#the-skills)
 - [Install](#install)
@@ -17,6 +18,7 @@ the code. Plain markdown — no runtime, nothing to build.
 - [Backlog refinement](#backlog-refinement)
 - [Sprint orchestration](#sprint-orchestration)
 - [Unity game development](#unity-game-development)
+- [The inspector mod](#the-inspector-mod)
 - [Cost](#cost)
 - [What to watch](#what-to-watch)
 - [Design notes](#design-notes)
@@ -96,6 +98,7 @@ existed at startup — **and run `/doctor`**: 25 agents, 14 skills, no duplicate
 | `user/CLAUDE.md` | `~/.claude/CLAUDE.md` |
 | `project/.claude/` | `<repo>/.claude/` |
 | `project/ARCHITECTURE.template.md` | `<repo>/` — fill in, rename |
+| `plugin/dev-loop-inspector/` | nowhere — enabled in place, see [The inspector mod](#the-inspector-mod) |
 
 Existing `~/.claude/CLAUDE.md` and `<repo>/.claude/standards.md` are never
 overwritten — you get a `.new.md` beside them to merge. Everything else is copied
@@ -367,6 +370,65 @@ Security is dropped outright — the eligibility list is what makes it
 inapplicable. Architecture, Standards, Dead code and Minimalism fold into the
 one Structure lane and run once: in testing they mostly produced standards
 churn on image-producing tooling, and round-2 reruns added nothing.
+
+---
+
+## The inspector mod
+
+`dev-loop-inspector` is the one component that is not markdown — a Claude Code
+plugin, TypeScript the engine loads from source. **Optional, and inert until you
+enable it.**
+
+It reads `.claude/review/runs/<run-id>/` — the newest run, or one you name — and
+reconciles the run against its own files: each round's `plan.md`, `triage.md`,
+per-lane findings JSON and `wontfix.json`. Two checks are the reason it exists:
+
+| It reports | Because |
+| --- | --- |
+| A finding in no triage file | It was raised and then dropped. Nothing records a decision on it, and the run still reads as complete |
+| An `applicable` lane with no findings file | The lane was classified as owning the diff and never drained. A lane that found nothing and a lane that never ran look identical in the directory |
+
+Neither shows up by reading the run directory: both are arithmetic across files
+nobody holds side by side, and both are failures of the *loop* rather than of the
+code, so no review lane owns them. `index.jsonl` answers questions across runs;
+this answers whether the run in front of you adds up. A lane file the plan
+classifies nowhere, and a triage row deciding an id no lane raised, are reported
+too — as notes, not alarms. In the adversarial loops only the adjudicated
+`<lane>.json` counts.
+
+A live pane, a status-line entry (`DL r2 7/9 lanes · 23 raised · reconciled`),
+and `/dev-loop-inspect` for the same report as text. Read-only; it judges the
+loop's record of itself, never the code.
+
+Enable it in two steps, in two different places — in a shell:
+
+```bash
+claude plugin marketplace add "/path/to/this/bundle"
+```
+
+then at the Claude Code prompt, where the leading `/` is the tell:
+
+```
+/plugin install dev-loop-inspector@claude-pen
+```
+
+The `add` names the marketplace `claude-pen` whatever the folder is called, which
+is what the second command refers to. One step also works if you would rather
+hand the prompt the path and let it add the marketplace itself:
+`/plugin install dev-loop-inspector --marketplace "/path/to/this/bundle"` — that
+flag takes a *source*, not a marketplace name.
+
+Both installers print the two-step pair with the path filled in, each quoted for
+the one shell it names — `install.sh` for bash, `install.ps1` for PowerShell.
+Neither is quoted for `cmd.exe`, which treats `'` as an ordinary character, so
+paste the first into the shell its own installer names. `.claude-plugin/marketplace.json`
+at the repo root is what makes the bundle a marketplace; its `source` is relative,
+so the mod runs from `plugin/dev-loop-inspector/` instead of from a copy. That
+makes the folder a standing code source rather than a one-time install — it is
+loaded at every session start — so keep the bundle somewhere only you can write,
+and re-check it after moving or replacing it.
+`.claude-plugin/types/` under it is written by the engine on first load — not
+committed, and `tsc -p` only type-checks after that.
 
 ---
 

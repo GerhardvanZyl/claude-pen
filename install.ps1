@@ -64,7 +64,7 @@ Backup-Tree (Join-Path $claude 'skills') 'skills'
 if ($didBackup) { Write-Host "  backed up existing agents/skills -> $backup" -ForegroundColor Yellow }
 
 Copy-Tree (Join-Path $here 'user\.claude\agents') (Join-Path $claude 'agents') 'agents (24)'
-$skillsLabel = 'skills (7 loops + solution-architecture + coding-standards + 3 walkthrough)'
+$skillsLabel = 'skills (13: 7 loops + backlog-refinement + coding-standards + solution-architecture + 3 walkthrough)'
 Copy-Tree (Join-Path $here 'user\.claude\skills') (Join-Path $claude 'skills') $skillsLabel
 if (-not $WhatIfOnly) {
     $userClaude = Join-Path $here 'user\CLAUDE.md'
@@ -123,6 +123,52 @@ if ($Repo) {
     Add-IgnoreRule $Repo '.claude/review/runs/' 'Review lane logs quote the code they read'
 }
 
+Write-Host "`n=== Mod: dev-loop-inspector ===" -ForegroundColor Cyan
+
+# A plugin is enabled through Claude Code's own marketplace registry under
+# ~/.claude/plugins, which is that program's cache and not an install target.
+# So this section verifies the vendored tree and prints the two commands and
+# nothing else: shelling out to `claude` would put the CLI on this bundle's
+# dependency list, where nothing else needs it, and writing nothing is what
+# makes the section read the same under -WhatIfOnly as without it.
+#
+# The list is what the loader needs: both manifests, the hook, the module it
+# imports, and the `types` path plugin.json declares -- `claude plugin validate`
+# calls a missing one a load failure. tsconfig.json and scan.test.ts are not on
+# it; nothing loads them. -LiteralPath because a bundle unzipped into a folder
+# with a bracket in its name would otherwise be read as a wildcard and every
+# file reported missing.
+$modComplete = $true
+foreach ($needed in @(
+        'plugin\dev-loop-inspector\.claude-plugin\plugin.json',
+        'plugin\dev-loop-inspector\hooks\hooks.json',
+        'plugin\dev-loop-inspector\hooks\register.tsx',
+        'plugin\dev-loop-inspector\hooks\scan.ts',
+        'plugin\dev-loop-inspector\types\index.d.ts',
+        '.claude-plugin\marketplace.json')) {
+    if (-not (Test-Path -LiteralPath (Join-Path $here $needed))) {
+        Write-Host "  ! missing $needed" -ForegroundColor Yellow
+        $modComplete = $false
+    }
+}
+if ($modComplete) {
+    Write-Host "  vendored source and marketplace entry present"
+} else {
+    Write-Host "  mod incomplete -- re-unzip the bundle. Nothing else installed here depends on it."
+}
+# $here goes into a line the user is told to paste, so it is printed inside
+# single quotes with an embedded one doubled -- the only PowerShell quoting a
+# directory name cannot break out of to run something other than what it shows.
+# No one form is right for cmd.exe as well: it treats ' as an ordinary
+# character, so a name carrying & or ^ would split the line there. Step 1 names
+# the shell this quoting is for rather than claiming all of them.
+$hereQuoted = "'" + $here.Replace("'", "''") + "'"
+Write-Host "  Enabling it is two steps, in two different places:"
+Write-Host "  1. in PowerShell (not cmd.exe) --"
+Write-Host "       claude plugin marketplace add $hereQuoted"
+Write-Host "  2. at the Claude Code prompt, not a shell --"
+Write-Host "       /plugin install dev-loop-inspector@claude-pen"
+
 if ($WhatIfOnly) { Write-Host "`nDry run only. Re-run without -WhatIfOnly to apply.`n"; exit 0 }
 
 Write-Host "`n=== Verify ===" -ForegroundColor Cyan
@@ -130,7 +176,7 @@ $agents = (Get-ChildItem (Join-Path $claude 'agents') -Filter *.md -ErrorAction 
 $skills = (Get-ChildItem (Join-Path $claude 'skills') -Directory -ErrorAction SilentlyContinue).Count
 Write-Host "  $agents agent files, $skills skill folders in $claude"
 if ($agents -lt 24) { Write-Host "  ! expected at least 24 agents" -ForegroundColor Yellow }
-if ($skills -lt 12) { Write-Host "  ! expected at least 12 skill folders" -ForegroundColor Yellow }
+if ($skills -lt 13) { Write-Host "  ! expected at least 13 skill folders" -ForegroundColor Yellow }
 if ($Repo) {
     $ps = (Get-ChildItem (Join-Path $Repo '.claude') -Recurse -File).Count
     Write-Host "  $ps files in $Repo\.claude"
@@ -150,4 +196,6 @@ if ($Repo) {
 }
 Write-Host "  * Merge .claude\settings.example.json into .claude\settings.json for hook logging,"
 Write-Host "    then run /doctor -- the hook fails silently if its path is wrong."
+Write-Host "  * Enable the dev-loop-inspector mod with the two commands in the Mod section above."
+Write-Host "    The first goes in a shell, the second at the Claude Code prompt -- the leading / is the tell."
 Write-Host "`nRestart Claude Code once, then run /doctor.`n"

@@ -1,0 +1,15 @@
+{
+  "name": "claude-pen",
+  "metadata": {
+    "description": "Mods that ship with the claude-pen dev-loop bundle."
+  },
+  "owner": {
+    "name": "Gerhard van Zyl"
+  },
+  "plugins": [
+    {
+      "name": "dev-loop-inspector",
+      "source": "./plugin/dev-loop-inspector"
+    }
+  ]
+}
