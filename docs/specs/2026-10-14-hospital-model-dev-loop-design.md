@@ -42,15 +42,42 @@ The family is **seven skills**, not five. The general ladder is `dev-loop-ultral
 | `dev-loop-unity` | `dev-loop` (full) |
 | `dev-loop-unity-lite` | `dev-loop-lite` |
 
-There are three lane-card files, and a mechanism touching lane cards touches all three: `dev-loop/references/review-lanes.md` (used by full, ultralight, ultra, ultra-opus), `dev-loop-lite/references/review-lanes-lite.md`, and `dev-loop-unity/references/review-lanes-unity.md` (used by both Unity loops).
+There are three lane-card files, and a mechanism touching lane cards touches all three:
 
-## 4. Mechanism 1 — `reviewer-plan`, new Phase 0b
+| Lane-card file | Used by |
+| --- | --- |
+| `dev-loop/references/review-lanes.md` | full, ultra, ultra-opus |
+| `dev-loop-lite/references/review-lanes-lite.md` | lite |
+| `dev-loop-unity/references/review-lanes-unity.md` | unity, unity-lite |
+
+`dev-loop-ultralight` has **no lane-card file**. Its single reviewer sweeps a fixed list of concerns held in `reviewer-ultralight.md` itself, and its log records a verdict for every concern on that list including the ones it found nothing on. Any mechanism that adds a lane concern therefore adds it to that sweep rather than to a card, and the new concern must appear in the per-concern verdict list.
+
+The Unity loops add no test reviewer of their own: `dev-loop-unity` reuses `reviewer-tests`, and `dev-loop-unity-lite` reuses `reviewer-lite-correctness`, `reviewer-lite-tests` and `reviewer-lite-structure`, all reading the Unity cards in place of the lite ones.
+
+### 3.1 Phase naming — letters, not numbers
+
+The two new phases are named **Phase P** (plan review) and **Phase D** (discharge audit), positionally rather than numerically, and the deferred-findings feed is a numbered **step inside the existing commit phase** rather than a phase of its own.
+
+This is deliberate. Numeric sub-phase labels are already taken or absent in ways that make a single number impossible:
+
+- `dev-loop-unity` already uses **Phase 0a** (art direction) and **Phase 0b** (inventory, primitives, harness), so the plan gate cannot be "Phase 0b".
+- `dev-loop-ultralight` has no Phase 8 or 9 at all — its phases run 0, 1, 2, 3, 4, 5, 5b, 6, with commit at **Phase 6** — so the run audit cannot be "Phase 8c".
+
+One letter per phase holds across all seven loops, survives future renumbering, and keeps the loops comparable, which is what the identical-formats rule exists to protect. Positions:
+
+| New phase | Position |
+| --- | --- |
+| **Phase P** — plan review | Immediately after the framing phase (Phase 0 everywhere), before any implementation. |
+| **Phase D** — discharge audit | Immediately after the walkthrough phase (8b, or 5b in ultralight), before the commit phase (9, or 6 in ultralight). |
+| Deferred-findings feed | A numbered step inside the commit phase, after the PR is created. |
+
+## 4. Mechanism 1 — `reviewer-plan`, new Phase P
 
 **Rungs: full, ultra, ultra-opus, unity.** Not ultralight, lite, or unity-lite, whose eligibility criteria already bound the cost of a misframed brief.
 
 A new read-only agent at `user/.claude/agents/reviewer-plan.md`, on **Opus** on every rung it runs on. It is the only lane that runs before any code exists, so it has no diff: its inputs are `brief.md`, the repository as it stands, `.claude/review/conventions.md`, and the `coding-standards` and `solution-architecture` skills.
 
-It gets a Plan card in each applicable lane-card file. Concerns it owns:
+It gets a Plan card in `review-lanes.md` (serving full, ultra and ultra-opus) and in `review-lanes-unity.md` (where the card states that only `dev-loop-unity` runs it, not `dev-loop-unity-lite`). No card is added to `review-lanes-lite.md`, since neither lite rung has the gate. Concerns it owns:
 
 - **Completeness** — the requirement in plain language, explicit non-goals, named hard constraints, a definition of done naming the validation commands that must pass, and the source branch recorded.
 - **Groundedness** — the files and entry points the brief names actually exist.
@@ -69,9 +96,9 @@ It uses **the same findings schema as every other lane**, so runs stay comparabl
 
 | Finding severity | Behaviour |
 | --- | --- |
-| Critical or Major | **Stop the run.** Present the findings. Do not enter Phase 1. |
+| Critical or Major | **Stop the run.** Present the findings. Do not enter the implementation phase. |
 | Minor | The lead revises `brief.md` itself, records the revision in `notes.md`, and proceeds. No round-trip. |
-| Empty | Silent. Straight to Phase 1. |
+| Empty | Silent. Straight to implementation. |
 
 This keeps the attention cost of the gate at zero on a sound brief, which is the common case — their data has plans rejected under 10% of the time, and they still call plan review the highest-value check in the pipeline, because what it catches has not been built yet.
 
@@ -80,13 +107,13 @@ This keeps the attention cost of the gate at zero on a sound brief, which is the
 **Two plan reviews per run, maximum.** The second is spent on one of:
 
 - a brief the user told the lead to revise after a stop; or
-- the "don't improvise" rule: if Phase 5 triage accepts a requirements finding that redefines the definition of done, the brief is revised and the plan review re-runs.
+- the "don't improvise" rule: if the triage phase accepts a requirements finding that redefines the definition of done, the brief is revised and the plan review re-runs.
 
 A second rejection stops the run and reports. The loop does not iterate on plans.
 
 `notes.md` records the plan review outcome either way, including a silent pass.
 
-## 5. Mechanism 2 — `reviewer-discharge`, new Phase 8c
+## 5. Mechanism 2 — `reviewer-discharge`, new Phase D
 
 **All seven loops.** Its cost scales with the size of the run directory, so on `dev-loop-ultralight` it is nearly free — and a trust gate covering only the expensive runs leaves the cheap rungs unaudited, which is where corner-cutting is likeliest.
 
@@ -97,14 +124,14 @@ A new read-only agent at `user/.claude/agents/reviewer-discharge.md`, on **Sonne
 1. Every `round-N/plan.md` exists and carries its `tree:` and `snapshot:` lines.
 2. Every lane in every round is classified `applicable` or `skipped` with a reason.
 3. **Every skip reason is a factual statement about what the diff does not touch**, verified against the changed-file list. "The code looks fine", or a reason that is not a statement about the diff, is a finding.
-4. **The snapshot chain is unbroken**: each round's `snapshot:` is the next round's round base, up to the Phase 8b baseline. The commit comparison stays with Phase 9 step 4, which runs after this phase.
+4. **The snapshot chain is unbroken**: each round's `snapshot:` is the next round's round base, up to the walkthrough-phase baseline. The commit comparison stays in the commit phase, which runs after this one.
 5. **Every accepted finding in every `triage.md` has a corresponding change.** This is the headline check.
 6. Every accepted finding with `would_have_been_bug: true` has a regression test, and the notes record it failing before the fix.
 7. Every `wontfix.json` entry carries a reason and a classification.
 8. **Rejection classifications are defensible on spot-check.** `rejected_wrong` is the only classification that counts against a lane, so misclassifying a wrong finding as `stale` or `remedy` hides lane drift.
 9. Existing-test modifications are justified — see mechanism 4.
 10. The walkthrough exists, or its skip reason is one of the permitted mechanical-change reasons and is recorded in both the PR description and `run.md`.
-11. The recorded Phase 7 exit condition actually holds.
+11. The exit condition the lead recorded actually holds.
 12. Deferred findings were filed, or the cap was reached and recorded — see mechanism 6.
 13. The `index.jsonl` line is true against the round files.
 
@@ -112,7 +139,7 @@ A new read-only agent at `user/.claude/agents/reviewer-discharge.md`, on **Sonne
 
 `discharge.json` (standard findings schema, `file` being the run-directory file at fault) and `discharge.log.md`, with an explicit `verdict: pass | fail` line.
 
-**A `fail` stops the run before Phase 9.** Nothing is committed or pushed. Where the failure is a record defect, the lead corrects the record and discharge re-runs once. Where the failure is check 5 — an accepted finding that was never fixed — the run returns to Phase 6, not forward.
+**A `fail` stops the run before the commit phase.** Nothing is committed or pushed. Where the failure is a record defect, the lead corrects the record and discharge re-runs once. Where the failure is check 5 — an accepted finding that was never fixed — the run returns to the fix phase, not forward.
 
 ### Accepted seam
 
@@ -126,12 +153,12 @@ Default cap: **1,000 changed lines including tests**, matching the source articl
 
 ### Two parties, so neither grades itself
 
-- The **lead writes its line estimate into `brief.md`** at Phase 0.
+- The **lead writes its line estimate into `brief.md`** at the framing phase.
 - **`reviewer-plan` independently assesses whether that estimate is plausible** given the named files and the requirement, and raises a Major — which stops the run — when the estimate exceeds the cap or is implausibly low for what the brief describes. The finding names suggested sub-slices.
 
 On rungs without a plan gate, only the measurement below applies.
 
-### Measurement after Phase 2
+### Measurement after the tests phase
 
 The lead measures the actual change — `git diff --shortstat <base>` plus the line count of untracked files that will be staged — and records `lines_estimated` and `lines_actual` in `notes.md` and in the index line.
 
@@ -143,8 +170,10 @@ The lead measures the actual change — `git diff --shortstat <base>` plus the l
 
 - **Rule.** Weakening, skipping, deleting, or loosening an assertion in an existing test must be named and justified in the sidekick's returned reasoning and recorded as its own item in `notes.md`.
 - **Lane ownership.** The Tests card in all three lane-card files gains existing-test modifications as an owned concern. **Unjustified weakening is Critical** — it is the one change that blinds every other gate in the loop.
-- **Brief requirement.** The Phase 1, Phase 2 and Phase 6 briefs gain an explicit line: you may not weaken, skip or delete an existing test to make a change pass; if a test is genuinely wrong, say so and stop. The line also goes into `sidekick.md`, `sidekick-heavy.md` and `sidekick-lite.md` as a standing rule, so it cannot be lost by a brief that forgets it.
+- **Brief requirement.** The implement, tests and fix briefs gain an explicit line: you may not weaken, skip or delete an existing test to make a change pass; if a test is genuinely wrong, say so and stop. The line also goes into `sidekick.md`, `sidekick-heavy.md` and `sidekick-lite.md` as a standing rule, so it cannot be lost by a brief that forgets it. `sidekick-visual.md` is excluded — it builds scenes and art, not tests.
 - **Audit.** `reviewer-discharge` check 9 cross-references existing-test modifications in the diff against justifications present in the notes.
+
+In `dev-loop-ultralight` the concern joins `reviewer-ultralight.md`'s fixed sweep rather than a card, and must appear in that reviewer's per-concern verdict list so a silent omission is visible.
 
 The article's "test changes must be separate, reviewed commits" does not transfer, because the unit of review here is the working tree rather than a commit series. The justification-in-notes requirement achieves the same end.
 
@@ -156,7 +185,7 @@ Required whenever:
 
 - a sidekick returns blocked or wrong and the lead re-delegates the same brief;
 - the lead escalates rung, per the one-way escalation table; or
-- Phase 7 exits `blocked`.
+- the loop-or-exit phase exits `blocked`.
 
 Written to `handoff.md` in the run directory:
 
@@ -170,9 +199,11 @@ That last clause is the mechanism. Without it a handoff is only a longer brief, 
 
 The index line gains a `handoffs` count.
 
-## 9. Mechanism 6 — deferred-findings feed, new Phase 9b
+## 9. Mechanism 6 — deferred-findings feed, a step in the commit phase
 
-**All seven loops.** Today `stale` and deferred-but-real findings go into the PR description and are never seen again.
+**All seven loops**, as a numbered step at the end of the commit phase — after the PR exists, so each filed item can link to it. That is `dev-loop`'s Phase 9 and `dev-loop-ultralight`'s Phase 6.
+
+Today `stale` and deferred-but-real findings go into the PR description and are never seen again.
 
 - **Host detection** from `git remote get-url origin`: `github.com` uses `gh`, `dev.azure.com` or `visualstudio.com` uses the `ado-rest` skill, and anything else appends to `.claude/review/deferred.md` and says so in `run.md`.
 - **Cap: five filed items per run**, by default. Beyond the cap the remainder stays in the PR description, and `run.md` plus the index record `deferred_filed` against `deferred_unfiled`. The cap ships from day one rather than being learned: the article's Research Department had to be throttled and backlog-capped because it generated more issues than the team could review, and many duplicated older ones.
@@ -186,7 +217,7 @@ This contradicts two rules currently in force, and the contradiction must be res
 - `dev-loop`'s "Work tracker changes" section states that the loop does not create or change work items unless the user asked it to.
 - `user/CLAUDE.md` states that being told to file a bug on one run is not authorisation to file bugs on the next.
 
-Both gain an explicit, narrow carve-out: **Phase 9b filing of deferred review findings is standing authorisation, capped and deduped as specified, and nothing else about work-item handling changes.** In particular this does not authorise creating, closing or state-changing any other work item, and does not authorise merging.
+Both gain an explicit, narrow carve-out: **filing deferred review findings at the end of the commit phase is standing authorisation, capped and deduped as specified, and nothing else about work-item handling changes.** In particular this does not authorise creating, closing or state-changing any other work item, and does not authorise merging.
 
 ## 10. Mechanism 7 — records branch
 
@@ -218,13 +249,13 @@ On a rung with no plan gate, `plan_review` is omitted rather than zeroed, so a m
 
 | Mechanism | ultralight | lite | full | ultra | ultra-opus | unity | unity-lite |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `reviewer-plan` (0b) | — | — | yes | yes | yes | yes | — |
-| `reviewer-discharge` (8c) | yes | yes | yes | yes | yes | yes | yes |
+| `reviewer-plan` (Phase P) | — | — | yes | yes | yes | yes | — |
+| `reviewer-discharge` (Phase D) | yes | yes | yes | yes | yes | yes | yes |
 | Ceiling: estimate + plan check | — | — | yes | yes | yes | yes | — |
 | Ceiling: measure and record | yes | yes | yes | yes | yes | yes | yes |
 | Test integrity | yes | yes | yes | yes | yes | yes | yes |
 | I-PASS handoff | yes | yes | yes | yes | yes | yes | yes |
-| Deferred feed (9b) | yes | yes | yes | yes | yes | yes | yes |
+| Deferred feed (commit-phase step) | yes | yes | yes | yes | yes | yes | yes |
 | Records branch | yes | yes | yes | yes | yes | yes | yes |
 | Index additions | yes | yes | yes | yes | yes | yes | yes |
 
@@ -237,13 +268,22 @@ On a rung with no plan gate, `plan_review` is omitted rather than zeroed, so a m
 - `user/.claude/skills/dev-loop/references/handoff.md`
 - `user/.claude/skills/dev-loop/references/records-branch.md`
 
-**Edited:**
+**Edited.** The seven loop skills are not uniform in how they are written, and the plan must respect that rather than inserting the same headings seven times:
 
-- All seven loop skills: `dev-loop`, `dev-loop-lite`, `dev-loop-ultralight`, `dev-loop-ultra`, `dev-loop-ultra-opus`, `dev-loop-unity`, `dev-loop-unity-lite` — new phases where applicable, ceiling, test integrity, handoff and records references, index additions, and the Phase 9b carve-out.
-- All three lane-card files: `dev-loop/references/review-lanes.md`, `dev-loop-lite/references/review-lanes-lite.md`, `dev-loop-unity/references/review-lanes-unity.md` — a Plan card where the rung has the gate, a Discharge card, and the existing-test concern added to the Tests card.
-- The test reviewer agents: `reviewer-tests.md`, `reviewer-lite-tests.md`, `reviewer-ultralight.md`, and the Unity equivalent.
-- `sidekick.md`, `sidekick-heavy.md`, `sidekick-lite.md` — the test-integrity standing rule.
-- `user/CLAUDE.md` — the Phase 9b carve-out, and the loop table updated to seven loops with the new phases named.
+| Skill | Shape | Edit needed |
+| --- | --- | --- |
+| `dev-loop` | Full phase bodies, 0–9 | Phase P and Phase D as new sections; ceiling, test integrity, handoff and records references; deferred-feed step in Phase 9; index additions; work-tracker carve-out. This is the canonical copy the others defer to. |
+| `dev-loop-lite` | Full phase bodies, 0–9 | Phase D; ceiling measurement; test integrity; handoff and records references; deferred-feed step in Phase 9. No Phase P. |
+| `dev-loop-ultralight` | Full phase bodies, 0–6 with 5b | Phase D between 5b and 6; ceiling measurement; deferred-feed step in Phase 6; handoff and records references. No Phase P. Its Formats section defers wholesale to `dev-loop`, so the index additions propagate with no edit there. |
+| `dev-loop-ultra` | Phases 0–2 merged into one section | Phase P stated as a line in the merged "Phases 0 to 2" section, not a new heading; Phase D; the rest as `dev-loop`. |
+| `dev-loop-ultra-opus` | Deltas only — no phase bodies | Index line section only. It inherits ultra's phases, so no phase edits. |
+| `dev-loop-unity` | Deltas from `dev-loop`, with its own 0a and 0b | Phase P as a delta — **not** "0b", which is already inventory/primitives/harness; Phase D as a delta in the merged "Phase 8 / 8b / 9" section. |
+| `dev-loop-unity-lite` | Deltas from `dev-loop-unity` | Phase D delta; no Phase P. |
+
+- The three lane-card files: `review-lanes.md` and `review-lanes-unity.md` gain a Plan card (the Unity one stating that only the full Unity loop runs it); all three gain a Discharge card and the existing-test concern on the Tests card. `review-lanes-lite.md` gains no Plan card.
+- The test reviewer agents: `reviewer-tests.md` (full, ultra, ultra-opus, unity) and `reviewer-lite-tests.md` (lite, unity-lite). `reviewer-ultralight.md` gains the concern in its fixed sweep and its per-concern verdict list. There is no separate Unity test reviewer.
+- `sidekick.md`, `sidekick-heavy.md`, `sidekick-lite.md` — the test-integrity standing rule. Not `sidekick-visual.md`.
+- `user/CLAUDE.md` — the work-tracker carve-out, and the loop table corrected from five loops to seven with the new phases named.
 - `README.md` and `INSTALL.md` where either enumerates agents or phases.
 
 **Unchanged:** every existing lane's concerns, the round bound, the triage gates, the two-scope rule, `conventions.md` semantics, and the model tiers of all existing agents.
@@ -251,14 +291,15 @@ On a rung with no plan gate, `plan_review` is omitted rather than zeroed, so a m
 ## 14. Definition of done for Stage 1
 
 - `reviewer-plan` and `reviewer-discharge` exist, are read-only in the same sense as the other reviewers, and are wired into the rungs named in section 12.
-- A deliberately underspecified brief on a `dev-loop` run is stopped at Phase 0b with a Major, and the run does not reach Phase 1.
-- A run whose `triage.md` records an accepted finding with no corresponding change is stopped at Phase 8c and returned to Phase 6.
-- A run with a lane skipped for a non-factual reason is stopped at Phase 8c.
+- A deliberately underspecified brief on a `dev-loop` run is stopped at Phase P with a Major, and the run does not reach implementation.
+- A run whose `triage.md` records an accepted finding with no corresponding change is stopped at Phase D and returned to the fix phase.
+- A run with a lane skipped for a non-factual reason is stopped at Phase D.
+- Phase P and Phase D carry those labels in all seven skills, and neither collides with `dev-loop-unity`'s existing 0a and 0b or depends on a phase number `dev-loop-ultralight` does not have.
 - All seven loops write the section 11 index fields, with `plan_review` omitted on the rungs that have no gate.
 - A completed run's records are present on the `review-records` branch and absent from the PR diff.
 - A run with more than five deferred findings files five, records the remainder, and dedupes a finding that matches an open item.
 - A sidekick retry, a rung escalation and a `blocked` exit each produce a `handoff.md` in the I-PASS format, and the receiving brief demands a restatement before editing.
-- `user/CLAUDE.md` and `dev-loop`'s work-tracker section no longer contradict Phase 9b.
+- `user/CLAUDE.md` and `dev-loop`'s work-tracker section no longer contradict the deferred-findings feed, and `user/CLAUDE.md`'s ladder table lists all seven loops.
 
 ## 15. Stage 2 — shape only, not specified here
 
