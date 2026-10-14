@@ -38,10 +38,11 @@ Everything else is copied over the top.
 | From | To |
 | --- | --- |
 | `user/.claude/agents/` | `~/.claude/agents/` — 24 agents |
-| `user/.claude/skills/` | `~/.claude/skills/` — 7 loops + `solution-architecture` + `coding-standards` + 3 walkthrough |
+| `user/.claude/skills/` | `~/.claude/skills/` — 13: 7 loops + `backlog-refinement` + `coding-standards` + `solution-architecture` + 3 walkthrough |
 | `user/CLAUDE.md` | `~/.claude/CLAUDE.md` — delegation policy, loop selection |
-| `project/.claude/` | `<repo>/.claude/` — per-project standards override, the 2 sprint skills, `sprint-item-runner`, hook script |
+| `project/.claude/` | `<repo>/.claude/` — per-project standards override, `implement-sprint`, `sprint-item-runner`, hook script |
 | `project/ARCHITECTURE.template.md` | `<repo>/` — fill in and rename |
+| `plugin/dev-loop-inspector/` | nowhere — the mod runs from the bundle where it sits. Enabled by hand, see *Manual steps after install* |
 
 ## After it runs
 
@@ -50,8 +51,10 @@ that existed when the session started, so a fresh `agents/` needs a restart to b
 seen.
 
 **Run `/doctor`.** With a repo wired up you should see 25 agents and 14 skills
-(24 agents and 12 skills user-level, plus `sprint-item-runner`, `implement-sprint`
-and `backlog-refinement` from the project), with no duplicate names. If a skill shows
+(24 agents and 13 skills user-level, plus `sprint-item-runner` and
+`implement-sprint` from the project), with no duplicate names. The mod does not
+move those two numbers — a plugin is neither an agent nor a skill, and its own
+tell is the `DL …` status-line entry plus `/dev-loop-inspect`. If a skill shows
 up under a filename rather than its folder name, a `SKILL.md` was renamed
 somewhere.
 
@@ -78,6 +81,44 @@ version is. Nothing is deleted. Use `-WhatIfOnly` (PowerShell) or `--dry-run`
 **`~/.claude/skills/coding-standards/SKILL.md` is a scaffold**, installed once
 per machine. Replace its rule sections with your real cross-project rules. Its
 *Explicitly not standards* section matters as much as the rules themselves.
+
+**`dev-loop-inspector` is not enabled by the installer.** It reconciles a review
+run against its own files and reports the two failures the loop is otherwise
+blind to: a finding that reached no triage file, and a lane classified
+`applicable` that never drained. It is a Claude Code plugin, so enabling it
+means adding this bundle as a marketplace and then installing from it — two
+commands, in two different places:
+
+```bash
+claude plugin marketplace add "/path/to/this/bundle"
+```
+
+```
+/plugin install dev-loop-inspector@claude-pen
+```
+
+The first is a **shell** command. The second is typed **at the Claude Code
+prompt**, not in a shell — the leading `/` is the tell. Both installers print
+them with the bundle's absolute path already filled in, each quoted for the one
+shell it names — `install.sh` for **bash**, `install.ps1` for **PowerShell** —
+so a copy-paste survives a path with spaces in it. Neither is quoted for
+`cmd.exe`: it treats `'` as an ordinary character rather than a quote, so paste
+the first command into the shell its own installer names. Neither
+installer runs them, and neither writes to `~/.claude/plugins/` or any
+`settings.json`: that registry is Claude Code's own cache, not an install
+target.
+
+**The bundle folder stays a code source.** The marketplace entry's `source` is a
+relative path, so the mod is loaded from this folder at every session start
+rather than copied in once at install. Keep the bundle somewhere only you can
+write, and re-check it after moving or replacing it.
+
+The marketplace is named `claude-pen` regardless of what the unzipped folder is
+called, and `@claude-pen` is how the second command finds it. `--marketplace`
+would also work in place of `@`, but it takes a *source* — a path or an
+`owner/repo` — not a marketplace name, so it is the one-command form
+(`/plugin install dev-loop-inspector --marketplace "/path/to/this/bundle"`)
+rather than a follow-on to the first step.
 
 Three more things need your input, per repository, before the loops behave
 well:

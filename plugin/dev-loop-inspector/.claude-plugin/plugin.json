@@ -1,0 +1,7 @@
+{
+  "name": "dev-loop-inspector",
+  "version": "0.1.0",
+  "description": "Reconciles dev-loop review runs: flags findings that never reached triage and applicable lanes that never drained.",
+  "author": { "name": "Gerhard van Zyl" },
+  "types": "./types/index.d.ts"
+}

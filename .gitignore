@@ -6,3 +6,9 @@
 .claude/settings.local.json
 .claude/agent-memory/
 graphify-out/
+
+# Claude Code writes ~1 MB of its own type declarations here the first time it
+# loads the mod, specific to the installed version. The mod's own .gitignore in
+# that folder is `*`, which ignores itself, so it is tracked only by git add -f
+# and this rule is what keeps a fresh clone clean.
+plugin/dev-loop-inspector/.claude-plugin/types/
