@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The shape of each loop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:  #0b131b;
+      --color-ink:    #ffffff;
+      --color-muted:  #c8ccd0;
+      --color-soft:   #93989c;
+      --color-accent: #f05126;
+      --font-sans:  'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono:  'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .frame { max-width: 1080px; width: 100%; }
+    .eyebrow {
+      font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-accent); margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.15;
+      margin-bottom: 0.35rem;
+    }
+    .standfirst {
+      font-size: 0.85rem; font-weight: 300; color: var(--color-muted);
+      max-width: 64ch; margin-bottom: 1.5rem;
+    }
+    .source {
+      font-family: var(--font-mono); font-size: 0.6rem; color: var(--color-soft);
+      letter-spacing: 0.04em; margin-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.12); padding-top: 0.75rem;
+    }
+    svg { width: 100%; min-width: 820px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Radar · dev-loop</p>
+    <h1>The shape of each loop</h1>
+    <p class="standfirst">Five dimensions of review depth, each normalised to its own maximum. The full loop is not a smaller version of the heaviest one — it is a different shape. It takes breadth and repetition to the ceiling and deliberately leaves reviewers-per-lane and model tier on the floor.</p>
+
+    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="loop-radar-title loop-radar-desc">
+      <title id="loop-radar-title">The shape of each loop</title>
+      <desc id="loop-radar-desc">Radar chart comparing the ultralight, full and ultra-opus dev loops across five normalised review dimensions — lanes, reviewers per lane, verification, Opus share and rounds. Ultra-opus fills every axis, the full loop maxes lanes and rounds while staying low on reviewers per lane and Opus share, and ultralight sits near the centre on every axis.</desc>
+
+      <rect width="100%" height="100%" fill="#0b131b"/>
+
+      <!-- Grid rings -->
+      <polygon points="500,208 530,230 519,266 481,266 470,230" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="0.8"/>
+      <polygon points="500,176 561,220 538,292 462,292 439,220" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="0.8"/>
+      <polygon points="500,144 591,211 556,317 444,317 409,211" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="0.8"/>
+      <polygon points="500,112 622,201 575,343 425,343 378,201" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="0.8"/>
+      <polygon points="500,80 652,191 594,369 406,369 348,191"  fill="none" stroke="rgba(255,255,255,0.20)" stroke-width="1"/>
+
+      <!-- Axis spokes -->
+      <line x1="500" y1="240" x2="500" y2="80"  stroke="rgba(255,255,255,0.20)" stroke-width="0.8"/>
+      <line x1="500" y1="240" x2="652" y2="191" stroke="rgba(255,255,255,0.20)" stroke-width="0.8"/>
+      <line x1="500" y1="240" x2="594" y2="369" stroke="rgba(255,255,255,0.20)" stroke-width="0.8"/>
+      <line x1="500" y1="240" x2="406" y2="369" stroke="rgba(255,255,255,0.20)" stroke-width="0.8"/>
+      <line x1="500" y1="240" x2="348" y2="191" stroke="rgba(255,255,255,0.20)" stroke-width="0.8"/>
+
+      <!-- Axis labels -->
+      <text x="500" y="64"  fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Lanes</text>
+      <text x="667" y="186" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif">Reviewers</text>
+      <text x="603" y="382" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif">Verify</text>
+      <text x="397" y="382" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="end">Opus</text>
+      <text x="333" y="186" fill="#ffffff" font-size="11" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="end">Rounds</text>
+
+      <!-- Scale ticks — top axis only -->
+      <text x="494" y="211" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">2</text>
+      <text x="494" y="179" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">4</text>
+      <text x="494" y="147" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">6</text>
+      <text x="494" y="115" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">8</text>
+      <text x="494" y="83"  fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end">10</text>
+
+      <!-- Series — smallest area first -->
+      <polygon points="500,222 550,224 500,240 500,240 450,224"
+               fill="rgba(130,160,192,0.22)" stroke="#82a0c0" stroke-width="1.5"/>
+
+      <polygon points="500,80 652,191 594,369 406,369 348,191"
+               fill="rgba(156,175,143,0.12)" stroke="#9caf8f" stroke-width="1.5"/>
+
+      <!-- Focal: the full loop -->
+      <polygon points="500,80 550,224 547,304 459,297 348,191"
+               fill="rgba(240,81,38,0.22)" stroke="#f05126" stroke-width="1.8"/>
+      <circle cx="500" cy="80"  r="4" fill="#f05126"/>
+      <circle cx="550" cy="224" r="4" fill="#f05126"/>
+      <circle cx="547" cy="304" r="4" fill="#f05126"/>
+      <circle cx="459" cy="297" r="4" fill="#f05126"/>
+      <circle cx="348" cy="191" r="4" fill="#f05126"/>
+
+      <!-- Legend -->
+      <line x1="40" y1="462" x2="960" y2="462" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+      <text x="40" y="478" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+
+      <rect x="140" y="489" width="16" height="8" fill="rgba(240,81,38,0.22)" stroke="#f05126" stroke-width="1.8"/>
+      <text x="164" y="497" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">DEV-LOOP · 1×</text>
+
+      <rect x="320" y="489" width="16" height="8" fill="rgba(156,175,143,0.12)" stroke="#9caf8f" stroke-width="1.5"/>
+      <text x="344" y="497" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">ULTRA-OPUS · 8×</text>
+
+      <rect x="512" y="489" width="16" height="8" fill="rgba(130,160,192,0.22)" stroke="#82a0c0" stroke-width="1.5"/>
+      <text x="536" y="497" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">ULTRALIGHT · 0.1×</text>
+
+      <text x="960" y="497" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end" letter-spacing="0.06em">LITE AND ULTRA SIT BETWEEN — OMITTED FOR LEGIBILITY</text>
+    </svg>
+
+    <p class="source">All five axes normalised to 0–10 against the maximum in the loop table. Lanes: 1 · 4 · 9 · 9 · 9. Reviewers per lane: 1 · 1 · 1 · 3 · 3. Rounds: 1 · 2 · 3 · 3 · 3. Opus share of reviewer slots: 0% · 0% · 44% · 44% · 100%. Verification: never = 0, conditional = 5, always = 10. Two axes read zero for ultralight, which is why its polygon is pinned to the centre.</p>
+  </div>
+</body>
+</html>

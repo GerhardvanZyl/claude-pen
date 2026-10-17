@@ -72,9 +72,18 @@ SHOULD. Do not invent rules that are not written in either file.
   reads badly once wrapped is telling you it wants an intermediate named
   variable (see the rule above), not a narrower window. Applies to lines this
   change touches; do not reformat surrounding lines to comply.
+- **MUST NOT** have more than one `&&`/`||` in a single line, if condition change is already broken into multiple lines, unless wrapped in structurally necessary parentheses. 
+  If the condition is a single line, it can have multiple `&&`/`||`.
+- **SHOULD** align method parameters and arguments across multiple lines, and **SHOULD** align
+  them with the opening parenthesis.
 - **SHOULD** keep methods under 40 lines and types under 400.
 - **SHOULD** prefer composition over inheritance; seal classes not designed for
   extension.
+- **SHOULD NOT** place the body of an if statement on the same line as the condition, even if it is a single statement. 
+- **SHOULD** omit braces on an if whose body is a single statement written on the line immediately following.
+  A multi-statement body or a body spanning more than one line MUST use braces on every branch.
+- **SHOULD** prefer ternary expressions for simple conditional assignments, but **MUST NOT** use them for side effects or complex logic.
+- **SHOULD NOT** use nested ternary expressions.
 
 ## Nullability and defensive coding
 
@@ -120,16 +129,29 @@ SHOULD. Do not invent rules that are not written in either file.
   the code already says, narrates steps the reader can follow unaided, or
   carries change history belonging in git is not concise — and unlike code,
   nothing compiles it, so it goes stale silently and misleads the next reader.
-- **SHOULD** fit in one or two lines. A comment substantially longer than the
-  code it explains usually means the code needs changing, not that it needs
-  more explanation.
+- **SHOULD** fit in one or two lines. Longer business logic explanations belong in a design document, not in a comment.
+  Create or update such a document and link to it from the comment instead. See the documents section for rules around document creation.
+- **MUST NOT** reference anything in the .claude folder. Only reference files in the /docs folder.
+
+## Project Documentation
+
+- **MUST** be added to an aptly named subfolder under /docs in the project root.
+- **MUST** be added under /docs/architecture-decision-record/[major/minor] for major or minor architectual decisions. Minor decisions spans a few files.
+  Major decisions involves which frameworks or technologies were chosen. Architecture decision records must state at least What/Alternatives/Why.
+- **MUST** be added under /docs/logic for code flow and/or business logic decisions.
+- **MUST NOT** be added under /.Clade.
+
+## Complexity
+
+- **SHOULD NOT** exceed cyclomatic complexity of 15 for a method
+- **MUST NOT** have more than 3 levels of nested control flow in a method.
+- **MUST NOT** have an opening an closing brace more than 40 lines apart inside a method.
 
 ## Explicitly not standards
 
 The following are **not** rules here, and a reviewer must not raise them:
 
 - Preference between `var` and explicit types.
-- Brace style, or anything else the formatter rewrites on save.
 - Preferred line width **other than** the 120-character limit under *Structure*,
   which is a MUST and is raised like any other rule. A line already inside 120
   characters is not a finding however you would have wrapped it, and neither is

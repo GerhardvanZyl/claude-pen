@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Where the instructions live</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:  #0b131b;
+      --color-ink:    #ffffff;
+      --color-muted:  #c8ccd0;
+      --color-soft:   #93989c;
+      --color-accent: #f05126;
+      --font-sans:  'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono:  'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .frame { max-width: 1080px; width: 100%; }
+    .eyebrow {
+      font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-accent); margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.15;
+      margin-bottom: 0.35rem;
+    }
+    .standfirst {
+      font-size: 0.85rem; font-weight: 300; color: var(--color-muted);
+      max-width: 64ch; margin-bottom: 1.5rem;
+    }
+    .source {
+      font-family: var(--font-mono); font-size: 0.6rem; color: var(--color-soft);
+      letter-spacing: 0.04em; margin-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.12); padding-top: 0.75rem;
+    }
+    svg { width: 100%; min-width: 820px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Treemap · claude-pen</p>
+    <h1>Where the instructions live</h1>
+    <p class="standfirst">Every word of markdown in the skill library, by area. The dev-loop family is fifty-seven per cent of it — and the four cheaper variants together still weigh more than the full loop they are derived from, because each one has to restate the parts it changes.</p>
+
+    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="skills-tm-title skills-tm-desc">
+      <title id="skills-tm-title">Where the instructions live</title>
+      <desc id="skills-tm-desc">Treemap of the claude-pen skill library by words of markdown, totalling 26,676. The four dev-loop variants take the largest area at 31 per cent, the full dev-loop skill 26 per cent, the walkthrough pair and backlog-refinement 15 per cent each, and the three cross-cutting standards and notes skills 12 per cent.</desc>
+
+      <rect width="100%" height="100%" fill="#0b131b"/>
+
+      <!-- Cell 1 — the four loop variants -->
+      <rect x="40" y="40" width="524" height="204" rx="2" fill="#0b131b"/>
+      <rect x="40" y="40" width="524" height="204" rx="2" data-share="30.78" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.30)" stroke-width="1"/>
+      <text x="56" y="68" fill="#ffffff" font-size="13" font-weight="600" font-family="'Work Sans', sans-serif">The four loop variants</text>
+      <text x="56" y="86" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace">8,212 words · 31% of the library</text>
+      <text x="56" y="102" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">lite · ultralight · ultra · ultra-opus</text>
+
+      <!-- Cell 2 — dev-loop (focal) -->
+      <rect x="40" y="248" width="524" height="172" rx="2" fill="#0b131b"/>
+      <rect x="40" y="248" width="524" height="172" rx="2" data-share="26.40" fill="rgba(240,81,38,0.16)" stroke="#f05126" stroke-width="1.5"/>
+      <text x="56" y="276" fill="#ffffff" font-size="13" font-weight="600" font-family="'Work Sans', sans-serif">dev-loop</text>
+      <text x="56" y="294" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace">7,042 words · 26% of the library</text>
+      <text x="56" y="310" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">the loop the other four are priced against</text>
+
+      <!-- Cell 3 — pr-walkthrough -->
+      <rect x="568" y="40" width="196" height="268" rx="2" fill="#0b131b"/>
+      <rect x="568" y="40" width="196" height="268" rx="2" data-share="15.45" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.30)" stroke-width="1"/>
+      <text x="584" y="68" fill="#ffffff" font-size="13" font-weight="600" font-family="'Work Sans', sans-serif">pr-walkthrough</text>
+      <text x="584" y="86" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace">4,121 words · 15%</text>
+      <text x="584" y="102" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">author + review</text>
+
+      <!-- Cell 4 — backlog-refinement -->
+      <rect x="768" y="40" width="188" height="268" rx="2" fill="#0b131b"/>
+      <rect x="768" y="40" width="188" height="268" rx="2" data-share="15.12" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.30)" stroke-width="1"/>
+      <text x="784" y="68" fill="#ffffff" font-size="13" font-weight="600" font-family="'Work Sans', sans-serif">backlog-refinement</text>
+      <text x="784" y="86" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace">4,034 words · 15%</text>
+
+      <!-- Cell 5 — cross-cutting rules -->
+      <rect x="568" y="312" width="388" height="108" rx="2" fill="#0b131b"/>
+      <rect x="568" y="312" width="388" height="108" rx="2" data-share="12.25" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.30)" stroke-width="1"/>
+      <text x="584" y="340" fill="#ffffff" font-size="13" font-weight="600" font-family="'Work Sans', sans-serif">Standards, architecture &amp; notes</text>
+      <text x="584" y="358" fill="#c8ccd0" font-size="9" font-family="'Geist Mono', monospace">3,267 words · 12%</text>
+      <text x="584" y="374" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">coding-standards · solution-architecture · implementation-notes</text>
+
+      <!-- Legend -->
+      <line x1="40" y1="462" x2="956" y2="462" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+      <text x="40" y="478" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+
+      <rect x="140" y="488" width="16" height="10" fill="rgba(240,81,38,0.16)" stroke="#f05126" stroke-width="1.5"/>
+      <text x="164" y="497" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">DEV-LOOP — THE FOCAL SKILL</text>
+
+      <rect x="400" y="488" width="16" height="10" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.30)" stroke-width="1"/>
+      <text x="424" y="497" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">STRONGER CONTRAST IS LARGER</text>
+
+      <text x="956" y="497" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end" letter-spacing="0.06em">AREA = WORDS OF MARKDOWN · 26,676 TOTAL · 2026-09-10</text>
+    </svg>
+
+    <p class="source">Measured across every <span style="color:#c8ccd0">.md</span> file under <span style="color:#c8ccd0">user/.claude/skills/</span>, including reference files, not just each SKILL.md. Eleven skills grouped into five cells; nothing is omitted and the five shares sum to 100%. Drawn areas sit within 2.5% of true share — the 4px grid and the gutters between cells both move area, and the residual is disclosed rather than hidden.</p>
+  </div>
+</body>
+</html>

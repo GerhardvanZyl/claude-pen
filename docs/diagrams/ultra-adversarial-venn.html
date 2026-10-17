@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What the adjudicator keeps</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:  #0b131b;
+      --color-ink:    #ffffff;
+      --color-muted:  #c8ccd0;
+      --color-soft:   #93989c;
+      --color-accent: #f05126;
+      --font-sans:  'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono:  'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .frame { max-width: 1080px; width: 100%; }
+    .eyebrow {
+      font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-accent); margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.15;
+      margin-bottom: 0.35rem;
+    }
+    .standfirst {
+      font-size: 0.85rem; font-weight: 300; color: var(--color-muted);
+      max-width: 64ch; margin-bottom: 1.5rem;
+    }
+    .source {
+      font-family: var(--font-mono); font-size: 0.6rem; color: var(--color-soft);
+      letter-spacing: 0.04em; margin-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.12); padding-top: 0.75rem;
+    }
+    svg { width: 100%; min-width: 820px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Venn · dev-loop-ultra</p>
+    <h1>What the adjudicator keeps</h1>
+    <p class="standfirst">Every lane in the ultra loop is reviewed twice by opposed reviewers who never see each other's work, then reconciled by a third. This is why the loop logs three numbers per lane rather than one — the interesting findings are the ones only half the pair found, and the centre region is the only place a finding arrives already corroborated.</p>
+
+    <svg viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ultra-venn-title ultra-venn-desc">
+      <title id="ultra-venn-title">What the adjudicator keeps</title>
+      <desc id="ultra-venn-desc">Venn diagram of one ultra-loop lane showing three sets — findings raised by the prosecution reviewer, findings raised by the defence reviewer, and findings the adjudicator kept. The centre region where all three meet holds the corroborated findings; the two crescents inside the kept set are where recall and precision each paid off alone; and the kept-only region is empty because nothing can be kept that neither reviewer raised.</desc>
+
+      <rect width="100%" height="100%" fill="#0b131b"/>
+
+      <!-- Circles -->
+      <circle cx="420" cy="200" r="140" fill="rgba(255,255,255,0.04)" stroke="#ffffff" stroke-width="1"/>
+      <circle cx="580" cy="200" r="140" fill="rgba(200,204,208,0.05)" stroke="#c8ccd0" stroke-width="1"/>
+      <circle cx="500" cy="336" r="140" fill="rgba(147,152,156,0.05)" stroke="#93989c" stroke-width="1"/>
+
+      <!-- Set labels — outside every stroke -->
+      <text x="200" y="112" fill="#ffffff" font-size="14" font-weight="600" font-family="'Work Sans', sans-serif">Prosecution</text>
+      <text x="200" y="128" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">recall-first</text>
+
+      <text x="800" y="112" fill="#ffffff" font-size="14" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="end">Defence</text>
+      <text x="800" y="128" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">precision-first</text>
+
+      <text x="500" y="512" fill="#ffffff" font-size="14" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Kept</text>
+      <text x="500" y="528" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">the adjudicator's set</text>
+
+      <!-- Region labels -->
+      <text x="356" y="144" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">noise</text>
+      <text x="356" y="160" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">the price of recall</text>
+
+      <text x="644" y="144" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">noise</text>
+      <text x="644" y="160" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">rare by design</text>
+
+      <text x="500" y="160" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">both wrong</text>
+
+      <text x="422" y="296" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">recall paid</text>
+      <text x="422" y="312" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">prosecution alone</text>
+
+      <text x="578" y="296" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">precision paid</text>
+      <text x="578" y="312" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">defence alone</text>
+
+      <text x="500" y="248" fill="#f05126" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">corroborated</text>
+      <text x="500" y="264" fill="#f05126" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">seen by both</text>
+
+      <text x="500" y="404" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">empty</text>
+      <text x="500" y="420" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">nothing arrives unraised</text>
+
+      <!-- Legend -->
+      <line x1="40" y1="552" x2="960" y2="552" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+      <text x="40" y="568" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+
+      <rect x="140" y="578" width="16" height="8" fill="rgba(255,255,255,0.04)" stroke="#ffffff" stroke-width="1"/>
+      <text x="164" y="586" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">RAISED_P</text>
+
+      <rect x="300" y="578" width="16" height="8" fill="rgba(200,204,208,0.05)" stroke="#c8ccd0" stroke-width="1"/>
+      <text x="324" y="586" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">RAISED_D</text>
+
+      <rect x="460" y="578" width="16" height="8" fill="rgba(147,152,156,0.05)" stroke="#93989c" stroke-width="1"/>
+      <text x="484" y="586" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">KEPT</text>
+
+      <text x="600" y="586" fill="#f05126" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">CORROBORATED — THE ONE FOCAL REGION</text>
+    </svg>
+
+    <p class="source">Structure, not counts. The circles are drawn at equal radius because the three quantities are per-run, not fixed: the ultra loops log <span style="color:#c8ccd0">raised_p</span>, <span style="color:#c8ccd0">raised_d</span> and <span style="color:#c8ccd0">kept</span> per lane precisely so the real proportions can be read afterwards. Reviewers run blind to each other; only the adjudicator sees both files plus the diff, and its output is the lane's single authoritative finding set.</p>
+  </div>
+</body>
+</html>

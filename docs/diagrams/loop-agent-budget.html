@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Where a full run's agents go</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:  #0b131b;
+      --color-ink:    #ffffff;
+      --color-muted:  #c8ccd0;
+      --color-soft:   #93989c;
+      --color-accent: #f05126;
+      --font-sans:  'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Instrument Serif', serif;
+      --font-mono:  'Geist Mono', ui-monospace, monospace;
+    }
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .frame { max-width: 1080px; width: 100%; }
+    .eyebrow {
+      font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--color-accent); margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.15;
+      margin-bottom: 0.35rem;
+    }
+    .standfirst {
+      font-size: 0.85rem; font-weight: 300; color: var(--color-muted);
+      max-width: 64ch; margin-bottom: 1.5rem;
+    }
+    .source {
+      font-family: var(--font-mono); font-size: 0.6rem; color: var(--color-soft);
+      letter-spacing: 0.04em; margin-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.12); padding-top: 0.75rem;
+    }
+    svg { width: 100%; min-width: 820px; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Sankey · dev-loop</p>
+    <h1>Where a full run's agents go</h1>
+    <p class="standfirst">Thirty-five agent invocations at the ceiling of one full loop. Review is thirty of them, and of the thirteen that reach Opus, twelve are review lanes. The loop does not spend its money writing code — it spends it reading code.</p>
+
+    <svg viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="loop-sankey-title loop-sankey-desc">
+      <title id="loop-sankey-title">Where a full run's agents go</title>
+      <desc id="loop-sankey-desc">Sankey diagram of the thirty-five agent invocations in one full dev-loop run, flowing from phase to agent kind to model tier: build contributes two, review and fix thirty, ship three; these resolve into five sidekicks, twenty-seven reviewer lanes and three verification or walkthrough agents; and finally into thirteen Opus and twenty-two Sonnet invocations, with the reviewer-to-Opus band the largest single claim on the Opus budget.</desc>
+
+      <rect width="100%" height="100%" fill="#0b131b"/>
+
+      <!-- Column headers -->
+      <text x="186" y="72" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.18em">PHASE</text>
+      <text x="496" y="72" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.18em">AGENT KIND</text>
+      <text x="806" y="72" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.18em">MODEL TIER</text>
+
+      <!-- Ordinary ribbons -->
+      <path d="M192,112 C341,112 341,112 490,112 L490,128 C341,128 341,128 192,128 Z" fill="rgba(200,204,208,0.18)"/>
+      <path d="M192,184 C341,184 341,128 490,128 L490,152 C341,152 341,208 192,208 Z" fill="rgba(200,204,208,0.18)"/>
+      <path d="M192,208 C341,208 341,208 490,208 L490,424 C341,424 341,424 192,424 Z" fill="rgba(200,204,208,0.18)"/>
+      <path d="M192,480 C341,480 341,480 490,480 L490,504 C341,504 341,504 192,504 Z" fill="rgba(200,204,208,0.18)"/>
+
+      <path d="M502,112 C651,112 651,140 800,140 L800,180 C651,180 651,152 502,152 Z" fill="rgba(200,204,208,0.18)"/>
+      <path d="M502,208 C651,208 651,180 800,180 L800,300 C651,300 651,328 502,328 Z" fill="rgba(200,204,208,0.18)"/>
+      <path d="M502,480 C651,480 651,300 800,300 L800,316 C651,316 651,496 502,496 Z" fill="rgba(200,204,208,0.18)"/>
+      <path d="M502,496 C651,496 651,468 800,468 L800,476 C651,476 651,504 502,504 Z" fill="rgba(200,204,208,0.18)"/>
+
+      <!-- Focal path: reviewer lanes into Opus -->
+      <path d="M502,328 C651,328 651,372 800,372 L800,468 C651,468 651,424 502,424 Z" fill="rgba(240,81,38,0.28)"/>
+
+      <!-- Node bars -->
+      <rect x="180" y="112" width="12" height="16"  fill="#ffffff"/>
+      <rect x="180" y="184" width="12" height="240" fill="#ffffff"/>
+      <rect x="180" y="480" width="12" height="24"  fill="#ffffff"/>
+
+      <rect x="490" y="112" width="12" height="40"  fill="#ffffff"/>
+      <rect x="490" y="208" width="12" height="216" fill="#ffffff"/>
+      <rect x="490" y="480" width="12" height="24"  fill="#ffffff"/>
+
+      <rect x="800" y="140" width="12" height="176" fill="#ffffff"/>
+      <rect x="800" y="372" width="12" height="104" fill="#ffffff"/>
+
+      <!-- Column 1 labels — outside the bar, anchored end -->
+      <text x="168" y="116" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="end">Build</text>
+      <text x="168" y="130" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">2 handoffs</text>
+
+      <text x="168" y="300" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="end">Review &amp; fix</text>
+      <text x="168" y="314" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">30 invocations</text>
+
+      <text x="168" y="488" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="end">Ship</text>
+      <text x="168" y="502" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="end">3 invocations</text>
+
+      <!-- Column 2 labels — centred in the gutter above each bar -->
+      <text x="496" y="88" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Sidekick</text>
+      <text x="496" y="100" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">5</text>
+
+      <text x="496" y="174" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Reviewer lane</text>
+      <text x="496" y="186" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">27</text>
+
+      <text x="496" y="446" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif" text-anchor="middle">Verify &amp; walkthrough</text>
+      <text x="496" y="458" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">3</text>
+
+      <!-- Column 3 labels — outside the bar, anchored start -->
+      <text x="824" y="224" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif">Sonnet</text>
+      <text x="824" y="238" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">22 invocations</text>
+
+      <text x="824" y="420" fill="#ffffff" font-size="12" font-weight="600" font-family="'Work Sans', sans-serif">Opus</text>
+      <text x="824" y="434" fill="#93989c" font-size="9" font-family="'Geist Mono', monospace">13 invocations</text>
+
+      <!-- Legend -->
+      <line x1="40" y1="540" x2="960" y2="540" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+      <text x="40" y="556" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+
+      <rect x="140" y="567" width="16" height="8" fill="rgba(240,81,38,0.28)"/>
+      <text x="164" y="575" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">REVIEW LANES INTO OPUS — 12 OF THE 13</text>
+
+      <rect x="440" y="567" width="16" height="8" fill="rgba(200,204,208,0.18)"/>
+      <text x="464" y="575" fill="#c8ccd0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.06em">EVERY OTHER FLOW</text>
+
+      <text x="960" y="575" fill="#93989c" font-size="8" font-family="'Geist Mono', monospace" text-anchor="end" letter-spacing="0.06em">BAND THICKNESS = INVOCATIONS · 8PX EACH</text>
+    </svg>
+
+    <p class="source">One full dev-loop run at its ceiling — three rounds, every lane applicable. Build = implement + tests, two sidekick handoffs. Review &amp; fix = 9 lanes × 3 rounds, plus one fix sidekick per round. Ship = reviewer-verify, the walkthrough author and the walkthrough reviewer. Reviewer tiers are 4 Opus and 5 Sonnet lanes; sidekicks and the walkthrough pair run at the default Sonnet tier. Every column sums to 35. A real run is smaller: rounds 2 and 3 rerun only the lanes that owned accepted findings.</p>
+  </div>
+</body>
+</html>
