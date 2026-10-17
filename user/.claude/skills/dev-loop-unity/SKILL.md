@@ -8,10 +8,11 @@ description: >
   owner-approved exception) and drops the Security lane, since an eligible
   change has no reachable security surface. Not for a contained one-system or
   one-scene change with no settings/pipeline/package/asmdef change, no
-  save-format change, no new shared primitive, and no new art direction — use
-  dev-loop-unity-lite for that. Not for multiplayer, online services,
-  accounts, purchases, analytics, downloaded or user-generated content, mod
-  loading, or credentials — those go to the general dev-loop ladder.
+  save-format change, no new shared primitive, no new art direction, and no
+  newly authored 3D asset — use dev-loop-unity-lite for that. Not for
+  multiplayer, online services, accounts, purchases, analytics, downloaded
+  or user-generated content, mod loading, or credentials — those go to the
+  general dev-loop ladder.
 ---
 
 # Development and review loop — Unity (single-player)
@@ -27,16 +28,16 @@ Lane definitions live in `references/review-lanes-unity.md`, shared with
 read the file whole.
 
 Unity operating rules — editor isolation, batchmode, bridge CLIs, modal
-dialogs, turn limits, scene-building lessons, the capture harness contract —
-live in `references/unity-editor.md`. Read it in Phase 0 and hand it to every
-sidekick and to the Visual lane.
+dialogs, turn limits, scene-building lessons, Blender asset work, the capture
+harness contract — live in `references/unity-editor.md`. Read it in Phase 0
+and hand it to every sidekick and to the Visual lane.
 
 The working-tree snapshot, the integrity check, and the scratch worktree the
 Tests lane needs are shared with the general loop; follow
 `dev-loop/references/tree-snapshot.md`.
 
 **Everything this file does not restate is exactly `dev-loop`'s**: the
-`implementation-notes` invocation at Phase 0 and the reasoning asked back in
+`implementation-notes` invocation at Phase 0 and the decision record asked back in
 every implement/test/fix brief, the `pr-walkthrough` / `pr-walkthrough-review`
 pipeline at Phase 8b, the tree digest before and after reviewers, the evidence
 and cause gates including `missing-required`, regression-test-before-fix,
@@ -55,13 +56,14 @@ sidekicks with `references/unity-editor.md` regardless.
 
 **Use `dev-loop-unity-lite` instead** when the change is contained: one
 system or one scene, no settings/pipeline/package/asmdef change, no
-save-format change, no new shared primitive, no new art direction.
+save-format change, no new shared primitive, no new art direction, no newly
+authored 3D asset (modifying an existing one is contained).
 
 **Escalation, one-way:**
 
 - To `dev-loop-unity` from the lite loop: any Critical in round 1, or the
-  change turns out to need art direction, a settings change, or a new shared
-  primitive.
+  change turns out to need art direction, a settings change, a new shared
+  primitive, or a newly authored 3D asset.
 - To the general ladder, from either Unity loop: eligibility breaks mid-run.
 - From `dev-loop-unity` itself: the same Critical surviving a fix is
   blocked — stop and report. No heavier Unity loop exists; say so and offer
@@ -97,7 +99,9 @@ Before any building:
 1. `.claude/unity/asset-inventory.md` — for every asset name the bible or
    brief uses: measured bounds, pivot, forward axis, variant materials the
    vendor already ships, and names that do not exist. Incremental — add only
-   the missing entries.
+   the missing entries. A name that does not exist, or a need no shipped
+   asset or variant meets, is recorded as absent; that record alone
+   authorises authoring the asset in Blender (Phase 1).
 2. Shared placement primitives, tested in EditMode: oriented-footprint
    clearance, spacing between agents, ground-height layering, camera-inside-
    geometry checks. Scene code places through them; no hand-rolled positions.
@@ -112,9 +116,13 @@ Both files under `.claude/unity/` are committed.
 Code and systems go to `sidekick`, on the normal ladder. Scene composition,
 lighting, framing, posing, and materials go to `sidekick-visual`: it builds,
 captures, *looks at every capture*, fixes, at most two self-QA iterations per
-handoff, one scene set per handoff. Both obey the reference; neither changes
-project-wide rendering or settings unless the brief says so. Both briefs ask
-for the reasoning back, same as `dev-loop`.
+handoff, one scene set per handoff. Blender asset work — modifying an
+existing 3D asset, or authoring one the inventory records as absent — goes
+to `sidekick-visual` too, on the same turn limits and self-QA cap; it
+imports the result, re-measures it, and writes the inventory entry from that
+measurement. Both obey the reference; neither changes project-wide rendering
+or settings unless the brief says so. Both briefs ask for a decision record
+back, same as `dev-loop`.
 
 ### Phase 2 — Tests
 
@@ -143,7 +151,7 @@ Lane table:
 | `reviewer-requirements` | Requirements | Always. |
 | `reviewer-technical` | Technical | C# changed — runtime, editor, or test code. |
 | `reviewer-tests` | Tests | C# changed — runtime, editor, or test code. |
-| `reviewer-artifacts` | Artifacts | A settings, pipeline, package, asmdef, `.meta`, or scene/prefab YAML change — or should have been one. |
+| `reviewer-artifacts` | Artifacts | A settings, pipeline, package, asmdef, `.meta`, scene/prefab YAML, `.blend`, or exported-mesh change — or should have been one. |
 | `reviewer-lite-structure` | Structure | Round 1 only. Skipped for a throwaway tooling path recorded in `.claude/review/conventions.md` (capture or concept tooling whose output is images). |
 
 ### Phase 4 — Delegate
@@ -166,7 +174,8 @@ building or upgrading the shared primitive, with a regression test.
 
 Code findings go to `sidekick` (or `sidekick-heavy`), test-before-fix as in
 `dev-loop`. Visual findings go to `sidekick-visual`, which must recapture and
-confirm by eye before returning.
+confirm by eye before returning. A finding from any lane whose fix is
+changing a Blender asset itself goes to `sidekick-visual` too.
 
 ### Phase 7 — Rounds capped at 2
 
@@ -180,16 +189,18 @@ new; a failure there is reported, not looped. Otherwise, termination follows
 
 As `dev-loop`, plus verify also runs when the Artifacts lane ran this run or
 a visual acceptance is unconfirmed, in addition to `dev-loop`'s own verify
-triggers. Before staging: editor idle, scenes saved, every new asset's
-`.meta` staged; never stage `Library/`, `Temp/`, `Logs/`, or `UserSettings/`;
-commit `.claude/unity/*`. Captures stay in the run directory unless the
-project already commits them. The index line carries `"loop":"unity"`.
+triggers. Before staging: editor idle, scenes saved, every `.meta` a new
+asset generates staged, plus any `.blend` source; never stage `Library/`,
+`Temp/`, `Logs/`, or `UserSettings/`; commit `.claude/unity/*`. Captures
+stay in the run directory unless the project already commits them. The
+index line carries `"loop":"unity"`.
 
 ## Agents
 
 - **New, `sidekick-visual`** (`model: fable`) — the owner-approved Fable
   exception, confined to this agent and `reviewer-visual`. Roles: the bible
-  (0a), visual build (1), visual fix (6). Fallback: on a usage-policy false
+  (0a), visual build and Blender asset work (1), visual fix and asset fix
+  (6). Fallback: on a usage-policy false
   positive (combat framed as game design still occasionally trips one), the
   lead retries once on `sidekick-heavy` and records it.
 - **New, `reviewer-visual`** (`model: fable`) — the same exception, read-only

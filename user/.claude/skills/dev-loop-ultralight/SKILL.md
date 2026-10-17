@@ -63,10 +63,10 @@ a strong sign you are in the wrong loop.
 
 Tests are still required. Each must fail if the behaviour it covers regresses.
 
-**The brief must ask for the reasoning back.** Require the sidekick to return,
+**The brief must ask for a decision record back.** Require the sidekick to return,
 alongside its summary, the decisions it took, the alternatives it rejected and
 why, and any constraint that forced a shape. Append what comes back to
-`notes.md`. Without this the reasoning dies when the agent returns, and the
+`notes.md`. Without this the rationale dies when the agent returns, and the
 walkthrough in Phase 5b has nothing to work from but the diff.
 
 ## Phase 2 — Review

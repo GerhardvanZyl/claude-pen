@@ -80,17 +80,17 @@ briefing sidekicks with the Unity editor reference.
 
 **Use `dev-loop-unity-lite`** for a contained change — one system or one scene,
 no settings/pipeline/package/asmdef change, no save-format change, no new
-shared primitive, no new art direction. **Use `dev-loop-unity`** for everything
-else single-player: new scenes or a new look built from references,
-settings/pipeline/package changes, save-format changes, shared primitives, or
-multi-system work.
+shared primitive, no new art direction, no newly authored 3D asset. **Use
+`dev-loop-unity`** for everything else single-player: new scenes or a new
+look built from references, settings/pipeline/package changes, save-format
+changes, shared primitives, newly authored 3D assets, or multi-system work.
 
 Escalation: `dev-loop-unity-lite` → `dev-loop-unity` on any Critical in round 1,
-or when the change turns out to need art direction, a settings change, or a new
-primitive. Either Unity loop → the general ladder if eligibility breaks
-mid-run. `dev-loop-unity` has no heavier Unity loop to escalate to — the same
-Critical surviving a fix stops the run and reports, offering the general
-ladder.
+or when the change turns out to need art direction, a settings change, a new
+primitive, or a newly authored 3D asset. Either Unity loop → the general
+ladder if eligibility breaks mid-run. `dev-loop-unity` has no heavier Unity
+loop to escalate to — the same Critical surviving a fix stops the run and
+reports, offering the general ladder.
 
 Rules common to every loop:
 
@@ -152,6 +152,8 @@ Routing rules:
   `dev-loop-unity-lite`) route art direction, visual building, and visual
   review to `sidekick-visual` and `reviewer-visual`, both pinned to Fable —
   visual judgment on those tasks was measurably better than Opus in testing.
+  `sidekick-visual` is also handed Blender asset work in those loops —
+  modifying a 3D asset, or authoring a new one — under the same exception.
   The exception is confined to those two agents; nothing else routes there.
 - Name the tier and the one-line reason in your handoff message, so a wrong
   route is visible in the transcript rather than buried.
