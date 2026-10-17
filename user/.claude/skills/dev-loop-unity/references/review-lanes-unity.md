@@ -25,8 +25,8 @@ to cover is not reachable by an eligible change.
   clipping, floating, or intersecting objects; T-poses and other broken
   poses; fused characters; z-fighting; black or washed-out frames; lights not
   reaching the framed core; missing post-processing or grading.
-- **Does not own:** Whether the settings behind the image are saved
-  correctly or safe to ship (Artifacts); whether the scene fulfils the
+- **Does not own:** Whether the settings or asset files behind the image are
+  saved correctly or safe to ship (Artifacts); whether the scene fulfils the
   brief's non-visual requirements (Requirements); whether the code compiles
   or the tests pass (Technical, Tests).
 - **Quality brake:** Every finding cites a capture and a pixel region.
@@ -90,11 +90,13 @@ to cover is not reachable by an eligible change.
 - **Owns:** `ProjectSettings/`, render-pipeline and quality assets,
   `Packages/manifest.json` and its lock, `.asmdef` files, missing or
   unexpectedly regenerated `.meta` files (GUID churn), vendor import-setting
-  changes, hand-edited scene or prefab YAML, and any project-wide rendering
-  change made as a side effect of tooling rather than a stated brief
-  decision.
-- **Does not own:** The visual result these settings produce (Visual); the
-  logic that consumes them (Technical).
+  changes, hand-edited scene or prefab YAML, Blender-authored or -modified
+  assets as files — a `.blend` source missing beside its export, a vendor
+  package asset edited in place instead of a project-owned copy — and any
+  project-wide rendering change made as a side effect of tooling rather than
+  a stated brief decision.
+- **Does not own:** The visual result these settings or assets produce
+  (Visual); the logic that consumes them (Technical).
 - **Quality brake:** Run a generate-and-diff or asset-reimport check where
   one exists rather than reasoning about currency. A project-wide settings
   change with no brief authorization is Critical even if the resulting image
@@ -130,7 +132,9 @@ whose only output is images.*
 - **Owns:** All three concerns as the full-loop cards above define them —
   brief conformance including the named-shot definition of done; logic,
   state, and Unity lifecycle defects; and project settings, packages,
-  `.asmdef`, `.meta`, and hand-edited scene/prefab YAML.
+  `.asmdef`, `.meta`, hand-edited scene/prefab YAML, and Blender-authored or
+  -modified assets as files (`.blend` source beside its export, no vendor
+  package asset edited in place).
 - **Does not own:** Visual fidelity (Visual), whether the code is shaped
   well (Structure), whether tests would catch a regression (Tests).
 - **Quality brake:** Cover all three concerns before writing anything — the

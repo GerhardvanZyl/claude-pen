@@ -353,12 +353,21 @@ placement. So the code lanes stay on their usual tiers, and only the Visual
 lane and its sidekick move to Fable — the owner-approved exception to "do not
 route to Fable" in the delegation policy.
 
+**Blender asset work is in scope**, on Fable via `sidekick-visual` under that
+same exception: modifying an existing 3D asset, or authoring a new one
+(a name that does not exist, or a need no shipped asset or variant meets).
+Blender runs headless, vendor package assets are copied rather than edited
+in place, and the `.blend` source is committed beside its export. It is
+reviewed by the existing lanes, not exempted: Visual for how the asset looks
+in a capture, Artifacts (Correctness in lite) for the files. Authoring a new
+asset needs the full loop; modifying one stays lite-eligible.
+
 | Lane | Agent | Model | Applicable when |
 | --- | --- | --- | --- |
 | Visual | `reviewer-visual` | fable | Gated: anything that renders changed (scenes, prefabs, materials, shaders, lighting, post-processing, cameras, animation, UI, VFX), or the brief names shots |
 | Requirements | `reviewer-requirements` | opus / high | Always (full loop) |
 | Technical | `reviewer-technical` | opus / xhigh | Gated: C# changed — runtime, editor, or test code (full loop) |
-| Artifacts | `reviewer-artifacts` | sonnet / high | Gated: settings, pipeline, packages, `.meta`/GUID churn (full loop) |
+| Artifacts | `reviewer-artifacts` | sonnet / high | Gated: settings, pipeline, packages, `.meta`/GUID churn, `.blend`/exported mesh (full loop) |
 | Correctness | `reviewer-lite-correctness` | sonnet / high | Always (lite loop; folds in Requirements + Technical + Artifacts) |
 | Tests | `reviewer-tests` (full) / `reviewer-lite-tests` (lite) | sonnet / high, or haiku | Gated: C# changed — runtime, editor, or test code |
 | Structure | `reviewer-lite-structure` | sonnet / high | Round 1 only, both loops; skipped for recorded throwaway tooling paths |
