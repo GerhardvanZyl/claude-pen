@@ -137,8 +137,10 @@ assert_not_exists "$SCRATCH/.claude/skills/coding-standards" \
   "project-level coding-standards skill does not come back"
 assert_exists "$SCRATCH/.claude/skills/implement-sprint" \
   "bulk project-layer copy still lands implement-sprint"
-assert_exists "$SCRATCH/.claude/skills/backlog-refinement/SKILL.md" \
-  "bulk project-layer copy still lands backlog-refinement"
+assert_exists "$HOME/.claude/skills/backlog-refinement/SKILL.md" \
+  "backlog-refinement skill lands at user level"
+assert_not_exists "$SCRATCH/.claude/skills/backlog-refinement" \
+  "project-level backlog-refinement skill does not come back"
 assert_not_exists "$SCRATCH/.claude/standards.new.md" \
   "no standards.new.md on a fresh install"
 
