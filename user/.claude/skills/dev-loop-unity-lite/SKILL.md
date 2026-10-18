@@ -3,12 +3,13 @@ name: dev-loop-unity-lite
 description: >
   The lightweight Unity loop for a contained single-player change — one
   system or one scene, no settings/pipeline/package/asmdef change, no
-  save-format change, no new shared primitive, no new art direction. Use when
-  asked for a lite Unity run, or when the user types /dev-loop-unity-lite.
-  Four consolidated lanes including a Fable-driven Visual lane (an
-  owner-approved exception), two rounds plus a visual confirmation. Escalates
-  to dev-loop-unity on a round-1 Critical, or when the change turns out to
-  need art direction, a settings change, or a new shared primitive.
+  save-format change, no new shared primitive, no new art direction, no
+  newly authored 3D asset. Use when asked for a lite Unity run, or when the
+  user types /dev-loop-unity-lite. Four consolidated lanes including a
+  Fable-driven Visual lane (an owner-approved exception), two rounds plus a
+  visual confirmation. Escalates to dev-loop-unity on a round-1 Critical, or
+  when the change turns out to need art direction, a settings change, a new
+  shared primitive, or a newly authored 3D asset.
 ---
 
 # Development and review loop — Unity lite (single-player)
@@ -45,12 +46,15 @@ briefing sidekicks with `unity-editor.md` regardless.
 This loop is additionally the wrong one, even within single-player scope, if
 the change is not contained: new scenes or a look built from references, a
 settings/pipeline/package/asmdef change, a save-format change, a new shared
-primitive, or multi-system work. Use `dev-loop-unity` for any of those.
+primitive, a newly authored 3D asset (it needs the Phase 0b inventory pass
+this loop does not run), or multi-system work. Use `dev-loop-unity` for any
+of those. Modifying an existing asset in Blender stays contained.
 
 **Escalation, one-way:**
 
 - To `dev-loop-unity`: any Critical in round 1; or the change turns out to
-  need art direction, a settings change, or a new shared primitive.
+  need art direction, a settings change, a new shared primitive, or a newly
+  authored 3D asset.
 - To the general ladder: eligibility breaks mid-run.
 
 If you are unsure, use the full Unity loop. This loop's savings are not
@@ -81,7 +85,9 @@ record capture-level acceptance for any visual item.
 As `dev-loop-unity`, routed by kind: `sidekick` for code, `sidekick-visual`
 (Fable) for scene composition, lighting, framing, posing, materials — same
 turn limits and self-QA cap. No Phase 0a or 0b here; the inventory and
-primitives this change needs must already exist.
+primitives this change needs must already exist. Modifying an existing 3D
+asset in Blender is `sidekick-visual`'s too, under the Blender rules in
+`unity-editor.md`; the asset to modify must already exist.
 
 ### Phase 2 — Tests
 
@@ -121,7 +127,8 @@ exactly as `dev-loop-lite`.
 
 As `dev-loop-unity`: code findings to `sidekick` or `sidekick-heavy`,
 test-before-fix; visual findings to `sidekick-visual`, which recaptures and
-confirms by eye before returning.
+confirms by eye before returning; a finding from any lane whose fix is
+changing a Blender asset itself goes to `sidekick-visual` too.
 
 ### Phase 7 — Loop or exit
 

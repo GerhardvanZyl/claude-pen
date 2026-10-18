@@ -85,6 +85,37 @@ fallback rather than retrying the same brief unchanged.
   a brief-level decision, not something a capture or placement script does
   quietly.
 
+## Blender asset work
+
+Modifying an existing 3D asset, or authoring a new one, is
+`sidekick-visual`'s. Authoring is the rung below the vendor-shipped check
+above, never a replacement for it: author only when Phase 0b's inventory
+records the need as absent — a name that does not exist, or a need no
+shipped asset or variant meets. Authoring is full-loop only; the lite loop
+modifies an existing asset and never authors.
+
+- **Verify Blender is installed and runs** before planning around it. If it
+  does not, report a blocker — never substitute another route.
+- **Headless and non-interactive only** — no GUI, no modal dialog. The
+  Bridge CLIs rules apply: an explicit timeout longer than the slowest
+  export can take, one invocation at a time. A run at 0% CPU with a log that
+  stopped mid-line is hung, as under Modal dialogs.
+- **Never edit a vendor package asset in place.** Copy it into a
+  project-owned folder and modify the copy, so a package update cannot
+  silently revert the change.
+- **Keep the `.blend` source beside its export,** so the lead stages and
+  commits both. The export is a build product; the source is the only way
+  to change it later.
+- **Export on the project's existing scale and axis convention.** Measure an
+  asset already in use rather than trusting Blender's defaults.
+- **Re-measure after import.** Bounds, pivot, and forward axis come from the
+  imported asset in the editor, never from the Blender file;
+  `sidekick-visual` writes the inventory entry from that measurement. Where
+  the project keeps no inventory, report the measurement instead.
+- **Change no project-wide import or rendering setting** as a side effect.
+  Import settings are per-asset; a project-wide one is a brief-level
+  decision.
+
 ## Capture harness contract
 
 A capture harness, wherever the run's Phase 0b builds or reuses one, must:
