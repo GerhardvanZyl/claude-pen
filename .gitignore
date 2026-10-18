@@ -4,5 +4,5 @@
 .claude/sprint/*/summary.md
 .claude/refinement/*/refinement.json
 .claude/settings.local.json
-.claude/agent-memory/
+**/.claude/agent-memory/
 graphify-out/

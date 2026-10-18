@@ -160,8 +160,10 @@ try {
         'project-level coding-standards skill does not come back'
     Assert-Exists (Join-Path $scratch '.claude\skills\implement-sprint') `
         'bulk project-layer copy still lands implement-sprint'
-    Assert-Exists (Join-Path $scratch '.claude\skills\backlog-refinement\SKILL.md') `
-        'bulk project-layer copy still lands backlog-refinement'
+    Assert-Exists (Join-Path $TmpHome '.claude\skills\backlog-refinement\SKILL.md') `
+        'backlog-refinement skill lands at user level'
+    Assert-NotExists (Join-Path $scratch '.claude\skills\backlog-refinement') `
+        'project-level backlog-refinement skill does not come back'
     Assert-NotExists (Join-Path $scratch '.claude\standards.new.md') `
         'no standards.new.md on a fresh install'
 
