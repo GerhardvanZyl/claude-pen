@@ -16,7 +16,8 @@ rule is the same. This file changes two things and nothing else.
 
 Read `dev-loop-ultra/SKILL.md` now and work from it. Do not reimplement its
 phases from this file. That includes Phase 0's `implementation-notes` and Phase
-8b's walkthrough — both are inherited unchanged.
+8b's walkthrough — both are inherited unchanged, including the walkthrough's
+human audience: never a transcription or reconstruction of model reasoning.
 
 ## Change 1 — Every subagent runs on Opus
 

@@ -198,6 +198,7 @@ As `dev-loop` Phase 8b in full: invoke `pr-walkthrough` off `notes.md`, invoke
 baseline whether or not a walkthrough was written. One addition: the per-lane
 prosecution/defence/kept counts go into the notes' Reviewers section, alongside
 the lanes run, lanes skipped, and model tiers `dev-loop` already puts there.
+The walkthrough's audience is a human reviewer: decisions and their justification in plain prose, never a transcription or reconstruction of any model's internal reasoning — see `dev-loop` Phase 8b.
 
 ## Phase 9 — Commit, push, pull request
 

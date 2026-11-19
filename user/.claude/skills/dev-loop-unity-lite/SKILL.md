@@ -147,7 +147,7 @@ Per Lite limits above: only after a Critical, or a Major with
 As `dev-loop-unity`. Before staging: editor idle, scenes saved, `.meta`
 staged for every new asset; never stage `Library/`, `Temp/`, `Logs/`, or
 `UserSettings/`; commit `.claude/unity/*` if present. The index line carries
-`"loop":"unity-lite"`.
+`"loop":"unity-lite"`. The walkthrough's audience is a human reviewer: decisions and their justification in plain prose, never a transcription or reconstruction of any model's internal reasoning — see `dev-loop` Phase 8b.
 
 ## Agents
 
