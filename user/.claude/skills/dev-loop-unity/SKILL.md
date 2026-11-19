@@ -193,7 +193,7 @@ triggers. Before staging: editor idle, scenes saved, every `.meta` a new
 asset generates staged, plus any `.blend` source; never stage `Library/`,
 `Temp/`, `Logs/`, or `UserSettings/`; commit `.claude/unity/*`. Captures
 stay in the run directory unless the project already commits them. The
-index line carries `"loop":"unity"`.
+index line carries `"loop":"unity"`. The walkthrough's audience is a human reviewer: decisions and their justification in plain prose, never a transcription or reconstruction of any model's internal reasoning — see `dev-loop` Phase 8b.
 
 ## Agents
 

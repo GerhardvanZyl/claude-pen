@@ -37,6 +37,12 @@ they do not know this codebase's particular shape. That calibrates everything:
   true of any C# repository, or any React app, it does not belong here — the
   reader already knows it, and writing it down signals you don't trust them
   with the parts that actually matter.
+- **Write for a human, not a model.** The reader is a person reviewing the PR.
+  State each decision and its justification as a conclusion in plain prose,
+  drawn from `notes.md` and the diff. Never transcribe, replay, or reconstruct
+  any model's internal reasoning, thinking, or step-by-step deliberation — and
+  if you delegate any part of this, ask for decisions and rejected
+  alternatives, never for the delegate's thought process.
 
 ## Why beats what
 

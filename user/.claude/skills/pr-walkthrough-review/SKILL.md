@@ -82,6 +82,10 @@ Work through these in order:
    architecture diagram and the sequence diagram both exist and are valid
    Mermaid syntax. A diagram that fails to render defeats the entire reason
    `pr-walkthrough` mandates Mermaid over ASCII.
+9. **Written for a human, not a model.** Decisions and their justification
+   read as conclusions in plain prose. Rewrite or cut anything that
+   transcribes, replays, or reconstructs a model's internal reasoning,
+   thinking, or step-by-step deliberation.
 
 ## The return contract
 

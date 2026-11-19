@@ -228,6 +228,14 @@ human sees the work.
 The change has been reviewed, but the reasoning behind it still exists only in
 `notes.md`. This phase turns it into the document that ships with the PR.
 
+**Audience: a human reviewer.** The walkthrough is written for a person
+reading the PR, not for another model. It states each decision and its
+justification as a conclusion in plain prose, drawn from `notes.md` and the
+diff. It does not transcribe, replay, or reconstruct any model's internal
+reasoning, thinking, or step-by-step deliberation, and no brief for it asks a
+sidekick to recount how it thought — ask for decisions and rejected
+alternatives, never for its thought process.
+
 1. **Author it.** Invoke the `pr-walkthrough` skill. Delegate the draft to
    `sidekick`, passing the `notes.md` path, the diff base, the changed-file
    list, the path to `pr-walkthrough/SKILL.md`, and the resolved exemplar path
