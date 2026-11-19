@@ -120,6 +120,27 @@ SHOULD. Do not invent rules that are not written in either file.
 - **MUST** parameterise every query. No string concatenation into SQL.
 - **SHOULD** keep queries out of controllers and handlers.
 
+## Web UI
+
+- **MUST** implement web drag and drop with Dragology (`dragology`,
+  https://declarative-dragging.github.io/) and its declarative-dragging approach:
+  model the state, declare which future states dragging an element can lead to,
+  and let the engine derive drop zones and animation from them. Compose simple
+  behaviours and use its modifiers for floating, snapping, and transitions rather
+  than hand-writing hit-testing, geometry, or drag animation. Dragology targets
+  SVG interfaces; where a drag cannot be expressed that way, say so and agree an
+  alternative before writing one.
+- **MUST** build web UI on a **new** project with UI SDK (`@ui-sdk/core` plus the
+  matching framework binding such as `@ui-sdk/react`,
+  https://ui-sdk.dev/docs/core/changelog/introducing-ui-sdk). Keep behaviour in
+  primitives (`definePrimitive`) and presentation in your own styles; turn
+  primitives into components with the framework binding (e.g. `createParts`) and
+  reuse its ready-made behaviours (focus, keyboard navigation, popups, ARIA)
+  instead of reimplementing them. It is in beta: pin the version.
+- **MUST NOT** introduce UI SDK into an **existing** project without the user's
+  explicit confirmation. **SHOULD** suggest it, with the reason, where it would be
+  a good fit. A reviewer does not raise its absence on an existing project.
+
 ## Comments
 
 - **SHOULD** explain why, not what. Delete commented-out code rather than

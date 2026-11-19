@@ -79,7 +79,8 @@ if [ -z "$DRY" ]; then
     cp "$HERE/user/CLAUDE.md" "$CLAUDE/CLAUDE.md"; echo "  CLAUDE.md installed"
   fi
 else
-  echo "  would copy agents (24) and skills (7 loops + solution-architecture + coding-standards + 3 walkthrough)"
+  SKILLS_LABEL='skills (13: 7 loops + backlog-refinement + coding-standards + solution-architecture + 3 walkthrough)'
+  echo "  would copy agents (24) and $SKILLS_LABEL"
 fi
 
 if [ -n "$REPO" ]; then
@@ -122,6 +123,48 @@ if [ -n "$REPO" ]; then
   add_ignore_rule "$REPO" '.claude/review/runs/' 'Review lane logs quote the code they read'
 fi
 
+echo
+echo "=== Mod: dev-loop-inspector ==="
+
+# A plugin is enabled through Claude Code's own marketplace registry under
+# ~/.claude/plugins, which is that program's cache and not an install target.
+# So this section verifies the vendored tree and prints the two commands and
+# nothing else: shelling out to `claude` would put the CLI on this bundle's
+# dependency list, where nothing else needs it, and writing nothing is what
+# makes the section read the same under --dry-run as without it.
+#
+# The list is what the loader needs: both manifests, the hook, the module it
+# imports, and the `types` path plugin.json declares -- `claude plugin validate`
+# calls a missing one a load failure. tsconfig.json and scan.test.ts are not on
+# it; nothing loads them.
+MOD_COMPLETE=1
+for needed in plugin/dev-loop-inspector/.claude-plugin/plugin.json \
+              plugin/dev-loop-inspector/hooks/hooks.json \
+              plugin/dev-loop-inspector/hooks/register.tsx \
+              plugin/dev-loop-inspector/hooks/scan.ts \
+              plugin/dev-loop-inspector/types/index.d.ts \
+              .claude-plugin/marketplace.json; do
+  if [ ! -f "$HERE/$needed" ]; then echo "  ! missing $needed"; MOD_COMPLETE=""; fi
+done
+if [ -n "$MOD_COMPLETE" ]; then
+  echo "  vendored source and marketplace entry present"
+else
+  echo "  mod incomplete -- re-unzip the bundle. Nothing else installed here depends on it."
+fi
+# $HERE goes into a line the user is told to paste, so it is printed inside
+# single quotes with an embedded one written '\'' -- the only POSIX quoting a
+# directory name cannot break out of to run something other than what it shows.
+# No one form is right for cmd.exe as well: it treats ' as an ordinary
+# character, so a name carrying & or ^ would split the line there. Step 1 names
+# the shell this quoting is for rather than claiming all of them.
+QUOTE="'"
+HERE_QUOTED="$QUOTE${HERE//$QUOTE/$QUOTE\\$QUOTE$QUOTE}$QUOTE"
+echo "  Enabling it is two steps, in two different places:"
+echo "  1. in bash (not cmd.exe) --"
+echo "       claude plugin marketplace add $HERE_QUOTED"
+echo "  2. at the Claude Code prompt, not a shell --"
+echo "       /plugin install dev-loop-inspector@claude-pen"
+
 if [ -n "$DRY" ]; then
   echo
   echo "Dry run only. Re-run without --dry-run to apply."
@@ -135,7 +178,7 @@ AGENTS=$(ls -1 "$CLAUDE/agents"/*.md 2>/dev/null | wc -l)
 SKILLS=$(ls -1d "$CLAUDE/skills"/*/ 2>/dev/null | wc -l)
 echo "  $AGENTS agent files, $SKILLS skill folders"
 if [ "$AGENTS" -lt 24 ]; then echo "  ! expected at least 24 agents"; fi
-if [ "$SKILLS" -lt 12 ]; then echo "  ! expected at least 12 skill folders"; fi
+if [ "$SKILLS" -lt 13 ]; then echo "  ! expected at least 13 skill folders"; fi
 if [ -n "$REPO" ]; then echo "  $(find "$REPO/.claude" -type f | wc -l) files in $REPO/.claude"; fi
 if [ -n "$DID_BACKUP" ]; then echo "  previous agents/skills preserved in $BACKUP"; fi
 
@@ -153,6 +196,8 @@ if [ -n "$REPO" ]; then
 fi
 echo "  * Merge .claude/settings.example.json into .claude/settings.json for hook logging,"
 echo "    then run /doctor -- the hook fails silently if its path is wrong."
+echo "  * Enable the dev-loop-inspector mod with the two commands in the Mod section above."
+echo "    The first goes in a shell, the second at the Claude Code prompt -- the leading / is the tell."
 echo
 echo "Restart Claude Code once, then run /doctor."
 echo
